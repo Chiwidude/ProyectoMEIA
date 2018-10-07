@@ -22,13 +22,13 @@ import java.util.regex.Pattern;
  */
 public class ApiloFile {
 
-    private RandomAccessFile Archivo;
-    private File descriptor;
+    protected RandomAccessFile Archivo;
+    protected File descriptor;
     public File masterfile;
     private int registros;
     public int maxregistros;
-    private String[] llave;
-    private String[] atributos;
+    protected String[] llave;
+    protected String[] atributos;
        /**
         * Constructor del archivo Apilo
         * @param Masterfile ruta del archivo
@@ -181,7 +181,7 @@ public class ApiloFile {
       Insertar(nuevo);
       UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
     }
-    private int PosicionRegistro(String registro){
+    protected int PosicionRegistro(String registro){
         int posicion = -1;
         try {
             Archivo = new RandomAccessFile(masterfile,"r");
@@ -203,7 +203,7 @@ public class ApiloFile {
       
         return posicion;
     }
-    private void EliminacionLogica(String registro) throws FileNotFoundException, IOException{
+    protected void EliminacionLogica(String registro) throws FileNotFoundException, IOException{
         int position = PosicionRegistro(registro);
         Archivo = new RandomAccessFile(masterfile,"rw");
         for(int i = -1; i<position; i++){
@@ -216,7 +216,7 @@ public class ApiloFile {
         Archivo.close();
         UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
     }
-    private int RegistrosActivos() throws FileNotFoundException, IOException{
+    protected int RegistrosActivos() throws FileNotFoundException, IOException{
      Archivo = new RandomAccessFile(masterfile,"r");
      String linea;
      int records = 0;
@@ -231,7 +231,7 @@ public class ApiloFile {
     
         return records;
     }
-    private int RegistrosInactivos() throws FileNotFoundException, IOException{
+    protected int RegistrosInactivos() throws FileNotFoundException, IOException{
      Archivo = new RandomAccessFile(masterfile,"r");
      int registers = 0;
      String linea;
@@ -265,7 +265,7 @@ public class ApiloFile {
         
         
     }
-    private void UpdateDescriptor(String registrosA, String registrosI, String fechamod) throws FileNotFoundException, IOException{
+     protected void UpdateDescriptor(String registrosA, String registrosI, String fechamod) throws FileNotFoundException, IOException{
       Archivo = new RandomAccessFile(descriptor,"rw");
       String linea;
        while((linea = Archivo.readLine())!= null){
@@ -332,7 +332,7 @@ public class ApiloFile {
         FileChannel.open(Paths.get(masterfile.getPath()), StandardOpenOption.WRITE).truncate(0).close();
         UpdateDescriptor("0","0",new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
     }
-    private String rightpad(String text, int length) {
+     protected String rightpad(String text, int length) {
     return String.format("%-" + length + "." + length + "s", text);
 }
     public int ReturnMaxreg() throws FileNotFoundException, IOException{

@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyectomeia.Clases.SequentialFile;
 import proyectomeia.Clases.ApiloFile;
+import proyectomeia.Clases.Bitacora_lista;
 import proyectomeia.Clases.Singleton;
 import proyectomeia.Clases.Usuario;
 
@@ -202,11 +203,7 @@ public class Inicio extends javax.swing.JFrame {
                
            } else {
                String busqueda = fase.Usuarios.Buscar(txtUser.getText());
-               try {
-                   int prueba = fase.Usuarios.bitacora.ReturnMaxreg();
-               } catch (IOException ex) {
-                   Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-               }
+               Bitacora_lista prueba = new Bitacora_lista("C:/MEIA/bitacora_prueba.txt","","","",3,new String[]{"Usuario"},"Usuario|Nombre");
                if(!busqueda.isEmpty()){
                    Usuario actual =new Usuario();
                    try {
