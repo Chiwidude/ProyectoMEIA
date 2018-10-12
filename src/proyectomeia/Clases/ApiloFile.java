@@ -91,7 +91,6 @@ public class ApiloFile {
             Archivo = new RandomAccessFile(masterfile, "r");
             String line;
             int busqueda = 0;
-            if(llave.length == 1){
             for(int j = 0; j < atributos.length;j++){
                 if(llave[0].equals(atributos[j])){
                     busqueda = j;
@@ -99,24 +98,9 @@ public class ApiloFile {
             }
             while((line = Archivo.readLine())!= null){
                    String compare = line.split("\\|")[busqueda];
-                   if(compare.trim().equals(value))
-                           found.add(line);  
-                   
-               }
-            }else{
-                int[] busquedas = new int[llave.length];
-                for(int i = 0; i<busquedas.length; i++){
-                    for(int j = 0; j<atributos.length; j++){
-                        if(llave[i].equals(atributos[j])){
-                            busquedas[i] = j;
-                        }
-                    }
-                    
-                }
-            }
-               
-                    
-            
+                   if(compare.trim().equals(value.trim()))
+                           found.add(line);
+               }    
             Archivo.close();
             
         } catch (FileNotFoundException ex) {
