@@ -149,7 +149,7 @@ public class SequentialFile  {
             String inputLine;
             while((inputLine = ArchivoUsuario.readLine())!= null){
                 usuario = inputLine.split("\\|");
-                if(usuario[0].contains(llave)){                    
+                if(usuario[0].trim().equals(llave.trim())){                    
                     usuarioBuscado = new Usuario();
                     usuarioBuscado.CreatefromString(inputLine);
                     resultado = usuarioBuscado.ToString();

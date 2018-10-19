@@ -203,7 +203,6 @@ public class Inicio extends javax.swing.JFrame {
                
            } else {
                String busqueda = fase.Usuarios.Buscar(txtUser.getText());
-               Bitacora_lista prueba = new Bitacora_lista("C:/MEIA/bitacora_prueba.txt","","","",3,new String[]{"Usuario"},"Usuario|Nombre");
                if(!busqueda.isEmpty()){
                    Usuario actual =new Usuario();
                    try {

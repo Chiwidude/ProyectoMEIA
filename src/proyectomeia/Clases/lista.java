@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
 public class lista{
 private  RandomAccessFile ArchivoLista;
 public  File descriptorLista;
-private  File masterfileLista;
+public  File masterfileLista;
 public Bitacora_lista bitacora;
 public boolean flag;
 public lista(String masterfile, Bitacora_lista bitacora){
@@ -31,7 +32,7 @@ public lista(String masterfile, Bitacora_lista bitacora){
     this.descriptorLista = new File(this.masterfileLista.getParent()+"/"+"desc_"+this.masterfileLista.getName().replaceAll(".txt", "")+".txt");
 }
 
-public void Insertar(String valor){
+public void Insertar(String valor) throws IOException{
           if(bitacora.masterfile.exists()){
         List<String>results = bitacora.Busqueda(valor);
         if(results.isEmpty()&& this.masterfileLista.exists()){
@@ -54,9 +55,62 @@ public void Insertar(String valor){
             bitacora.Insertar(valor);
         }
 }
-public String Buscar(String value){
-    return "";
+/**
+ * Método para realizar busquedas al insertar
+ * @param value valor string a buscar
+ * @return retorna el valor en caso encontrarlo
+ * @throws FileNotFoundException
+ * @throws IOException 
+ */
+public String Buscar(String value) throws FileNotFoundException, IOException{
+    String resultado = "";
+    int[] posbusqueda = new int[bitacora.llave.length];
+    for(int i = 0; i<posbusqueda.length; i++){
+        for(int j = 0; j<bitacora.atributos.length;j++){
+            if(bitacora.llave[i].equals(bitacora.atributos[j])){
+                posbusqueda[i] = j;
+            }
+        }
+    }
+    RandomAccessFile filer = new RandomAccessFile(masterfileLista,"r");
+    String line;
+    int counter = 0;
+    
+    while((line = filer.readLine()) != null){
+        for(int k = 0; k <posbusqueda.length; k++){
+                    String compare = line.split("\\|")[posbusqueda[k]];
+                    String tocompare = value.split("\\|")[posbusqueda[k]];
+                    if(compare.trim().equals(tocompare.trim())){
+                        counter++;
+                    }
+                }
+        if(counter == bitacora.llave.length){
+            resultado = line;
+        }
+        
+    }
+    return resultado;
 }
+public List<String> BuscarP(String value, String parameter) throws FileNotFoundException, IOException{
+    List<String> resultados = new ArrayList<>();
+    int posaBuscar = 0;
+    for(int i = 0; i< bitacora.atributos.length; i++){
+        if(bitacora.atributos[i].equals(parameter)){
+            posaBuscar = i;
+        }
+    }
+    RandomAccessFile lector = new RandomAccessFile(masterfileLista, "r");
+    String line;
+    while((line = lector.readLine())!= null){
+        String compare = line.split("\\|")[posaBuscar];
+        if(compare.trim().equals(value)){
+            resultados.add(line);
+        }
+    } 
+    
+    return resultados;
+}
+
 protected void refactorBitacora(){
     
 }
@@ -203,6 +257,37 @@ private void UpdateDescriptor(String registrosA, String registrosI, String fecha
             flag = false;
         }
      
+    }
+       public void CrearDescriptor(String Autor, int Maxregistros){
+    StringBuilder atributos = new StringBuilder();
+    atributos.append("Nombre_simbolico:"+ masterfileLista.getPath());
+    atributos.append(System.lineSeparator());
+    atributos.append("fecha_creacion:"+ new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
+    atributos.append(System.lineSeparator());
+    atributos.append("usuario_creacion:" + rightpad(Autor,20));
+    atributos.append(System.lineSeparator());
+    atributos.append("fecha_modificacion:"+ new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
+    atributos.append(System.lineSeparator());
+    atributos.append("usuario_modificacion:" + rightpad(Autor,20));
+    atributos.append(System.lineSeparator());
+    atributos.append("#_registros:" + rightpad("0",6));
+    atributos.append(System.lineSeparator());
+    atributos.append("Registros Activos:"+rightpad("0",6));
+    atributos.append(System.lineSeparator());
+    atributos.append("Registros Inactivos:"+rightpad("0",6));
+    atributos.append(System.lineSeparator());
+    atributos.append("Registros Máximos:" + rightpad(String.valueOf(Maxregistros),6));
+        try {
+          RandomAccessFile  ArchivoUsuario = new RandomAccessFile(descriptorLista,"rw");
+            ArchivoUsuario.writeBytes(atributos.toString());
+            ArchivoUsuario.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ApiloFile.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ApiloFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
     }
 
     

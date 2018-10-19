@@ -63,7 +63,7 @@ public class Bitacora_lista extends ApiloFile {
             while((linea = File.readLine())!= null){
                 for(int k = 0; k <busquedas.length; k++){
                     String compare = linea.split("\\|")[busquedas[k]];
-                    String tocompare = linea.split("\\|")[busquedas[k]];
+                    String tocompare = line.split("\\|")[busquedas[k]];
                     if(compare.trim().equals(tocompare.trim())){
                         counter++;
                     }
@@ -112,7 +112,7 @@ public class Bitacora_lista extends ApiloFile {
         }
         long rewriting = File.getFilePointer();
         File.seek(rewriting);
-        String registroEliminado = viejo.substring(0,viejo.length()-2)+"/0";
+        String registroEliminado = viejo.substring(0,viejo.length()-3)+"0";
         File.writeBytes(registroEliminado);
         File.close();
         this.UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
