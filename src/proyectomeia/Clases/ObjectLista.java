@@ -138,6 +138,9 @@ public class ObjectLista {
         this.Fecha_Creacion = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
         this.Estatus = true;
     }
+    public ObjectLista(){
+        
+    }
     private String  Nombre_lista,Usuario,Descripcion;
     private int Numero_usuarios;
     private String Fecha_Creacion;

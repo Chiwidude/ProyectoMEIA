@@ -40,8 +40,8 @@
         <Container class="javax.swing.JPanel" name="jPanel1">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Ingresar">
-                <Property name="tabTitle" type="java.lang.String" value="Ingresar"/>
+              <JTabbedPaneConstraints tabName="Crear">
+                <Property name="tabTitle" type="java.lang.String" value="Crear"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -151,6 +151,11 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
@@ -179,11 +184,15 @@
                                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="btnCnombre" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="162" max="-2" attributes="0"/>
                                       <Component id="btnCdesc" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
+                              <Component id="labelOname" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="41" max="32767" attributes="0"/>
@@ -196,26 +205,24 @@
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtBusqueda" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnBusqueda" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnEditarL" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtCnombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnCnombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtBusqueda" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnBusqueda" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnEditarL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="labelOname" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtCnombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCnombre" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="104" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnCdesc" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -233,6 +240,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBusquedaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnEditarL">
               <Properties>
@@ -284,7 +294,34 @@
                 <Property name="text" type="java.lang.String" value="Cambiar"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="labelOname">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Nombre: "/>
+              </Properties>
+            </Component>
           </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel3">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Agregar">
+                <Property name="tabTitle" type="java.lang.String" value="Agregar"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="485" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="298" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
         </Container>
       </SubComponents>
     </Container>
