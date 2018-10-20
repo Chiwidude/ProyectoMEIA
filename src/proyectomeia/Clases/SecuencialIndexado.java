@@ -14,8 +14,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -42,7 +46,7 @@ public class SecuencialIndexado {
     
     public void InsertarIndice(String nombreLista,String Usuario,String UsuarioAsociado,String Siguiente,String Estatus) throws IOException,FileNotFoundException{
             StringBuilder contenidoIndice = new StringBuilder();
-            String Posicion = "1.";
+            String Posicion = "1.",inputLine="";
             archivo = new RandomAccessFile(Indice,"rw");
             long tamanio = archivo.length();
             FormatearStringIndice();
@@ -61,6 +65,8 @@ public class SecuencialIndexado {
             nPosicion++;
             archivo.close();
             }else{
+                ArrayList<UsuarioIndexado> indice = new ArrayList<>();
+                String[] atributos;
                 //Dos posiciones o mas
                 if(CantidadRegistrosIndice() >= 1){
                     nPosicion = CantidadRegistrosIndice();
@@ -71,10 +77,38 @@ public class SecuencialIndexado {
                     contenidoIndice.append("|"+ nuevoUsuarioLista.NombreLista);
                     contenidoIndice.append("|"+ nuevoUsuarioLista.Usuario);
                     contenidoIndice.append("|" + nuevoUsuarioLista.UsuarioAsociado);
-                    contenidoIndice.append("|"+nuevoUsuarioLista.Siguiente);
+                    contenidoIndice.append("|"+(nPosicion-1));
                     contenidoIndice.append("|" + nuevoUsuarioLista.Status);
                     archivo.writeBytes(contenidoIndice.toString()); 
                     archivo.writeBytes(System.lineSeparator());
+                    archivo.seek(0);
+                    while((inputLine = archivo.readLine()) != null){
+                        atributos = inputLine.split("\\|");
+                        UsuarioIndexado encontrado = new UsuarioIndexado();
+                        encontrado.Usuario = atributos[3];
+                        encontrado.UsuarioAsociado = atributos[4];
+                        encontrado.Siguiente = atributos[5];
+                        indice.add(encontrado);
+                        }
+                    //Se ordena
+                    Collections.sort(indice,(o1,o2)-> o1.Usuario.compareToIgnoreCase(o2.Usuario)); 
+//                    int contador = 0;
+//                    long tam = 0;
+//                    StringBuilder nuevo = new StringBuilder();
+//                    while((inputLine = archivo.readLine()) != null){
+//                        tam+=inputLine.length();
+//                        archivo.seek(inputLine.length()-tam);
+//                        UsuarioIndexado ordenado = indice.get(contador);
+//                        atributos = inputLine.split("\\|");
+//                        if(atributos[3] == ordenado.Usuario && atributos[4] == ordenado.UsuarioAsociado){
+//                            nuevo.append(atributos[0]);
+//                            nuevo.append("|"+atributos[1]);
+//                            nuevo.append("|"+atributos[2]);
+//                            nuevo.append("|"+atributos[3]);
+//                        }
+//                        
+//                        contador++;
+//                    }
                     archivo.close();
                 }                
             }
@@ -110,7 +144,10 @@ public class SecuencialIndexado {
     }
     
     //sin comprobar   
-       
+     
+    /**
+     * Crear e archivo indice e inserta, en el mismo si el usuario no esta ingresado
+     */
     public void CrearIndice(UsuarioIndexado usuario,String nRegistro,String Posicion) throws IOException{
         Indice = new File(indice_ruta);        
         if(!Indice.exists()){
@@ -121,6 +158,9 @@ public class SecuencialIndexado {
         }
     }       
     
+    /**
+     * Crear e archivo lista e inserta, en el mismo si el usuario no esta ingresado
+     */
     public void CrearLista(UsuarioIndexado usuario) throws IOException{
         masterFile = new File(lista_ruta);      
         
@@ -132,7 +172,9 @@ public class SecuencialIndexado {
         }
     } 
     
-    
+    /**
+     * Formatea el string para insertarlo en en Archivo INDICE
+     */
     private void FormatearStringIndice(){
         
         nuevoUsuarioLista.NombreLista = String.format("%-30s", nuevoUsuarioLista.NombreLista);
@@ -143,6 +185,9 @@ public class SecuencialIndexado {
         nuevoUsuarioLista.Status = String.format("%-1s", nuevoUsuarioLista.Status);
     }
     
+    /**
+     * Formatea el string para insertarlo en en Archivo LISTA
+     */
     private void FormatearStringLista(){
         nuevoUsuarioLista.NombreLista = String.format("%-30s", nuevoUsuarioLista.NombreLista);
         nuevoUsuarioLista.Usuario = String.format("%-20s", nuevoUsuarioLista.Usuario);
@@ -312,7 +357,7 @@ public class SecuencialIndexado {
      */
     private int CantidadRegistrosInactivosIndice() throws IOException{
         int cantidadRegistrosActivosIndice = 0;
-       String [] atributos = null;
+        String [] atributos = null;
         InputStream f = new FileInputStream(indice_ruta);
         BufferedReader br = new BufferedReader(new InputStreamReader(f));
                 String inputLine;
