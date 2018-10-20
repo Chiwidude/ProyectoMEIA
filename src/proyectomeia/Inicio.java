@@ -163,8 +163,13 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
        UsuarioIndexado nuevo = new UsuarioIndexado();
-        SecuencialIndexado archivo = new SecuencialIndexado(nuevo,pathDescIndice,pathIndice,pathDescLista,pathLista);
-        
+       nuevo.NombreLista = "Universidad";
+       nuevo.Usuario = "Kevin";
+       nuevo.Descripcion = "CUATES";
+       nuevo.Status = "1";
+       nuevo.Siguiente = "0";
+       nuevo.UsuarioAsociado = "Pepito";
+       SecuencialIndexado archivo = new SecuencialIndexado(nuevo,pathDescIndice,pathIndice,pathDescLista,pathLista);        
         try {
             archivo.CrearIndice(nuevo, "1", "1.1");
             archivo.CrearLista(nuevo);
