@@ -12,15 +12,22 @@ import java.nio.file.Paths;
  * @author Pancho
  */
 public class Singleton {
-  public static final String pathArchivoApilo = Paths.get("C:/MEIA/bitacora_usuarios.txt").toString();
+    public static final String pathArchivoApilo = Paths.get("C:/MEIA/bitacora_usuarios.txt").toString();
     public static final String pathArchivoUsuarios = Paths.get("C:/MEIA/usuarios.txt").toString();
     public static final String pathArchivoListas = Paths.get("C:/MEIA/lista.txt").toString();
     public static final String pathBlistas = Paths.get("C:/MEIA/bitacora_listas.txt").toString();
-public Usuario current;
-public SequentialFile Usuarios;
-private ApiloFile bitacora;
-private Bitacora_lista Blista;
-public lista Listas;
+    public static final String pathListasUsuario = Paths.get("C:/MEIA/Lista_usuario.txt").toString();
+
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+    public Usuario current;
+    public SequentialFile Usuarios;
+    private ApiloFile bitacora;
+    private Bitacora_lista Blista;
+    public lista Listas;
+    public SecuencialIndexado ListaUsuarios;
 
 public Singleton(){
     current = new Usuario();
