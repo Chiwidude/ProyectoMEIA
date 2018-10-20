@@ -5,7 +5,11 @@
  */
 package proyectomeia.Clases;
 
+import java.io.File;
 import java.nio.file.Paths;
+import java.util.List;
+import static proyectomeia.Inicio.pathArchivoApilo;
+import static proyectomeia.Inicio.pathArchivoUsuarios;
 
 /**
  *
@@ -41,8 +45,40 @@ public Singleton(){
               + "Fecha_creacion|Estatus");
       Listas = new lista(pathArchivoListas,Blista);
 }
-    
-
-    
-    
+public boolean ExistsUser(String object){
+     File temp1 = new File(pathArchivoApilo);
+       File temp2 = new File(pathArchivoUsuarios);
+    boolean exists = false;
+    if(!temp1.exists() && !temp2.exists()){
+        exists = false;
+    } else if(temp1.exists()){
+        List<String> exist = Usuarios.bitacora.Busqueda(object);
+        if(!exist.isEmpty()){
+            String line = "";
+               for(int i = 0; i<exist.size();i++){
+                   line = exist.get(i);
+                   if(!line.contains("/0")&&!line.split("\\|")[line.split("\\|").length-1].contains("0")){
+                       line = line;
+                   }else{
+                       line = "";
+                   }      
+               }
+               if(line.equals("")){
+                   exists = false;
+               }else {
+                   exists = true;
+               }
+        } else if(!temp2.exists()){
+            exists = false;
+        } else {
+            String busqueda = Usuarios.Buscar(object);
+            if(!busqueda.isEmpty() || !busqueda.equals("")){
+                exists = true;
+            } else{
+                exists = false;
+            }
+        }
+    }
+    return exists;
+}       
 }

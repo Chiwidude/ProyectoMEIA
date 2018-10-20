@@ -119,6 +119,7 @@ public class MenuCambios extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField4 = new javax.swing.JTextField();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         TabsMenu = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
@@ -174,7 +175,7 @@ public class MenuCambios extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         btnBackup = new javax.swing.JButton();
-        btnElistas = new javax.swing.JButton();
+        btnClista = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu de cambios");
@@ -509,10 +510,10 @@ public class MenuCambios extends javax.swing.JFrame {
             }
         });
 
-        btnElistas.setText("Listas");
-        btnElistas.addActionListener(new java.awt.event.ActionListener() {
+        btnClista.setText("Crear Lista");
+        btnClista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnElistasActionPerformed(evt);
+                btnClistaActionPerformed(evt);
             }
         });
 
@@ -527,17 +528,18 @@ public class MenuCambios extends javax.swing.JFrame {
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnHabilitarEdicion)
-                        .addGap(7, 7, 7)
-                        .addComponent(btnCrearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnElistas))
+                        .addGap(7, 7, 7))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscarUsuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBackup)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnClista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCrearUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBackup)
+                .addGap(8, 8, 8))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(72, 72, 72)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -567,6 +569,10 @@ public class MenuCambios extends javax.swing.JFrame {
                             .addComponent(jButton5))
                         .addGap(131, 131, 131))
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(404, 404, 404))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(202, 202, 202)
@@ -577,15 +583,9 @@ public class MenuCambios extends javax.swing.JFrame {
                                 .addGap(40, 40, 40)
                                 .addComponent(jCheckBox2)
                                 .addGap(48, 48, 48)
-                                .addComponent(btnGuardar)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addGap(404, 404, 404))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(imgFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(472, Short.MAX_VALUE))))
+                                .addComponent(btnGuardar))
+                            .addComponent(imgFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -602,24 +602,21 @@ public class MenuCambios extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnHabilitarEdicion)
+                    .addComponent(btnCrearUsuario)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnHabilitarEdicion)
-                            .addComponent(btnCrearUsuario)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnElistas))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarUsuario))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(8, 8, 8)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscarUsuario))
+                    .addComponent(btnClista))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(22, 22, 22)
                 .addComponent(imgFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jLabel2)
@@ -649,7 +646,7 @@ public class MenuCambios extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkActivarDesactivar)
                     .addComponent(btnGuardar)
@@ -1087,9 +1084,11 @@ public class MenuCambios extends javax.swing.JFrame {
         }      
     }//GEN-LAST:event_btnBackupActionPerformed
 
-    private void btnElistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElistasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnElistasActionPerformed
+    private void btnClistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClistaActionPerformed
+        ListaAdmin crear = new ListaAdmin(fase);
+        crear.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnClistaActionPerformed
      private void copiarArchivos(File original, File destino){
         try{
             InputStream entrada = new FileInputStream(original);
@@ -1266,8 +1265,8 @@ public class MenuCambios extends javax.swing.JFrame {
     private javax.swing.JTabbedPane TabsMenu;
     private javax.swing.JButton btnBackup;
     private javax.swing.JButton btnBuscarUsuario;
+    private javax.swing.JButton btnClista;
     private javax.swing.JButton btnCrearUsuario;
-    private javax.swing.JButton btnElistas;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnGuardarCusuario;
     private javax.swing.JButton btnHabilitarEdicion;
@@ -1309,6 +1308,7 @@ public class MenuCambios extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField txtBuscarUsuario;
