@@ -174,7 +174,6 @@ public class Inicio extends javax.swing.JFrame {
             archivo.CrearIndice(nuevo, "1", "1.1");
             archivo.CrearLista(nuevo);
             archivo.CrearDescriptorLista("kevin");
-            archivo.CrearDescriptorIndice("1");
             
         } catch (IOException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);

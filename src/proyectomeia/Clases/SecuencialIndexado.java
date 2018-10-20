@@ -180,7 +180,6 @@ public class SecuencialIndexado {
         nuevoUsuarioLista.NombreLista = String.format("%-30s", nuevoUsuarioLista.NombreLista);
         nuevoUsuarioLista.Usuario = String.format("%-20s", nuevoUsuarioLista.Usuario);
         nuevoUsuarioLista.UsuarioAsociado = String.format("%-20s", nuevoUsuarioLista.UsuarioAsociado);
-        nuevoUsuarioLista.Descripcion = String.format("%-40s",nuevoUsuarioLista.Descripcion);
         nuevoUsuarioLista.Siguiente = String.format("%-1s",nuevoUsuarioLista.Siguiente);
         nuevoUsuarioLista.Status = String.format("%-1s", nuevoUsuarioLista.Status);
     }
@@ -216,33 +215,11 @@ public class SecuencialIndexado {
         descriptorLista.append(System.lineSeparator());
         descriptorLista.append("Registros Activos:"+CantidadRegistrosActivosLista()); 
         descriptorLista.append(System.lineSeparator());
-        descriptorLista.append("Registros Inactivos:"+CantidadRegistrosInactivosIndice());
-        archivo.writeBytes(descriptorLista.toString());
-        
-    }  
-    
-    /**
-     * Sobreescrbe el descriptor INDICE, lo actualiza, sin problemas
-     * @param nRegistro ultimo registro agregado o eliminado
-     * @throws IOException 
-     */
-    public void CrearDescriptorIndice(String nRegistro) throws IOException{
-        DescriptorIndice = new File(desc_indice_ruta);        
-        DescriptorIndice.createNewFile();
-        archivo = new RandomAccessFile(DescriptorIndice, "rw");
-        StringBuilder descriptorLista = new StringBuilder();
-        descriptorLista.append("Numero de Registros:"+CantidadRegistrosLista()); 
-        descriptorLista.append(System.lineSeparator());
-        descriptorLista.append("Registro Inicio:"+nRegistro);
-        descriptorLista.append(System.lineSeparator());        
-        descriptorLista.append("Registros Activos:"+CantidadRegistrosActivosLista()); 
-        descriptorLista.append(System.lineSeparator());
-        descriptorLista.append("Registros Inactivos:"+CantidadRegistrosInactivosIndice());
+        descriptorLista.append("Registros Inactivos:"+CantidadRegistrosInactivosLista());
         archivo.writeBytes(descriptorLista.toString());
         
     }   
-    
-    
+   
     /**
      * Metodo que retorna la cantidad de Registros en la lista
      * @return cantidadRegistrosLista
@@ -326,50 +303,5 @@ public class SecuencialIndexado {
                 br.close(); 
                 return cantidadRegistrosIndice;
     }
-    
-    /**
-     * Metodo que retorna la cantidad de Registros activos en el indice
-     * @return cantidadRegistrosActivosIndice
-     * @throws FileNotFoundException
-     * @throws IOException 
-     */
-    private int CantidadRegistrosActivosIndice() throws FileNotFoundException, IOException{
-       int cantidadRegistrosActivosIndice = 0;
-       String [] atributos = null;
-        InputStream f = new FileInputStream(indice_ruta);
-        BufferedReader br = new BufferedReader(new InputStreamReader(f));
-                String inputLine;
-                while ((inputLine = br.readLine()) != null) {
-                    atributos = inputLine.split("\\|");
-                    if(atributos[6].contains("1")){
-                        cantidadRegistrosActivosIndice++;
-                    }
-                }
-                br.close(); 
-                return cantidadRegistrosActivosIndice;
-    }
-    
-    /**
-     * Metodo que retorna la cantidad de Registros inactivos en el indice
-     * @return cantidadRegistrosInactivosIndice
-     * @throws FileNotFoundException
-     * @throws IOException 
-     */
-    private int CantidadRegistrosInactivosIndice() throws IOException{
-        int cantidadRegistrosActivosIndice = 0;
-        String [] atributos = null;
-        InputStream f = new FileInputStream(indice_ruta);
-        BufferedReader br = new BufferedReader(new InputStreamReader(f));
-                String inputLine;
-                while ((inputLine = br.readLine()) != null) {
-                    atributos = inputLine.split("\\|");
-                    if(atributos[6].contains("0")){
-                        cantidadRegistrosActivosIndice++;
-                    }
-                }
-                br.close(); 
-                return cantidadRegistrosActivosIndice;
-    }
-    
-   
+      
 }
