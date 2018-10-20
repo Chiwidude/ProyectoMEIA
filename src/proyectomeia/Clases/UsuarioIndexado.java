@@ -10,5 +10,5 @@ package proyectomeia.Clases;
  * @author kevin
  */
 public class UsuarioIndexado {
-    public String NombreLista,Usuario,UsuarioAsociado,Descripcion,fechaCreacion,Status;    
+    public String NombreLista,Usuario,UsuarioAsociado,Descripcion,Siguiente,Status;    
 }

@@ -5,9 +5,17 @@
  */
 package proyectomeia.Clases;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -16,97 +24,281 @@ import java.io.RandomAccessFile;
 public class SecuencialIndexado {
     
     private UsuarioIndexado nuevoUsuarioLista;
-    private String desc_indice_ruta,indice_ruta,desc_lista,lista_ruta;
+    private String desc_indice_ruta,indice_ruta,desc_lista_ruta,lista_ruta;
     private RandomAccessFile archivo;
     private File DescriptorIndice;
     private File Indice;
     private File DescriptorMasterFile;
     private File masterFile;
-    private int nRegistros;
-    private int nRegistrosActivos;
-    private int nRegistrosInactivos;
-    private int RegistroInicio;
-    public SecuencialIndexado(UsuarioIndexado nuevoUsuarioLista,String desc_indice_ruta,String indice_ruta,String desc_lista,String lista_ruta ){
+    private int nRegistros_indice,RegistroInicio_indice,nRegistrosActivos_indice,nRegistrosInactivos_indice;
+    private String usuarioCreacion,FechaCreacion;
+    private int nRegistros_lista,nRegistroActivos_lista,nRegistrosInactivos_lista;
+   
+    public SecuencialIndexado(UsuarioIndexado nuevoUsuarioLista,String desc_indice_ruta,String indice_ruta,String desc_lista_ruta,String lista_ruta ){
         this.nuevoUsuarioLista = nuevoUsuarioLista;   
         this.desc_indice_ruta = desc_indice_ruta;
-        this.desc_lista = lista_ruta;
+        this.desc_lista_ruta = desc_lista_ruta;
         this.indice_ruta = indice_ruta;
         this.lista_ruta = lista_ruta;
+    }   
+    
+    public void InsertarIndice(String nRegistro,String Posicion,String nombreLista,String Usuario,String UsuarioAsociado,String Siguiente,String Estatus) throws IOException,FileNotFoundException{
+            StringBuilder contenidoIndice = new StringBuilder();
+            archivo = new RandomAccessFile(Indice,"rw");
+            FormatearStringIndice();
+            contenidoIndice.append(nRegistro.format("%-10s", nRegistro));
+            contenidoIndice.append("|"+Posicion.format("%-10s", Posicion));
+            contenidoIndice.append("|"+ nuevoUsuarioLista.NombreLista);
+            contenidoIndice.append("|"+ nuevoUsuarioLista.Usuario);
+            contenidoIndice.append("|" + nuevoUsuarioLista.UsuarioAsociado);
+            contenidoIndice.append("|"+nuevoUsuarioLista.Siguiente);
+            contenidoIndice.append("|" + nuevoUsuarioLista.Status);
+            archivo.writeBytes(contenidoIndice.toString()); 
+            archivo.close();
     }
     
+    public void InsertarLista (String nombreLista,String usuario,String usuarioAsociado,String descriptor,String Status) throws IOException,FileNotFoundException{
+            StringBuilder contenidoLista = new StringBuilder();
+            archivo = new RandomAccessFile(masterFile,"rw"); 
+            FormatearStringLista();
+            contenidoLista.append(nuevoUsuarioLista.NombreLista);
+            contenidoLista.append("|"+ nuevoUsuarioLista.Usuario);
+            contenidoLista.append("|" + nuevoUsuarioLista.UsuarioAsociado);
+            contenidoLista.append("|"+nuevoUsuarioLista.Siguiente);
+            contenidoLista.append("|" + nuevoUsuarioLista.Status);
+            archivo.writeBytes(contenidoLista.toString()); 
+            archivo.close();
+    }  
     
-    public void Insertar(Usuario nuevoUsuario){
-       //sin implementar 
-    }
     
-    public void Eliminar(String nombre){
+    public void Eliminar(String NombreLista){
         //sin implementar
     }
     
-    public void Modificar(String nombre){
+    public void Modificar(String NombreLista){
         //sin implementar
     }
     
-    public void Busqueda(String Nombre){
+    public void Busqueda(String NombreLista){
         //sin implementar
     }
     
-    //sin comprobar
-    public String FormatearString(){
-        StringBuilder cadenaFormateada = new StringBuilder();
+    //sin comprobar   
+       
+    public void CrearIndice(UsuarioIndexado usuario,String nRegistro,String Posicion) throws IOException{
+        Indice = new File(indice_ruta);        
+        if(!Indice.exists()){
+            Indice.createNewFile();
+            InsertarIndice(nRegistro,Posicion, usuario.NombreLista, usuario.Usuario, usuario.UsuarioAsociado, usuario.Siguiente, usuario.Status);
+            }else{
+            InsertarIndice(nRegistro,Posicion, usuario.NombreLista, usuario.Usuario, usuario.UsuarioAsociado, usuario.Siguiente, usuario.Status);
+        }
+    }       
+    
+    public void CrearLista(UsuarioIndexado usuario) throws IOException{
+        masterFile = new File(lista_ruta);      
+        
+        if(!masterFile.exists()){
+            masterFile.createNewFile();
+            InsertarLista(usuario.NombreLista, usuario.Usuario, usuario.UsuarioAsociado, usuario.Descripcion, usuario.Status);
+            }else{
+            InsertarLista(usuario.NombreLista, usuario.Usuario, usuario.UsuarioAsociado, usuario.Descripcion, usuario.Status);
+        }
+    } 
+    
+    
+    public void FormatearStringIndice(){
+        
         nuevoUsuarioLista.NombreLista = String.format("%-30s", nuevoUsuarioLista.NombreLista);
         nuevoUsuarioLista.Usuario = String.format("%-20s", nuevoUsuarioLista.Usuario);
         nuevoUsuarioLista.UsuarioAsociado = String.format("%-20s", nuevoUsuarioLista.UsuarioAsociado);
         nuevoUsuarioLista.Descripcion = String.format("%-40s",nuevoUsuarioLista.Descripcion);
-        nuevoUsuarioLista.fechaCreacion = String.format("%-20s",nuevoUsuarioLista.fechaCreacion);
+        nuevoUsuarioLista.Siguiente = String.format("%-1s",nuevoUsuarioLista.Siguiente);
         nuevoUsuarioLista.Status = String.format("%-1s", nuevoUsuarioLista.Status);
-        cadenaFormateada.append(nuevoUsuarioLista.NombreLista+"|"+
-                nuevoUsuarioLista.Usuario+"|"+
-                nuevoUsuarioLista.UsuarioAsociado+"|"+
-                nuevoUsuarioLista.Descripcion+"|"+
-                nuevoUsuarioLista.fechaCreacion+"|"+
-                nuevoUsuarioLista.Status);
-        return cadenaFormateada.toString();
     }
     
-    //sin comprobar
-    public void CrearLista() throws IOException{
-        masterFile = new File(lista_ruta);
-        StringBuilder descriptor = new StringBuilder();
-        if(!masterFile.exists()){
-            masterFile.createNewFile();
-        }else{
-            archivo = new RandomAccessFile(masterFile,"w");              
-            descriptor.append("Nombre Lista:"+ nuevoUsuarioLista.NombreLista);            
-            descriptor.append(System.lineSeparator());
-            descriptor.append("Usuario:"+ nuevoUsuarioLista.Usuario);
-            descriptor.append(System.lineSeparator());
-            descriptor.append("Usuario Asociado:" + nuevoUsuarioLista.UsuarioAsociado);
-            descriptor.append(System.lineSeparator());
-            descriptor.append("Descripcion:"+nuevoUsuarioLista.Descripcion);
-            descriptor.append(System.lineSeparator());
-            descriptor.append("Fecha Creacion:" + nuevoUsuarioLista.fechaCreacion);
-            descriptor.append(System.lineSeparator()); 
-            descriptor.append("Estatus:" + nuevoUsuarioLista.Status);
-            descriptor.append(System.lineSeparator());
-            archivo.writeBytes(desc_indice_ruta.toString()); 
-            archivo.close();
-        }
+    public void FormatearStringLista(){
+        nuevoUsuarioLista.NombreLista = String.format("%-30s", nuevoUsuarioLista.NombreLista);
+        nuevoUsuarioLista.Usuario = String.format("%-20s", nuevoUsuarioLista.Usuario);
+        nuevoUsuarioLista.UsuarioAsociado = String.format("%-20s", nuevoUsuarioLista.UsuarioAsociado);
+        nuevoUsuarioLista.Descripcion = String.format("%-40s",nuevoUsuarioLista.Descripcion);
+        nuevoUsuarioLista.Status = String.format("%-1s", nuevoUsuarioLista.Status);
+    }  
+    
+    
+    
+    /**
+     * Sobreescrbe el descriptor LISTA, lo actualiza, sin problemas
+     * @param usuario coloca el utltimo usuario
+     * @throws IOException 
+     */
+    public void CrearDescriptorLista(String usuario) throws IOException{
+        DescriptorMasterFile = new File(desc_lista_ruta);        
+        DescriptorMasterFile.createNewFile();
+        archivo = new RandomAccessFile(DescriptorMasterFile, "rw");
+        StringBuilder descriptorLista = new StringBuilder();
+        descriptorLista.append("Usuario Creado:"+usuario);
+        descriptorLista.append(System.lineSeparator());
+        descriptorLista.append("Fecha Creacion:"+new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
+        descriptorLista.append(System.lineSeparator());
+        descriptorLista.append("Numero de Registros:"+CantidadRegistrosLista()); 
+        descriptorLista.append(System.lineSeparator());
+        descriptorLista.append("Registros Activos:"+CantidadRegistrosActivosLista()); 
+        descriptorLista.append(System.lineSeparator());
+        descriptorLista.append("Registros Inactivos:"+CantidadRegistrosInactivosIndice());
+        archivo.writeBytes(descriptorLista.toString());
+        
+    }  
+    
+    /**
+     * Sobreescrbe el descriptor INDICE, lo actualiza, sin problemas
+     * @param nRegistro ultimo registro agregado o eliminado
+     * @throws IOException 
+     */
+    public void CrearDescriptorIndice(String nRegistro) throws IOException{
+        DescriptorIndice = new File(desc_indice_ruta);        
+        DescriptorIndice.createNewFile();
+        archivo = new RandomAccessFile(DescriptorIndice, "rw");
+        StringBuilder descriptorLista = new StringBuilder();
+        descriptorLista.append("Numero de Registros:"+CantidadRegistrosLista()); 
+        descriptorLista.append(System.lineSeparator());
+        descriptorLista.append("Registro Inicio:"+nRegistro);
+        descriptorLista.append(System.lineSeparator());        
+        descriptorLista.append("Registros Activos:"+CantidadRegistrosActivosLista()); 
+        descriptorLista.append(System.lineSeparator());
+        descriptorLista.append("Registros Inactivos:"+CantidadRegistrosInactivosIndice());
+        archivo.writeBytes(descriptorLista.toString());
+        
+    }   
+    
+    
+    /**
+     * Metodo que retorna la cantidad de Registros en la lista
+     * @return cantidadRegistrosLista
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    private int CantidadRegistrosLista() throws FileNotFoundException, IOException{        
+        int cantidadRegistrosIndice = 0;
+        InputStream f = new FileInputStream(lista_ruta);
+        BufferedReader br = new BufferedReader(new InputStreamReader(f));
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    if(inputLine!=null){
+                        cantidadRegistrosIndice++;
+                    }
+                }
+                br.close(); 
+                return cantidadRegistrosIndice;
     }
-//     public void CrearLista(){
-//        Descriptor = new File(desc_indice_ruta);
-//        StringBuilder descriptor = new StringBuilder();
-//        descriptor.append("Nombre Lista:"+ nuevoUsuarioLista.NombreLista);
-//        descriptor.append(System.lineSeparator());
-//        descriptor.append("Usuario:"+ nuevoUsuarioLista.Usuario);
-//        descriptor.append(System.lineSeparator());
-//        descriptor.append("Usuario Asociado:" + nuevoUsuarioLista.UsuarioAsociado);
-//        descriptor.append(System.lineSeparator());
-//        descriptor.append("Descripcion:"+nuevoUsuarioLista.Descripcion);
-//        descriptor.append(System.lineSeparator());
-//        descriptor.append("Fecha Creacion:" + nuevoUsuarioLista.fechaCreacion);
-//        descriptor.append(System.lineSeparator()); 
-//        descriptor.append("Estatus:" + nuevoUsuarioLista.Status);
-//        descriptor.append(System.lineSeparator());        
-//    }
+    
+    /**
+     * Metodo que retorna la cantidad de Registros activos en la lista
+     * @return cantidadRegistrosActivosLista
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    private int CantidadRegistrosActivosLista() throws FileNotFoundException, IOException{
+       int cantidadRegistrosActivosIndice = 0;
+       String [] atributos = null;
+        InputStream f = new FileInputStream(indice_ruta);
+        BufferedReader br = new BufferedReader(new InputStreamReader(f));
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    atributos = inputLine.split("\\|");
+                    if(atributos[6].contains("1")){
+                        cantidadRegistrosActivosIndice++;
+                    }
+                }
+                br.close(); 
+                return cantidadRegistrosActivosIndice;
+    }
+    
+     /**
+     * Metodo que retorna la cantidad de Registros inactivos en la lista
+     * @return cantidadRegistrosInactivosLista
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    private int CantidadRegistrosInactivosLista() throws IOException{
+        int cantidadRegistrosActivosIndice = 0;
+       String [] atributos = null;
+        InputStream f = new FileInputStream(indice_ruta);
+        BufferedReader br = new BufferedReader(new InputStreamReader(f));
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    atributos = inputLine.split("\\|");
+                    if(atributos[6].contains("0")){
+                        cantidadRegistrosActivosIndice++;
+                    }
+                }
+                br.close(); 
+                return cantidadRegistrosActivosIndice;
+    }
+    
+     /**
+     * Metodo que retorna la cantidad de Registros en el indice
+     * @return cantidadRegistrosIndice
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    private int CantidadRegistrosIndice() throws FileNotFoundException, IOException{        
+        int cantidadRegistrosIndice = 0;
+        InputStream f = new FileInputStream(indice_ruta);
+        BufferedReader br = new BufferedReader(new InputStreamReader(f));
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    if(inputLine!=null){
+                        cantidadRegistrosIndice++;
+                    }
+                }
+                br.close(); 
+                return cantidadRegistrosIndice;
+    }
+    
+    /**
+     * Metodo que retorna la cantidad de Registros activos en el indice
+     * @return cantidadRegistrosActivosIndice
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    private int CantidadRegistrosActivosIndice() throws FileNotFoundException, IOException{
+       int cantidadRegistrosActivosIndice = 0;
+       String [] atributos = null;
+        InputStream f = new FileInputStream(indice_ruta);
+        BufferedReader br = new BufferedReader(new InputStreamReader(f));
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    atributos = inputLine.split("\\|");
+                    if(atributos[6].contains("1")){
+                        cantidadRegistrosActivosIndice++;
+                    }
+                }
+                br.close(); 
+                return cantidadRegistrosActivosIndice;
+    }
+    
+    /**
+     * Metodo que retorna la cantidad de Registros inactivos en el indice
+     * @return cantidadRegistrosInactivosIndice
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    private int CantidadRegistrosInactivosIndice() throws IOException{
+        int cantidadRegistrosActivosIndice = 0;
+       String [] atributos = null;
+        InputStream f = new FileInputStream(indice_ruta);
+        BufferedReader br = new BufferedReader(new InputStreamReader(f));
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    atributos = inputLine.split("\\|");
+                    if(atributos[6].contains("0")){
+                        cantidadRegistrosActivosIndice++;
+                    }
+                }
+                br.close(); 
+                return cantidadRegistrosActivosIndice;
+    }
+    
+   
 }

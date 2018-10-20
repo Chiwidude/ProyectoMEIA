@@ -141,7 +141,6 @@ public class MenuCambios extends javax.swing.JFrame {
         buttonNphone = new javax.swing.JButton();
         buttonNpic = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
-        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
         btnGuardarCusuario = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -159,7 +158,6 @@ public class MenuCambios extends javax.swing.JFrame {
         txtPassword = new javax.swing.JTextField();
         txtCorreoAlterno = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
-        dateFechaNacimiento = new com.github.lgooddatepicker.components.DatePicker();
         btnGuardar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtBuscarUsuario = new javax.swing.JTextField();
@@ -176,6 +174,7 @@ public class MenuCambios extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         btnBackup = new javax.swing.JButton();
         btnClista = new javax.swing.JButton();
+        dateFechaNacimiento = new com.github.lgooddatepicker.components.DatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu de cambios");
@@ -331,7 +330,6 @@ public class MenuCambios extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNdate)
-                                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addGap(30, 30, 30)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -367,14 +365,12 @@ public class MenuCambios extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtN_email)
                             .addComponent(txtNdate))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(jLabel13))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fieldN_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(fieldN_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonN_email)
                         .addGap(11, 11, 11)))
@@ -395,7 +391,7 @@ public class MenuCambios extends javax.swing.JFrame {
                     .addComponent(btnGuardarCusuario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonNphone)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addComponent(buttonNpic)
                 .addGap(83, 83, 83))
         );
@@ -556,11 +552,11 @@ public class MenuCambios extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(dateFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtCorreoAlterno, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCorreoAlterno, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dateFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton2)
@@ -637,8 +633,8 @@ public class MenuCambios extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(dateFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(dateFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(1, 1, 1)
                 .addComponent(jLabel11)
                 .addGap(1, 1, 1)
@@ -646,7 +642,7 @@ public class MenuCambios extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkActivarDesactivar)
                     .addComponent(btnGuardar)
@@ -674,7 +670,7 @@ public class MenuCambios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonN_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonN_dateActionPerformed
-       fecha_ = datePicker1.getText();
+       fecha_ = dateFechaNacimiento.getText();
        if(!fecha_.isEmpty()){
            if(fase.current.getFecha_nacimiento().contains(fecha_)){
                JOptionPane.showMessageDialog(null, "No se modifico la fecha de nacimiento del usuario");
@@ -1276,7 +1272,6 @@ public class MenuCambios extends javax.swing.JFrame {
     private javax.swing.JButton buttonNpic;
     private javax.swing.JCheckBox chkActivarDesactivar;
     private com.github.lgooddatepicker.components.DatePicker dateFechaNacimiento;
-    private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private javax.swing.JPasswordField fieldCNpass;
     private javax.swing.JTextField fieldN_email;
     private javax.swing.JPasswordField fieldNpass;

@@ -57,7 +57,7 @@
           <Color blue="66" green="66" red="66" type="rgb"/>
         </Property>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Default Cursor"/>
+          <Color id="Cursor Por defecto"/>
         </Property>
       </Properties>
 
@@ -226,7 +226,6 @@
                                           <Group type="102" alignment="1" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="txtNdate" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="datePicker1" min="-2" max="-2" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -277,16 +276,13 @@
                                           <Component id="txtN_email" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtNdate" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace pref="26" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="fieldN_email" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="datePicker1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="fieldN_email" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="buttonN_email" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
@@ -314,7 +310,7 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="buttonNphone" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="62" max="32767" attributes="0"/>
+                              <EmptySpace pref="82" max="32767" attributes="0"/>
                               <Component id="buttonNpic" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                           </Group>
@@ -385,8 +381,6 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
                       </Events>
-                    </Component>
-                    <Component class="com.github.lgooddatepicker.components.DatePicker" name="datePicker1">
                     </Component>
                     <Component class="javax.swing.JButton" name="btnGuardarCusuario">
                       <Properties>
@@ -481,12 +475,12 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel5" max="32767" attributes="0"/>
-                                          <Component id="jLabel6" pref="131" max="32767" attributes="0"/>
+                                          <Component id="jLabel6" pref="135" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="dateFechaNacimiento" max="32767" attributes="0"/>
-                                          <Component id="txtCorreoAlterno" pref="210" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="txtCorreoAlterno" min="-2" pref="210" max="-2" attributes="0"/>
+                                          <Component id="dateFechaNacimiento" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -586,8 +580,8 @@
                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="dateFechaNacimiento" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dateFechaNacimiento" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
@@ -597,7 +591,7 @@
                           <Component id="txtTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="8" max="32767" attributes="0"/>
+                      <EmptySpace pref="47" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="chkActivarDesactivar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -660,8 +654,6 @@
             <Component class="javax.swing.JTextField" name="txtCorreoAlterno">
             </Component>
             <Component class="javax.swing.JTextField" name="txtTelefono">
-            </Component>
-            <Component class="com.github.lgooddatepicker.components.DatePicker" name="dateFechaNacimiento">
             </Component>
             <Component class="javax.swing.JButton" name="btnGuardar">
               <Properties>
@@ -763,6 +755,8 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClistaActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="com.github.lgooddatepicker.components.DatePicker" name="dateFechaNacimiento">
             </Component>
           </SubComponents>
         </Container>
