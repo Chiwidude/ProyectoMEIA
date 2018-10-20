@@ -56,9 +56,8 @@
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="datePicker1" min="-2" pref="197" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jProgressBar1" max="32767" attributes="0"/>
                                   <Component id="txtPassword" max="32767" attributes="0"/>
@@ -66,6 +65,10 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="buttonviewPass" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="datePicker1" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -105,7 +108,7 @@
                   <Component id="txtName" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtnameNU" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labelapellido" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtapellido" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -128,7 +131,7 @@
                   <Component id="txtdbNU" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="datePicker1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txtMail" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtemailNU" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -155,34 +158,34 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="     Crear Usuario"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="24" style="1"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="     Crear Usuario"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="txtNewuser">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Usuario:"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Usuario:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="txtnewPass">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="txtvalidatePass">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Confirmar Contrase&#xf1;a."/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Confirmar Contrase&#xf1;a."/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUser">
@@ -208,13 +211,13 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnRegistrar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Crear"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="99" green="99" red="99" type="rgb"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Crear"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarActionPerformed"/>
@@ -222,10 +225,10 @@
     </Component>
     <Component class="javax.swing.JLabel" name="txtnameNU">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nombre:"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Nombre:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtName">
@@ -237,18 +240,18 @@
     </Component>
     <Component class="javax.swing.JLabel" name="txtdbNU">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Fecha de nacimiento:"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Fecha de nacimiento:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="txtemailNU">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Correo Alterno:"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Correo Alterno:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtMail">
@@ -260,10 +263,10 @@
     </Component>
     <Component class="javax.swing.JLabel" name="txtnumberNU">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tel&#xe9;fono:"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Tel&#xe9;fono:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPhoneNumber">
@@ -275,18 +278,18 @@
     </Component>
     <Component class="javax.swing.JLabel" name="txtppicNU">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ruta Fotograf&#xed;a:"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Ruta Fotograf&#xed;a:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="buttonpPicNU">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Seleccionar"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Seleccionar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonpPicNUActionPerformed"/>
@@ -294,10 +297,10 @@
     </Component>
     <Component class="javax.swing.JToggleButton" name="buttonviewPass">
       <Properties>
-        <Property name="text" type="java.lang.String" value="ver"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="ver"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonviewPassActionPerformed"/>
@@ -307,20 +310,13 @@
     </Component>
     <Component class="javax.swing.JLabel" name="labelapellido">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Apellido:"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Apellido:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtapellido">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Arial" size="11" style="0"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="com.github.lgooddatepicker.components.DatePicker" name="datePicker1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="11" style="0"/>
@@ -331,6 +327,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ruta"/>
       </Properties>
+    </Component>
+    <Component class="com.github.lgooddatepicker.components.DatePicker" name="datePicker1">
     </Component>
   </SubComponents>
 </Form>

@@ -111,24 +111,24 @@ public class CreateUser extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         labelapellido = new javax.swing.JLabel();
         txtapellido = new javax.swing.JTextField();
-        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
         txtruta = new javax.swing.JLabel();
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Crear usuario");
         setLocation(new java.awt.Point(350, 200));
 
-        jLabel1.setText("     Crear Usuario");
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setText("     Crear Usuario");
 
-        txtNewuser.setText("Usuario:");
         txtNewuser.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txtNewuser.setText("Usuario:");
 
-        txtnewPass.setText("Contraseña:");
         txtnewPass.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txtnewPass.setText("Contraseña:");
 
-        txtvalidatePass.setText("Confirmar Contraseña.");
         txtvalidatePass.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txtvalidatePass.setText("Confirmar Contraseña.");
 
         txtUser.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
@@ -136,58 +136,56 @@ public class CreateUser extends javax.swing.JFrame {
 
         txtValidatePass.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
-        btnRegistrar.setText("Crear");
         btnRegistrar.setBackground(new java.awt.Color(153, 153, 153));
         btnRegistrar.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        btnRegistrar.setText("Crear");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
             }
         });
 
-        txtnameNU.setText("Nombre:");
         txtnameNU.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txtnameNU.setText("Nombre:");
 
         txtName.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
-        txtdbNU.setText("Fecha de nacimiento:");
         txtdbNU.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txtdbNU.setText("Fecha de nacimiento:");
 
-        txtemailNU.setText("Correo Alterno:");
         txtemailNU.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txtemailNU.setText("Correo Alterno:");
 
         txtMail.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
-        txtnumberNU.setText("Teléfono:");
         txtnumberNU.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txtnumberNU.setText("Teléfono:");
 
         txtPhoneNumber.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
-        txtppicNU.setText("Ruta Fotografía:");
         txtppicNU.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txtppicNU.setText("Ruta Fotografía:");
 
-        buttonpPicNU.setText("Seleccionar");
         buttonpPicNU.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        buttonpPicNU.setText("Seleccionar");
         buttonpPicNU.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonpPicNUActionPerformed(evt);
             }
         });
 
-        buttonviewPass.setText("ver");
         buttonviewPass.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        buttonviewPass.setText("ver");
         buttonviewPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonviewPassActionPerformed(evt);
             }
         });
 
-        labelapellido.setText("Apellido:");
         labelapellido.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        labelapellido.setText("Apellido:");
 
         txtapellido.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-        datePicker1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         txtruta.setText("Ruta");
 
@@ -218,15 +216,17 @@ public class CreateUser extends javax.swing.JFrame {
                                 .addComponent(txtvalidatePass, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(txtnewPass)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtPassword)
                                     .addComponent(txtValidatePass, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(buttonviewPass))))
+                                .addComponent(buttonviewPass))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(datePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(69, 69, 69))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
@@ -254,7 +254,7 @@ public class CreateUser extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtnameNU))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelapellido)
                     .addComponent(txtapellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -273,7 +273,7 @@ public class CreateUser extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtdbNU)
                     .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtemailNU))
