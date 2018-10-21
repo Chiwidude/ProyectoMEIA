@@ -27,6 +27,7 @@ import java.util.List;
  */
 public class SecuencialIndexado {
     
+    //VARIBALES GLOBALES
     private UsuarioIndexado nuevoUsuarioLista;
     private final String desc_indice_ruta,indice_ruta,desc_lista_ruta,lista_ruta;
     private RandomAccessFile archivo;
@@ -36,6 +37,14 @@ public class SecuencialIndexado {
     private File masterFile;
     private int nPosicion = 1;
    
+    /**
+     * Metodo constructor
+     * @param nuevoUsuarioLista usuario
+     * @param desc_indice_ruta RUTA DESCRIPTOR INDICE
+     * @param indice_ruta RUTA INDICE
+     * @param desc_lista_ruta RUTA DESCRIPTOR LISTA
+     * @param lista_ruta RUTA LISTA
+     */
     public SecuencialIndexado(UsuarioIndexado nuevoUsuarioLista,String desc_indice_ruta,String indice_ruta,String desc_lista_ruta,String lista_ruta ){
         this.nuevoUsuarioLista = nuevoUsuarioLista;   
         this.desc_indice_ruta = desc_indice_ruta;
@@ -44,6 +53,16 @@ public class SecuencialIndexado {
         this.lista_ruta = lista_ruta;
     }   
     
+    /**
+     * Metodo que permite insertar en el indice y rerganizar las entradas
+     * @param nombreLista nombre de la lista
+     * @param Usuario nombre de usuario
+     * @param UsuarioAsociado nombre del usuario asociado
+     * @param Siguiente registro siguiente
+     * @param Estatus estatus
+     * @throws IOException
+     * @throws FileNotFoundException 
+     */
     public void InsertarIndice(String nombreLista,String Usuario,String UsuarioAsociado,String Siguiente,String Estatus) throws IOException,FileNotFoundException{
             StringBuilder contenidoIndice = new StringBuilder();
             String Posicion = "1.",inputLine="";
@@ -63,6 +82,7 @@ public class SecuencialIndexado {
             archivo.writeBytes(contenidoIndice.toString()); 
             archivo.writeBytes(System.lineSeparator());
             nPosicion++;
+            CrearDescriptorIndice();
             archivo.close();
             }else{
                 ArrayList<UsuarioIndexado> indice = new ArrayList<>();
@@ -151,11 +171,22 @@ public class SecuencialIndexado {
                             
                         }
                     }
+                    CrearDescriptorIndice();
                     archivo.close(); 
                 }
             }
     }
     
+    /**
+     * Metodo que permite insertar en una lista
+     * @param nombreLista nombre de la lista
+     * @param usuario nombre del usuario creador
+     * @param usuarioAsociado nombre del usuario asociado
+     * @param descriptor nombre de la descripcion
+     * @param Status estatus
+     * @throws IOException
+     * @throws FileNotFoundException 
+     */
     public void InsertarLista (String nombreLista,String usuario,String usuarioAsociado,String descriptor,String Status) throws IOException,FileNotFoundException{
             StringBuilder contenidoLista = new StringBuilder();
             archivo = new RandomAccessFile(masterFile,"rw"); 
@@ -183,9 +214,7 @@ public class SecuencialIndexado {
     
     public void Busqueda(String NombreLista,String usuario,String usuarioAsociado){
         //sin implementar
-    }
-    
-    //sin comprobar   
+    }     
      
     /**
      * Crear e archivo indice e inserta, en el mismo si el usuario no esta ingresado
@@ -236,10 +265,8 @@ public class SecuencialIndexado {
         nuevoUsuarioLista.UsuarioAsociado = String.format("%-20s", nuevoUsuarioLista.UsuarioAsociado);
         nuevoUsuarioLista.Descripcion = String.format("%-40s",nuevoUsuarioLista.Descripcion);
         nuevoUsuarioLista.Status = String.format("%-1s", nuevoUsuarioLista.Status);
-    }  
-    
-    
-   
+    }      
+       
     /**
      * Sobreescrbe el descriptor LISTA, lo actualiza, sin problemas
      * @param usuario coloca el utltimo usuario
@@ -261,7 +288,27 @@ public class SecuencialIndexado {
         descriptorLista.append("Registros Inactivos:"+CantidadRegistrosInactivosLista());
         archivo.writeBytes(descriptorLista.toString());
         
-    }   
+    } 
+    
+    /**
+     * Metodo que crea el descriptor del indice, lo va actualizando
+     * @throws IOException 
+     */
+    public void CrearDescriptorIndice() throws IOException{
+        DescriptorIndice = new File(desc_indice_ruta);        
+        DescriptorIndice.createNewFile();
+        RandomAccessFile archivo = new RandomAccessFile(DescriptorIndice, "rw");
+        StringBuilder descriptorLista = new StringBuilder();
+        descriptorLista.append("Numero de Registros:"+CantidadRegistrosIndice()); 
+        descriptorLista.append(System.lineSeparator());
+        descriptorLista.append("Registro Inicio:"+CantidadRegistrosIndice()); 
+        descriptorLista.append(System.lineSeparator());        
+        descriptorLista.append("Registros Activos:"+CantidadRegistrosActivosIndice()); 
+        descriptorLista.append(System.lineSeparator());
+        descriptorLista.append("Registros Inactivos:"+CantidadRegistrosInactivosIndice());
+        archivo.writeBytes(descriptorLista.toString());
+        
+    } 
    
     /**
      * Metodo que retorna la cantidad de Registros en la lista
@@ -326,8 +373,52 @@ public class SecuencialIndexado {
                 br.close(); 
                 return cantidadRegistrosActivosIndice;
     }
+        
+    /**
+     * Metodo que retorna la cantidad de Registros inactivos en el indice
+     * @return cantidadRegistrosInactivosLista
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    private int CantidadRegistrosInactivosIndice() throws IOException{
+        int cantidadRegistrosInactivosIndice = 0;
+       String [] atributos = null;
+        InputStream f = new FileInputStream(indice_ruta);
+        BufferedReader br = new BufferedReader(new InputStreamReader(f));
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    atributos = inputLine.split("\\|");
+                    if(atributos[6].contains("0")){
+                        cantidadRegistrosInactivosIndice++;
+                    }
+                }
+                br.close(); 
+                return cantidadRegistrosInactivosIndice;
+    }
     
-     /**
+    /**
+     * Metodo que retorna la cantidad de Registros activos en el indice
+     * @return cantidadRegistrosActivosLista
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    private int CantidadRegistrosActivosIndice() throws FileNotFoundException, IOException{
+       int cantidadRegistrosActivosIndice = 0;
+       String [] atributos = null;
+        InputStream f = new FileInputStream(indice_ruta);
+        BufferedReader br = new BufferedReader(new InputStreamReader(f));
+                String inputLine;
+                while ((inputLine = br.readLine()) != null) {
+                    atributos = inputLine.split("\\|");
+                    if(atributos[6].contains("1")){
+                        cantidadRegistrosActivosIndice++;
+                    }
+                }
+                br.close(); 
+                return cantidadRegistrosActivosIndice;
+    }
+    
+    /**
      * Metodo que retorna la cantidad de Registros en el indice
      * @return cantidadRegistrosIndice
      * @throws FileNotFoundException
