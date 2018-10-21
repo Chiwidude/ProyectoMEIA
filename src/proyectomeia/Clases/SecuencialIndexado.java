@@ -104,9 +104,8 @@ public class SecuencialIndexado {
                         recorrido +=inputLine.length();
                         //Posicion Uno
                         if(atributos[3].contains(modificarLinea.Usuario) && atributos[4].contains(modificarLinea.UsuarioAsociado)){                            
-                            archivo.seek(recorrido-3);                            
-                            atributos[5] = String.valueOf(contador);  
-                            archivo.writeBytes(atributos[5]);
+                            archivo.seek(recorrido-3);   
+                            archivo.writeBytes(String.valueOf(contador));
                             contador++;
                             archivo.seek(recorrido+2);
                         }else{

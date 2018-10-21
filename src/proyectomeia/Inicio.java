@@ -164,7 +164,7 @@ public class Inicio extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
        UsuarioIndexado nuevo = new UsuarioIndexado();
        nuevo.NombreLista = "Universidad";
-       nuevo.Usuario = "JUANITO";
+       nuevo.Usuario = "PEPITO";
        nuevo.Descripcion = "CUATES";
        nuevo.Status = "1";
        nuevo.Siguiente = "0";
