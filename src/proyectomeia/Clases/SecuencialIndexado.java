@@ -89,28 +89,48 @@ public class SecuencialIndexado {
                         encontrado.UsuarioAsociado = atributos[4];
                         encontrado.Siguiente = atributos[5];
                         indice.add(encontrado);
-                        }
+                        }                    
                     //Se ordena
                     Collections.sort(indice,(o1,o2)-> o1.Usuario.compareToIgnoreCase(o2.Usuario)); 
-//                    int contador = 0;
-//                    long tam = 0;
-//                    StringBuilder nuevo = new StringBuilder();
-//                    while((inputLine = archivo.readLine()) != null){
-//                        tam+=inputLine.length();
-//                        archivo.seek(inputLine.length()-tam);
-//                        UsuarioIndexado ordenado = indice.get(contador);
-//                        atributos = inputLine.split("\\|");
-//                        if(atributos[3] == ordenado.Usuario && atributos[4] == ordenado.UsuarioAsociado){
-//                            nuevo.append(atributos[0]);
-//                            nuevo.append("|"+atributos[1]);
-//                            nuevo.append("|"+atributos[2]);
-//                            nuevo.append("|"+atributos[3]);
-//                        }
-//                        
-//                        contador++;
-//                    }
-                    archivo.close();
-                }                
+                    int contador = 0;
+                    int recorrido = 0;
+                    StringBuilder nuevaReorganizacion = new StringBuilder();
+                    atributos = null;
+                    archivo.seek(0);
+                    while((inputLine = archivo.readLine()) != null){
+                        try{
+                        atributos = inputLine.split("\\|");
+                        UsuarioIndexado modificarLinea = indice.get(contador);
+                        recorrido +=inputLine.length();
+                        //Posicion Uno
+                        if(atributos[3].contains(modificarLinea.Usuario) && atributos[4].contains(modificarLinea.UsuarioAsociado)){                            
+                            archivo.seek(recorrido-3);                            
+                            atributos[5] = String.valueOf(contador);  
+                            archivo.writeBytes(atributos[5]);
+                            contador++;
+                            archivo.seek(recorrido+2);
+                        }else{
+                            //Cualquier Posicion
+                            contador++; 
+                            if(atributos[5].contains("0")){
+                            contador = 1;
+                            archivo.seek(recorrido-3); 
+                            archivo.writeBytes(String.valueOf(contador));                              
+                            archivo.seek(recorrido+2);
+                            }else{
+                            contador = 0;
+                            archivo.seek(recorrido-1); 
+                            archivo.writeBytes(String.valueOf(contador));                              
+                            archivo.seek(recorrido);
+                            }
+                        }
+                        }catch(Exception e){
+                            //fin archivo 
+                            return;
+                        }
+                        }
+                    archivo.close(); 
+                }
             }
     }
     
@@ -196,7 +216,7 @@ public class SecuencialIndexado {
     }  
     
     
-    
+   
     /**
      * Sobreescrbe el descriptor LISTA, lo actualiza, sin problemas
      * @param usuario coloca el utltimo usuario
