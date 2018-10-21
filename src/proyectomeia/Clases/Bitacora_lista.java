@@ -112,11 +112,12 @@ public class Bitacora_lista extends ApiloFile {
         }
         long rewriting = File.getFilePointer();
         File.seek(rewriting);
-        String registroEliminado = viejo.substring(0,viejo.length()-3)+"0";
+        String registroEliminado = viejo.substring(0,viejo.length()-1)+"0";
         File.writeBytes(registroEliminado);
         File.close();
         this.UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
   }
+  
     @Override
   public void empty() throws IOException{
       FileChannel.open(Paths.get(masterfile.getPath()), StandardOpenOption.WRITE).truncate(0).close();
@@ -174,6 +175,30 @@ public class Bitacora_lista extends ApiloFile {
      */
   public void updateAutor(String autor){
       //nothing
+  }
+  public void Reorganizar() throws FileNotFoundException, IOException{
+        Archivo = new RandomAccessFile(masterfile,"r");
+     Queue<String> refactor = new LinkedList<>();
+     String keepath = masterfile.getPath();
+          String linea;
+          while((linea = Archivo.readLine())!= null){
+              if(!linea.split("\\|")[linea.split("\\|").length-1].contains(("0"))){
+                  refactor.add(linea);
+              }
+          }
+          Archivo.close();
+          masterfile.delete();
+       File tempfile = new File(keepath); 
+      Archivo = new RandomAccessFile(tempfile,"rw");
+      String decoy;
+      decoy = refactor.poll();
+        while(decoy != null){
+          Archivo.writeBytes(decoy);
+          Archivo.writeBytes(System.lineSeparator());
+          decoy = refactor.poll();
+      }
+      Archivo.close();
+      masterfile = tempfile;
   }
   
  

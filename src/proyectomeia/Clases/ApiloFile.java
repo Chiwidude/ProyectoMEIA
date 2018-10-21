@@ -328,8 +328,9 @@ public class ApiloFile {
                  long iregs = archive.getFilePointer();
                  archive.seek(iregs);
                 String score = archive.readLine();
-                
-                
+                String temp = "Registros Máximos:";
+                score = score.substring(temp.length(),score.length());
+                result = Integer.parseInt(score.trim());
             }
         }
           return result;

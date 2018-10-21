@@ -52,14 +52,14 @@ public class SequentialFile  {
         if(results.isEmpty()&& this.masterfileUsuario.exists()){
             String result = Buscar(valor);
             if(result == null || result.isEmpty()){
-                if(bitacora.getNoRegistros() == bitacora.maxregistros){
+                if(bitacora.getNoRegistros() == bitacora.ReturnMaxreg()){
                     refactorBitacora();
                     flag = true;
                 }
                 bitacora.Insertar(valor);
             }
         }else if(results.isEmpty()){
-            if(bitacora.getNoRegistros() == bitacora.maxregistros){
+            if(bitacora.getNoRegistros() == bitacora.ReturnMaxreg()){
                     refactorBitacora();
                     flag = true;
                 }

@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Calendar;
@@ -38,14 +41,14 @@ public void Insertar(String valor) throws IOException{
         if(results.isEmpty()&& this.masterfileLista.exists()){
             String result = Buscar(valor);
             if(result == null || result.isEmpty()){
-                if(bitacora.getNoRegistros() == bitacora.maxregistros){
+                if(bitacora.getNoRegistros() == bitacora.ReturnMaxreg()){
                     refactorBitacora();
                     flag = true;
                 }
                 bitacora.Insertar(valor);
             }
         }else if(results.isEmpty()){
-            if(bitacora.getNoRegistros() == bitacora.maxregistros){
+            if(bitacora.getNoRegistros() == bitacora.ReturnMaxreg()){
                     refactorBitacora();
                     flag = true;
                 }
@@ -87,6 +90,7 @@ public String Buscar(String value) throws FileNotFoundException, IOException{
         if(counter == bitacora.llave.length){
             resultado = line;
         }
+        counter = 0;
         
     }
     return resultado;
@@ -111,8 +115,47 @@ public List<String> BuscarP(String value, String parameter) throws FileNotFoundE
     return resultados;
 }
 
-protected void refactorBitacora(){
-    
+protected void refactorBitacora() throws IOException{
+    bitacora.Reorganizar();
+     LinkedList<String>strings = new LinkedList<>();
+     RandomAccessFile archive = new RandomAccessFile(bitacora.masterfile,"r");
+     String line;
+     while((line = archive.readLine())!= null){
+            strings.add(line);
+        }
+     archive.close();
+     bitacora.empty();
+     line = "";
+     if(masterfileLista.exists()){
+         RandomAccessFile file = new RandomAccessFile(masterfileLista,"r");
+         while((line=file.readLine())!= null){
+             if(!line.split("\\|")[line.split("\\|").length-1].contains("0")){
+                strings.add(line);
+             }
+        }
+        file.close();
+        ComparatorS compare = new ComparatorS();
+        strings.sort(compare);
+         FileChannel.open(Paths.get(masterfileLista.getPath()), StandardOpenOption.WRITE).truncate(0).close();
+         RandomAccessFile file_ = new RandomAccessFile(masterfileLista,"rw");
+         for(int i = 0; i<strings.size();i++){
+               file_.writeBytes(strings.get(i));
+               file_.writeBytes(System.lineSeparator());
+           }
+           file_.close();
+           UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
+     } else{
+            ComparatorS compare = new ComparatorS();
+            strings.sort(compare);
+            RandomAccessFile file_ = new RandomAccessFile(masterfileLista,"rw");
+           
+           for(int i = 0; i<strings.size();i++){
+               file_.writeBytes(strings.get(i));
+               file_.writeBytes(System.lineSeparator());
+           }
+           file_.close();
+           UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
+        }
 }
 private void UpdateDescriptor(String registrosA, String registrosI, String fechamod) throws FileNotFoundException, IOException{
       ArchivoLista = new RandomAccessFile(descriptorLista,"rw");
@@ -223,6 +266,7 @@ private void UpdateDescriptor(String registrosA, String registrosI, String fecha
             String line;
             while((line = contador.readLine())!= null){
                 if(line.equals(registro)){
+                    contador.close();
                     return posicion;
                 }
                 posicion++;
@@ -253,7 +297,7 @@ private void UpdateDescriptor(String registrosA, String registrosI, String fecha
                 flag = true;
                 UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
         }else {
-            bitacora.UpdateRegister(Antiguo, nuevo);
+            bitacora.UpdateRegister(nuevo,Antiguo);
             flag = false;
         }
      

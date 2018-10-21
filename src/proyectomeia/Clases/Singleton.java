@@ -80,5 +80,89 @@ public boolean ExistsUser(String object){
         }
     }
     return exists;
-}       
+} 
+
+public boolean ExistsLista(String object){
+    File temp1 = new File(pathBlistas);
+       File temp2 = new File(pathArchivoListas);
+       boolean exists = false;
+       if(!temp1.exists() && !temp2.exists()){
+        exists = false;
+    } else if(temp1.exists()){
+        List<String> exist = Listas.bitacora.Busqueda(object);
+        if(!exist.isEmpty()){
+            int counter = 0;
+                   for(int i = 0; i<exist.size();i ++){
+                    String r = exist.get(i);
+                  if(r.split("\\|")[r.split("\\|").length-1].equals("0")){
+                     counter++;
+                    }
+                   }
+               if(counter == exist.size()){
+                  exists = false;
+                }else{
+                   exists = true;
+               }
+          }else if(!temp2.exists()){
+                       exists = false;
+                   } else {
+                            String busqueda = Usuarios.Buscar(object);
+                             if(busqueda.isEmpty() || busqueda.equals("")){
+                                 exists = false;
+                             }else if(busqueda.split("\\|")[busqueda.split("\\|").length-1].equals("1")) {
+                                 exists = true;
+                             }else{
+                                 exists = false;
+                             }
+           
+                          }
+        } 
+    
+       
+       return exists;
+}
+public String ExistsList(String object){
+    File temp1 = new File(pathBlistas);
+       File temp2 = new File(pathArchivoListas);
+       String exists = "";
+       if(!temp1.exists() && !temp2.exists()){
+                return exists;
+    } else if(temp1.exists()){
+        List<String> exist = Listas.bitacora.Busqueda(object);
+        if(!exist.isEmpty()){
+            int counter = 0;
+                   for(int i = 0; i<exist.size();i ++){
+                    String r = exist.get(i);
+                  if(r.split("\\|")[r.split("\\|").length-1].equals("0")){
+                     counter++;
+                    }
+                   }
+               if(counter == exist.size()){
+                  exists = "";
+                }else{
+                   for(int j = 0; j<exist.size();j ++){
+                    String r = exist.get(j);
+                  if(r.split("\\|")[r.split("\\|").length-1].equals("1")){
+                      exists = r;
+                    }
+                   }
+                   
+               }
+          }else if(!temp2.exists()){
+                       exists = "";
+                   } else {
+                            String busqueda = Usuarios.Buscar(object);
+                             if(busqueda.isEmpty() || busqueda.equals("")){
+                                 exists = "";
+                             }else if(busqueda.split("\\|")[busqueda.split("\\|").length-1].equals("1")) {
+                                 exists = busqueda;
+                             }else{
+                                exists = "";
+                             }
+           
+                          }
+        } 
+    
+       return exists;
+}
 }

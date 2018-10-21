@@ -6,6 +6,7 @@
 package proyectomeia;
 
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class UserView extends javax.swing.JFrame {
      */
     public UserView() {
         initComponents();
+         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));    
     }
     public UserView(Singleton datos){
         this();
@@ -36,6 +38,7 @@ public class UserView extends javax.swing.JFrame {
         t1 = labelRol.getText();
         if(fase.current.isRol()==true){
             t1 = t1+" " + "Administrador";
+            btnListas.setVisible(false);
         } else {
             t1 = t1 + " " + "Usuario Normal";
         }
@@ -73,6 +76,7 @@ public class UserView extends javax.swing.JFrame {
         imgIcon = new javax.swing.JLabel();
         opcionesButton = new javax.swing.JButton();
         btnListas = new javax.swing.JButton();
+        logout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +105,13 @@ public class UserView extends javax.swing.JFrame {
             }
         });
 
+        logout.setText("Cerrar Sesión");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,21 +126,25 @@ public class UserView extends javax.swing.JFrame {
                         .addComponent(labelRol))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(194, 194, 194)
-                        .addComponent(imgIcon))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(opcionesButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnListas)
-                            .addComponent(labelUsuario))))
+                        .addComponent(imgIcon)))
                 .addContainerGap(172, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(opcionesButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnListas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logout))
+                    .addComponent(labelUsuario)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(opcionesButton)
-                    .addComponent(btnListas))
+                    .addComponent(btnListas)
+                    .addComponent(logout))
                 .addGap(9, 9, 9)
                 .addComponent(labelTitulo)
                 .addGap(18, 18, 18)
@@ -155,6 +170,13 @@ public class UserView extends javax.swing.JFrame {
             lists.show();
             this.dispose();
     }//GEN-LAST:event_btnListasActionPerformed
+
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        fase.current = null;
+        Inicio start = new Inicio(fase);
+        this.dispose();
+        start.setVisible(true);
+    }//GEN-LAST:event_logoutActionPerformed
     
      
      
@@ -199,6 +221,7 @@ public class UserView extends javax.swing.JFrame {
     private javax.swing.JLabel labelRol;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelUsuario;
+    private javax.swing.JButton logout;
     private javax.swing.JButton opcionesButton;
     // End of variables declaration//GEN-END:variables
 }
