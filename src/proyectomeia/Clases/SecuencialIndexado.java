@@ -85,13 +85,15 @@ public class SecuencialIndexado {
                     while((inputLine = archivo.readLine()) != null){
                         atributos = inputLine.split("\\|");
                         UsuarioIndexado encontrado = new UsuarioIndexado();
+                        encontrado.NombreLista = atributos[2];
                         encontrado.Usuario = atributos[3];
                         encontrado.UsuarioAsociado = atributos[4];
                         encontrado.Siguiente = atributos[5];
                         indice.add(encontrado);
-                        }                    
-                    //Se ordena
-                    Collections.sort(indice,(o1,o2)-> o2.Usuario.compareToIgnoreCase(o1.Usuario)); 
+                        } 
+                    
+                    //Se ordena por el nombre de lista primero
+                    Collections.sort(indice,(o1,o2)-> o2.NombreLista.compareToIgnoreCase(o1.NombreLista)); 
                     int recorrido = 0;
                     int contador = 0;
                     atributos = null;
@@ -99,9 +101,49 @@ public class SecuencialIndexado {
                     while((inputLine = archivo.readLine()) != null && !indice.isEmpty()){                        
                         atributos = inputLine.split("\\|");                        
                         recorrido += inputLine.length();
-                        for (int i =indice.size()-1 ; i <=0; i++) {
+                        for (int i = indice.size()-1; i >=0; i--) {
                             UsuarioIndexado modificarLinea = indice.get(i);
-                            if(atributos[3].contains(modificarLinea.Usuario) && atributos[4].contains(modificarLinea.UsuarioAsociado)){                                
+                            if(atributos[2].contains(modificarLinea.NombreLista) && atributos[3].contains(modificarLinea.NombreLista) && atributos[4].contains(modificarLinea.NombreLista)){                                
+                                archivo.seek(archivo.getFilePointer()-5);
+                                archivo.writeBytes(String.valueOf(i));
+                                archivo.seek(archivo.getFilePointer()+4);                               
+                            }
+                            
+                        }
+                    }
+                    
+                    //Se ordena por el nombre de usuario segundo
+                    Collections.sort(indice,(o1,o2)-> o2.Usuario.compareToIgnoreCase(o1.Usuario)); 
+                    recorrido = 0;
+                    contador = 0;
+                    atributos = null;
+                    archivo.seek(0);
+                    while((inputLine = archivo.readLine()) != null && !indice.isEmpty()){                        
+                        atributos = inputLine.split("\\|");                        
+                        recorrido += inputLine.length();
+                        for (int i = indice.size()-1; i >=0; i--) {
+                            UsuarioIndexado modificarLinea = indice.get(i);
+                            if(atributos[2].contains(modificarLinea.NombreLista) && atributos[3].contains(modificarLinea.Usuario) && atributos[4].contains(modificarLinea.UsuarioAsociado)){                                
+                                archivo.seek(archivo.getFilePointer()-5);
+                                archivo.writeBytes(String.valueOf(i));
+                                archivo.seek(archivo.getFilePointer()+4);                               
+                            }
+                            
+                        }
+                    }
+                    
+                    //Se ordena por el usuario asociado
+                    Collections.sort(indice,(o1,o2)-> o2.UsuarioAsociado.compareToIgnoreCase(o1.UsuarioAsociado)); 
+                    recorrido = 0;
+                    contador = 0;
+                    atributos = null;
+                    archivo.seek(0);
+                    while((inputLine = archivo.readLine()) != null && !indice.isEmpty()){                        
+                        atributos = inputLine.split("\\|");                        
+                        recorrido += inputLine.length();
+                        for (int i = indice.size()-1; i >=0; i--) {
+                            UsuarioIndexado modificarLinea = indice.get(i);
+                            if(atributos[2].contains(modificarLinea.NombreLista) && atributos[3].contains(modificarLinea.UsuarioAsociado) && atributos[4].contains(modificarLinea.UsuarioAsociado)){                                
                                 archivo.seek(archivo.getFilePointer()-5);
                                 archivo.writeBytes(String.valueOf(i));
                                 archivo.seek(archivo.getFilePointer()+4);                               
