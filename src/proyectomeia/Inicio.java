@@ -36,10 +36,10 @@ public class Inicio extends javax.swing.JFrame {
     public static final String pathArchivoApilo = Paths.get("C:/MEIA/bitacora_usuarios.txt").toString();
     public static final String pathArchivoUsuarios = Paths.get("C:/MEIA/usuarios.txt").toString();
     
-    public static final String pathIndice = Paths.get("C:/MEIA/indice.txt").toString();  
-    public static final String pathDescIndice = Paths.get("C:/MEIA/desc_indice.txt").toString();  
-    public static final String pathLista = Paths.get("C:/MEIA/lista.txt").toString();  
-    public static final String pathDescLista = Paths.get("C:/MEIA/desc_lista.txt").toString();
+    public static final String pathIndice = Paths.get("C:/MEIA/Indice.txt").toString();  
+    public static final String pathDescIndice = Paths.get("C:/MEIA/desc_Indice.txt").toString();  
+    public static final String pathLista = Paths.get("C:/MEIA/Lista_usuario.txt").toString();  
+    public static final String pathDescLista = Paths.get("C:/MEIA/desc_Lista_usuario.txt").toString();
 //  Archivos
     
 
@@ -162,8 +162,14 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-
-        File temp1 = new File(pathArchivoApilo);
+        SecuencialIndexado archivo = new SecuencialIndexado(pathDescIndice, pathIndice,pathDescLista, pathLista);
+       try {
+            archivo.EliminacionLogicaAlCerrar();
+            fase.ListaUsuarios.UpdateDescriptorLista(fase.current.getUsername());
+        } catch (IOException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       File temp1 = new File(pathArchivoApilo);
        File temp2 = new File(pathArchivoUsuarios);
         if(!temp1.exists() && !temp2.exists()){
             CreateUser newuser =  new CreateUser(fase,0);

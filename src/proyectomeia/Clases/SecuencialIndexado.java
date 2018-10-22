@@ -17,6 +17,7 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +36,7 @@ public class SecuencialIndexado {
     private File masterFile;
     private int nPosicion = 1;
     public boolean flag;
+     ArrayList<String> lineas = new ArrayList<>();
    
     /**
      * Metodo constructor
@@ -155,10 +157,83 @@ public class SecuencialIndexado {
                 return line;
     }
     
-    
-    public void Eliminar(String NombreLista){
-        //sin implementar
+    /**
+     * Metodo que recibe como parametro las claves e inactiva una lista
+     * @param NombreLista clave 1
+     * @param nombreUsuario clave 2
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    public void EliminarEnEjecucion(String NombreLista,String nombreUsuario) throws FileNotFoundException, IOException{        
+        RandomAccessFile archivo = new RandomAccessFile(Indice,"rw");        
+        String lineaModificar;
+        String[] data;
+        while((lineaModificar = archivo.readLine())!=null){
+            data = lineaModificar.split("\\|");
+            if(data[3].contains(NombreLista) && data[4].contains(nombreUsuario)){
+                archivo.seek(archivo.getFilePointer()-1);
+                archivo.writeBytes("0");
+            }
+        }        
     }
+    
+    /**
+     * Elimina todas las listas desactivadas, inserta nuevamente las listas activas, y la reorganiza
+     * @throws IOException 
+     */
+    public void EliminacionLogicaAlCerrar() throws IOException{
+        ArrayList<String> lineasIndice = new ArrayList<>();
+        ArrayList<String> lineasMaster = new ArrayList<>();
+        ArrayList<String> lineasMasterSeleccionadas = new ArrayList<>();
+        File temp1 = new File(Indice.getPath());
+        File temp2 = new File(masterFile.getPath());
+        RandomAccessFile indice = new RandomAccessFile(Indice, "rw");
+        RandomAccessFile master = new RandomAccessFile(masterFile, "rw");
+        String dataIndice,dataMaster;
+        String[] acumulado,masterLista;
+        while((dataIndice = indice.readLine())!=null){
+            acumulado = dataIndice.split("\\|");            
+            if(acumulado[6].contains("1")){
+                lineasIndice.add(acumulado[1]+"|"+acumulado[2]+"|"+acumulado[3]+"|"+acumulado[4]+"|"+acumulado[6]);//almacena las listas activas                
+            }
+        }      
+        String[] posicion = new String[lineasIndice.size()];
+        for (int i = 0; i < posicion.length; i++) {
+            posicion[i] = lineasIndice.get(i).split("\\|")[0];
+        }
+        
+        while((dataMaster = master.readLine())!=null){
+            lineasMaster.add(dataMaster);
+        } 
+        for(int i = 0; i< posicion.length;i++){
+            String h = String.valueOf(posicion[i].charAt(2));
+            int j = Integer.valueOf(h);
+            lineasMasterSeleccionadas.add(lineasMaster.get(j-1));
+        } 
+        //Se eliminan los anteriores
+        indice.close();
+        master.close();
+        Indice.delete();
+        masterFile.delete();
+        //Se crean los archivos        
+        temp1.createNewFile();
+        temp2.createNewFile();
+        Indice = temp1;
+        masterFile = temp2;
+        for(int i = 0;i<lineasMasterSeleccionadas.size();i++){
+            ObjectIndice nuevo = new ObjectIndice(lineasIndice.get(i).split("\\|")[1],
+                    lineasIndice.get(i).split("\\|")[2],
+                    lineasIndice.get(i).split("\\|")[3]);
+            UsuarioIndexado newi = new UsuarioIndexado(lineasMasterSeleccionadas.get(i).split("\\|")[0],
+                    lineasMasterSeleccionadas.get(i).split("\\|")[1],
+                    lineasMasterSeleccionadas.get(i).split("\\|")[2],
+                    lineasMasterSeleccionadas.get(i).split("\\|")[3]);
+            InsertarIndice(nuevo.toString());
+            InsertarLista(newi.toString());
+        }
+        
+    }
+    
     /**
      *Modifica un dato del Indice
      * @param viejo
@@ -240,6 +315,7 @@ public class SecuencialIndexado {
         archivo.writeBytes(descriptorLista.toString());
         
     }
+    
     private void UpdateDescriptorIndice(){
         try {
             int inicio = ObtenerInicio();
