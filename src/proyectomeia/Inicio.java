@@ -162,43 +162,7 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-      /* UsuarioIndexado nuevo = new UsuarioIndexado();
-       nuevo.NombreLista = "Universidad";
-       nuevo.Usuario = "ALE";
-       nuevo.Descripcion = "CUATES";
-       nuevo.Status = "1";
-       nuevo.Siguiente = "0";
-       nuevo.UsuarioAsociado = "Pepito";
-       
-       UsuarioIndexado nuevo2 = new UsuarioIndexado();
-       nuevo2.NombreLista = "Universidad";
-       nuevo2.Usuario = "BARRIOS";
-       nuevo2.Descripcion = "CUATES";
-       nuevo2.Status = "1";
-       nuevo2.Siguiente = "0";
-       nuevo2.UsuarioAsociado = "Pepito";
-       
-       UsuarioIndexado nuevo3 = new UsuarioIndexado();
-       nuevo3.NombreLista = "Universidad";
-       nuevo3.Usuario = "CARLOS";
-       nuevo3.Descripcion = "CUATES";
-       nuevo3.Status = "1";
-       nuevo3.Siguiente = "0";
-       nuevo3.UsuarioAsociado = "Pepito";
-       SecuencialIndexado archivo = new SecuencialIndexado(nuevo,pathDescIndice,pathIndice,pathDescLista,pathLista);        
-        try {
-            archivo.CrearIndice(nuevo);
-            archivo.CrearIndice(nuevo2);
-            archivo.CrearIndice(nuevo3);
-            archivo.CrearLista(nuevo);
-            archivo.CrearLista(nuevo2);
-            archivo.CrearLista(nuevo3);
-            archivo.CrearDescriptorLista("kevin");
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        } */
-        
+
         File temp1 = new File(pathArchivoApilo);
        File temp2 = new File(pathArchivoUsuarios);
         if(!temp1.exists() && !temp2.exists()){

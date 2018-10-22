@@ -6,10 +6,11 @@
 package proyectomeia.Clases;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
-import static proyectomeia.Inicio.pathArchivoApilo;
-import static proyectomeia.Inicio.pathArchivoUsuarios;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,6 +21,9 @@ public class Singleton {
     public static final String pathArchivoUsuarios = Paths.get("C:/MEIA/usuarios.txt").toString();
     public static final String pathArchivoListas = Paths.get("C:/MEIA/lista.txt").toString();
     public static final String pathBlistas = Paths.get("C:/MEIA/bitacora_listas.txt").toString();
+    public static final String pathIndice = Paths.get("C:/MEIA/Indice.txt").toString();
+    public static final String pathdesInd = Paths.get("C:/MEIA/desc_Indice.txt").toString();
+    public static final String pathdesLU = Paths.get("C:/MEIA/desc_Lista_usuario.txt").toString();
     public static final String pathListasUsuario = Paths.get("C:/MEIA/Lista_usuario.txt").toString();
 
     @Override
@@ -44,6 +48,14 @@ public Singleton(){
       Blista = new Bitacora_lista(pathBlistas,"Bitácora Listas","Archivo de datos","",5,new String[]{"Nombre_lista","Usuario"},"Nombre_lista|Usuario|Descripción|Número_Usuarios|"
               + "Fecha_creacion|Estatus");
       Listas = new lista(pathArchivoListas,Blista);
+      if(!Listas.descriptorLista.exists()){
+        try {
+            Listas.CrearDescriptor("", Listas.bitacora.ReturnMaxreg());
+        } catch (IOException ex) {
+            Logger.getLogger(Singleton.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+      ListaUsuarios = new SecuencialIndexado(pathdesInd,pathIndice,pathdesLU,pathListasUsuario);
 }
 public boolean ExistsUser(String object){
      File temp1 = new File(pathArchivoApilo);
@@ -106,14 +118,18 @@ public boolean ExistsLista(String object){
           }else if(!temp2.exists()){
                        exists = false;
                    } else {
-                            String busqueda = Usuarios.Buscar(object);
-                             if(busqueda.isEmpty() || busqueda.equals("")){
-                                 exists = false;
-                             }else if(busqueda.split("\\|")[busqueda.split("\\|").length-1].equals("1")) {
-                                 exists = true;
-                             }else{
-                                 exists = false;
-                             }
+            try {
+                String busqueda = Listas.Buscar(object);
+                if(busqueda.isEmpty() || busqueda.equals("")){
+                    exists = false;
+                }else if(busqueda.split("\\|")[busqueda.split("\\|").length-1].equals("1")) {
+                    exists = true;
+                }else{
+                    exists = false;
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Singleton.class.getName()).log(Level.SEVERE, null, ex);
+            }
            
                           }
         } 

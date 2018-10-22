@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import proyectomeia.Clases.ObjectIndice;
 import proyectomeia.Clases.ObjectLista;
 import proyectomeia.Clases.Singleton;
 
@@ -35,9 +36,13 @@ public class ListasUser extends javax.swing.JFrame {
         btnCdesc.setEnabled(false);
         jTextArea1.setEnabled(false);
         btncancel.setEnabled(false);
+        btnBuser.setEnabled(false);
+        btnauser.setEnabled(false);
     }
     private Singleton fase;
     private ObjectLista working;
+    private String addUser;
+    private String addList;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,6 +63,16 @@ public class ListasUser extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtBlistaa = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        btnBlistaa = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        txtBuser = new javax.swing.JTextField();
+        btnBuser = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextArea3 = new javax.swing.JTextArea();
+        btnauser = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
@@ -147,15 +162,92 @@ public class ListasUser extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Crear", jPanel1);
 
+        jLabel5.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel5.setText("AGREGAR USUARIO A UNA LISTA");
+
+        jLabel9.setText("Buscar Lista");
+
+        btnBlistaa.setText("Buscar");
+        btnBlistaa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBlistaaActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Buscar Usuario");
+
+        btnBuser.setText("Buscar");
+        btnBuser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuserActionPerformed(evt);
+            }
+        });
+
+        jTextArea3.setColumns(20);
+        jTextArea3.setRows(5);
+        jScrollPane4.setViewportView(jTextArea3);
+
+        btnauser.setText("Agregar");
+        btnauser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnauserActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 582, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtBlistaa, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(btnBlistaa)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(14, 14, 14)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtBuser, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuser)))
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(154, 154, 154)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(241, 241, 241)
+                        .addComponent(btnauser)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel5)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBlistaa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBlistaa)
+                    .addComponent(txtBuser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuser))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnauser)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Agregar", jPanel3);
@@ -540,6 +632,66 @@ public class ListasUser extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnBlistaaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlistaaActionPerformed
+        String blist = txtBlistaa.getText();
+        if(blist.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor escriba la lista a la que desea agregar un usuario");
+        }else {
+            boolean exists = fase.ExistsLista(blist+"|"+fase.current.getUsername());
+            if(exists){
+                addList = blist;
+                btnBlistaa.setEnabled(false);
+                txtBlistaa.setText("");
+                btnBuser.setEnabled(true);
+                txtBuser.setText("");
+                 JOptionPane.showMessageDialog(null, blist+" " + "si existe");
+            }else {
+                JOptionPane.showMessageDialog(null, blist+" " + "no existe");
+            }
+        }
+    }//GEN-LAST:event_btnBlistaaActionPerformed
+
+    private void btnBuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuserActionPerformed
+       String buser = txtBuser.getText();
+        if(buser.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor escriba el usuario que desea agregar");
+        }else {
+            boolean exists = fase.ExistsUser(buser);
+            if(exists){
+                addUser = buser;
+                txtBlistaa.setText("");
+                btnBuser.setEnabled(false);
+                txtBuser.setText("");
+                btnauser.setEnabled(true);
+                jTextArea3.setText("");
+                 JOptionPane.showMessageDialog(null, buser+" " + "si existe");
+            }else {
+                JOptionPane.showMessageDialog(null, buser+" " + "no existe");
+            }
+        }
+    }//GEN-LAST:event_btnBuserActionPerformed
+
+    private void btnauserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnauserActionPerformed
+        String desc = jTextArea3.getText();
+        if(desc.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor agregue una descripción para el usuario");
+        }else {
+            if(desc.length()<=40){
+                try {
+                    ObjectIndice nuevo = new ObjectIndice(addList,fase.current.getUsername().trim(),addUser);
+                    fase.ListaUsuarios.InsertarIndice(nuevo.toString());
+                    btnauser.setEnabled(false);
+                    btnBlistaa.setEnabled(true);
+                    jTextArea3.setText("");
+                } catch (IOException ex) {
+                    Logger.getLogger(ListasUser.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else {
+                JOptionPane.showMessageDialog(null, "La descripción debe ser máximo de 40 caracteres");
+            }
+        }
+    }//GEN-LAST:event_btnauserActionPerformed
+
     /**     
      * @param args the command line arguments
      */
@@ -577,29 +729,39 @@ public class ListasUser extends javax.swing.JFrame {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBlistaa;
+    private javax.swing.JButton btnBuser;
     private javax.swing.JButton btnBusqueda;
     private javax.swing.JButton btnCdesc;
     private javax.swing.JButton btnCrearlista;
     private javax.swing.JButton btnEditarL;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnauser;
     private javax.swing.JButton btncancel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTextField txtBlistaa;
+    private javax.swing.JTextField txtBuser;
     private javax.swing.JTextField txtBusqueda;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNlista;
