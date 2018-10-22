@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import proyectomeia.Clases.ObjectIndice;
 import proyectomeia.Clases.ObjectLista;
 import proyectomeia.Clases.Singleton;
+import proyectomeia.Clases.UsuarioIndexado;
 
 /**
  *
@@ -88,6 +89,7 @@ public class ListasUser extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         btncancel = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -174,7 +176,7 @@ public class ListasUser extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Buscar Usuario");
+        jLabel10.setText("Buscar Usuarioa Asociar");
 
         btnBuser.setText("Buscar");
         btnBuser.addActionListener(new java.awt.event.ActionListener() {
@@ -205,16 +207,15 @@ public class ListasUser extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtBlistaa, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
-                        .addComponent(btnBlistaa)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(14, 14, 14)
+                        .addComponent(btnBlistaa)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtBuser, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuser)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -303,6 +304,8 @@ public class ListasUser extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setText("EDITAR UNA LISTA");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -316,7 +319,11 @@ public class ListasUser extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(160, 160, 160)
+                                .addComponent(jLabel11)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -345,8 +352,13 @@ public class ListasUser extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel11)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -399,6 +411,7 @@ public class ListasUser extends javax.swing.JFrame {
                                 nueva.setUsuario(fase.current.getUsername());
                                 try {
                                     fase.Listas.Insertar(nueva.toString());
+                                    fase.Listas.bitacora.updateAutor(fase.current.getUsername());
                                     txtNlista.setText("");
                                     txtDescripcion.setText("");
                                     JOptionPane.showMessageDialog(null, fase.current.getUsername().trim() + " " + "agrego la lista:" + " " + Nombre);
@@ -413,6 +426,9 @@ public class ListasUser extends javax.swing.JFrame {
                                         nueva.setUsuario(fase.current.getUsername());
                                         try {
                                             fase.Listas.Insertar(nueva.toString());
+                                            if(fase.Listas.flag){
+                                               fase.Listas.updateAutorMod(fase.current.getUsername());
+                                            }
                                             txtNlista.setText("");
                                             txtDescripcion.setText("");
                                             JOptionPane.showMessageDialog(null, fase.current.getUsername().trim() + " " + "agrego la lista:" + " " + Nombre);
@@ -426,6 +442,9 @@ public class ListasUser extends javax.swing.JFrame {
                                                     ObjectLista nueva = new ObjectLista(Nombre,Descripcion);
                                                      nueva.setUsuario(fase.current.getUsername());
                                                      fase.Listas.Insertar(nueva.toString());
+                                                     if(fase.Listas.flag){
+                                                         fase.Listas.updateAutorMod(fase.current.getUsername());
+                                                     }
                                                      txtNlista.setText("");
                                                      txtDescripcion.setText("");
                                                      JOptionPane.showMessageDialog(null, fase.current.getUsername().trim() + " " + "agrego la lista:" + " " + Nombre);
@@ -435,6 +454,9 @@ public class ListasUser extends javax.swing.JFrame {
                                                     ObjectLista nueva = new ObjectLista(Nombre,Descripcion);
                                                      nueva.setUsuario(fase.current.getUsername());
                                                      fase.Listas.Insertar(nueva.toString());
+                                                     if(fase.Listas.flag){
+                                                         fase.Listas.updateAutorMod(fase.current.getUsername());
+                                                     }
                                                      txtNlista.setText("");
                                                      txtDescripcion.setText("");
                                                      JOptionPane.showMessageDialog(null, fase.current.getUsername().trim() + " " + "agrego la lista:" + " " + Nombre);
@@ -680,6 +702,13 @@ public class ListasUser extends javax.swing.JFrame {
                 try {
                     ObjectIndice nuevo = new ObjectIndice(addList,fase.current.getUsername().trim(),addUser);
                     fase.ListaUsuarios.InsertarIndice(nuevo.toString());
+                    UsuarioIndexado newi = new UsuarioIndexado(addList,fase.current.getUsername().trim(),addUser,desc);
+                    fase.ListaUsuarios.InsertarLista(newi.toString());
+                    if(fase.ListaUsuarios.flag){
+                        fase.ListaUsuarios.CrearDescriptorLista(fase.current.getUsername());
+                    }else{
+                        fase.ListaUsuarios.UpdateDescriptorLista(fase.current.getUsername());
+                    }
                     btnauser.setEnabled(false);
                     btnBlistaa.setEnabled(true);
                     jTextArea3.setText("");
@@ -741,6 +770,7 @@ public class ListasUser extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

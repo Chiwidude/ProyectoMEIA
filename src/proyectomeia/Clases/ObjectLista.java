@@ -108,7 +108,7 @@ public class ObjectLista {
         str.append("|");
         str.append(rightpad(Descripcion,40));
         str.append("|");
-        str.append(Numero_usuarios);
+        str.append(rightpad(String.valueOf(Numero_usuarios),4));
         str.append("|");
         str.append(rightpad(String.valueOf(Fecha_Creacion),20));
         str.append("|");

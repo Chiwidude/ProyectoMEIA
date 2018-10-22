@@ -336,6 +336,7 @@ public class CreateUser extends javax.swing.JFrame {
                                                          try {
                                                              fase.Usuarios.bitacora.updateAutor(nuevo.getUsername());
                                                              fase.Usuarios.updateAutor(nuevo.getUsername());
+                                                             fase.Listas.updateAutor(nuevo.getUsername());
                                                          } catch (IOException ex) {
                                                              Logger.getLogger(CreateUser.class.getName()).log(Level.SEVERE, null, ex);
                                                          }

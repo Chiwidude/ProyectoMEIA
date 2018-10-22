@@ -57,6 +57,7 @@ public void Insertar(String valor) throws IOException{
        }else {
             bitacora.Insertar(valor);
         }
+  UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
 }
 /**
  * Método para realizar busquedas al insertar
@@ -302,6 +303,59 @@ private void UpdateDescriptor(String registrosA, String registrosI, String fecha
         }
      
     }
+       /**
+        * Escribe el usuario que ha creado el archivo
+        * @param autor
+        * @throws FileNotFoundException
+        * @throws IOException 
+        */
+       public void updateAutor(String autor) throws FileNotFoundException, IOException{
+        RandomAccessFile ArchivoUsuario = new RandomAccessFile(descriptorLista, "rw");
+        String linea;
+        long bytestosave = 0;
+        while((linea = ArchivoUsuario.readLine())!= null){
+            
+           if(linea.contains("fecha_creacion")){
+                bytestosave = ArchivoUsuario.getFilePointer();
+                ArchivoUsuario.seek(bytestosave);
+                String newvalue = "usuario_creacion:" + rightpad(autor,20);
+               ArchivoUsuario.writeBytes(newvalue);
+               ArchivoUsuario.close();
+                return; 
+            }
+           
+           
+            
+        }
+       }
+       /**
+        * Actualiza el usurio en caso se modifique el archivo
+        * @param autor
+        * @throws FileNotFoundException
+        * @throws IOException 
+        */
+       public void updateAutorMod(String autor) throws FileNotFoundException, IOException{
+        RandomAccessFile ArchivoUsuario = new RandomAccessFile(descriptorLista, "rw");
+        String linea;
+        long bytestosave = 0;
+        while((linea = ArchivoUsuario.readLine())!= null){
+            
+           if(linea.contains("fecha_modificacion")){
+                bytestosave = ArchivoUsuario.getFilePointer();
+                ArchivoUsuario.seek(bytestosave);
+                String newvalue = "usuario_modificacion:" + rightpad(autor,20);
+               ArchivoUsuario.writeBytes(newvalue);
+               ArchivoUsuario.close();
+                return; 
+            }
+           
+           
+            
+        }
+        
+        
+    }
+       
        public void CrearDescriptor(String Autor, int Maxregistros){
     StringBuilder atributos = new StringBuilder();
     atributos.append("Nombre_simbolico:"+ masterfileLista.getPath());

@@ -85,7 +85,12 @@ public boolean ExistsUser(String object){
         } else {
             String busqueda = Usuarios.Buscar(object);
             if(!busqueda.isEmpty() || !busqueda.equals("")){
-                exists = true;
+                if(!busqueda.split("\\|")[busqueda.split("\\|").length-1].contains("0")){
+                         exists = true;
+                }else{
+                       exists = true;
+                }
+             
             } else{
                 exists = false;
             }

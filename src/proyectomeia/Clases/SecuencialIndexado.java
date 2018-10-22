@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -31,6 +34,7 @@ public class SecuencialIndexado {
     private File DescriptorMasterFile;
     private File masterFile;
     private int nPosicion = 1;
+    public boolean flag;
    
     /**
      * Metodo constructor
@@ -73,6 +77,7 @@ public class SecuencialIndexado {
             archivo.writeBytes(System.lineSeparator());
             nPosicion++;
             CrearDescriptorIndice();
+            flag = true;
             archivo.close();
             }else{
                 //Dos posiciones o mas
@@ -89,7 +94,9 @@ public class SecuencialIndexado {
                     String nuevo = newv.toString();
                     archivo.writeBytes(nuevo); 
                     archivo.writeBytes(System.lineSeparator());
-                    archivo.close(); 
+                    archivo.close();
+                    UpdateDescriptorIndice();
+                    flag = false;
                 }
             }
     }
@@ -104,20 +111,34 @@ public class SecuencialIndexado {
      * @throws IOException
      * @throws FileNotFoundException 
      */
-    public void InsertarLista (String nombreLista,String usuario,String usuarioAsociado,String descriptor,String Status) throws IOException,FileNotFoundException{
-            StringBuilder contenidoLista = new StringBuilder();
+    public void InsertarLista (String object) {
+        try {
             archivo = new RandomAccessFile(masterFile,"rw"); 
-            long tamanio = archivo.length(); 
+            long tamanio = archivo.length();
             archivo.seek(tamanio);
-            archivo.writeBytes(contenidoLista.toString()); 
+            archivo.writeBytes(object); 
             archivo.writeBytes(System.lineSeparator());
             archivo.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    /*
+    Retorna la posición del siguiente dato en el archivo Indice
+    */
     private int Next(String find){
         String[] positions = find.split("\\|");
         int next = Integer.parseInt(positions[5].trim());
         return next;
     }
+    /**
+     * retorna el dato localizado en la posición indicada
+     * @param position posición del dato en el Indice
+     * @return dato encontrado
+     * @throws IOException 
+     */
     private String siguiente(int position) throws IOException{
         String line = "";
         InputStream f = new FileInputStream(Indice);
@@ -138,7 +159,13 @@ public class SecuencialIndexado {
     public void Eliminar(String NombreLista){
         //sin implementar
     }
-    
+    /**
+     *Modifica un dato del Indice
+     * @param viejo
+     * @param Nuevo
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public void Modificar(String viejo, String Nuevo) throws FileNotFoundException, IOException{
         int posicion = PosicionRegistro(viejo);
         RandomAccessFile archivo = new RandomAccessFile(Indice,"rw");
@@ -154,37 +181,47 @@ public class SecuencialIndexado {
     
     public void Busqueda(String NombreLista,String usuario,String usuarioAsociado){
         //sin implementar
-    }     
-    
-    /**
-     * Formatea el string para insertarlo en en Archivo INDICE
-     */
-    
-    /**
-     * Formatea el string para insertarlo en en Archivo LISTA
-     */      
-       
+    }       
     /**
      * Sobreescrbe el descriptor LISTA, lo actualiza, sin problemas
      * @param usuario coloca el utltimo usuario
      * @throws IOException 
      */
     public void CrearDescriptorLista(String usuario) throws IOException{     
-        DescriptorMasterFile.createNewFile();
         archivo = new RandomAccessFile(DescriptorMasterFile, "rw");
         StringBuilder descriptorLista = new StringBuilder();
-        descriptorLista.append("Usuario Creado:"+usuario);
+        descriptorLista.append("Usuario Creado:"+rightpad(usuario,20));
         descriptorLista.append(System.lineSeparator());
         descriptorLista.append("Fecha Creacion:"+new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
         descriptorLista.append(System.lineSeparator());
-        descriptorLista.append("Numero de Registros:"+CantidadRegistrosLista()); 
+        descriptorLista.append("Numero de Registros:"+rightpad(String.valueOf(CantidadRegistrosLista()),4)); 
         descriptorLista.append(System.lineSeparator());
-        descriptorLista.append("Registros Activos:"+CantidadRegistrosActivosLista()); 
+        descriptorLista.append("Registros Activos:"+rightpad(String.valueOf(CantidadRegistrosActivosLista()),4)); 
         descriptorLista.append(System.lineSeparator());
-        descriptorLista.append("Registros Inactivos:"+CantidadRegistrosInactivosLista());
+        descriptorLista.append("Registros Inactivos:"+rightpad(String.valueOf(CantidadRegistrosInactivosLista()),4));
         archivo.writeBytes(descriptorLista.toString());
         
-    } 
+    }
+    public void UpdateDescriptorLista(String usuario){
+        try {
+            FileChannel.open(Paths.get(DescriptorMasterFile.getPath()), StandardOpenOption.WRITE).truncate(0).close();
+            archivo = new RandomAccessFile(DescriptorMasterFile, "rw");
+            StringBuilder descriptorLista = new StringBuilder();
+            descriptorLista.append("Usuario Creado:"+rightpad(usuario,20));
+            descriptorLista.append(System.lineSeparator());
+            descriptorLista.append("Fecha Creacion:"+new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
+            descriptorLista.append(System.lineSeparator());
+            descriptorLista.append("Numero de Registros:"+rightpad(String.valueOf(CantidadRegistrosLista()),4)); 
+            descriptorLista.append(System.lineSeparator());
+            descriptorLista.append("Registros Activos:"+rightpad(String.valueOf(CantidadRegistrosActivosLista()),4)); 
+           descriptorLista.append(System.lineSeparator());
+           descriptorLista.append("Registros Inactivos:"+rightpad(String.valueOf(CantidadRegistrosInactivosLista()),4));
+           archivo.writeBytes(descriptorLista.toString());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     /**
      * Metodo que crea el descriptor del indice, lo va actualizando
@@ -203,7 +240,32 @@ public class SecuencialIndexado {
         archivo.writeBytes(descriptorLista.toString());
         
     }
-    public int ObtenerInicio() throws FileNotFoundException, IOException{
+    private void UpdateDescriptorIndice(){
+        try {
+            int inicio = ObtenerInicio();
+            FileChannel.open(Paths.get(DescriptorIndice.getPath()), StandardOpenOption.WRITE).truncate(0).close();
+            RandomAccessFile archivo = new RandomAccessFile(DescriptorIndice, "rw");
+            StringBuilder descriptorLista = new StringBuilder();
+            descriptorLista.append("Numero de Registros:"+rightpad(String.valueOf(CantidadRegistrosIndice()),4)); 
+            descriptorLista.append(System.lineSeparator());
+            descriptorLista.append("Registro Inicio:"+rightpad(String.valueOf(inicio),4)); 
+            descriptorLista.append(System.lineSeparator());        
+            descriptorLista.append("Registros Activos:"+rightpad(String.valueOf(CantidadRegistrosActivosIndice()),4)); 
+            descriptorLista.append(System.lineSeparator());
+            descriptorLista.append("Registros Inactivos:"+rightpad(String.valueOf(CantidadRegistrosInactivosIndice()),4));
+            archivo.writeBytes(descriptorLista.toString());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    /**
+     * Obtiene la posición de inicio del Indice
+     * @return posición de inicio
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    private int ObtenerInicio() throws FileNotFoundException, IOException{
         int inicio = 0;
         String line;
         InputStream f = new FileInputStream(DescriptorIndice);
@@ -218,7 +280,13 @@ public class SecuencialIndexado {
         }
         return inicio;
     }
-    public void NuevoInicio(String nInicio) throws FileNotFoundException, IOException{
+    /**
+     * Modifica el Inicio del Indice cuando es necesario
+     * @param nInicio nuevo inicio
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    private void NuevoInicio(String nInicio) throws FileNotFoundException, IOException{
         String line;
         RandomAccessFile r = new RandomAccessFile(DescriptorIndice,"rw");
         while((line = r.readLine())!= null){
@@ -233,6 +301,11 @@ public class SecuencialIndexado {
         r.close();
         
     }
+    /**
+     * verifica si la posición evaluada es el inicio
+     * @param t
+     * @return 
+     */
     private boolean esInicio(int t){
         boolean is = false;
         try {
@@ -246,10 +319,15 @@ public class SecuencialIndexado {
         }
         return is;
     }
-    
      protected String rightpad(String text, int length) {
     return String.format("%-" + length + "." + length + "s", text);
 }
+     /**
+      * Obtiene el siguiente que se le debe asignar al nuevo elemento del Indice
+      * @param object
+      * @return
+      * @throws IOException 
+      */
     private String ObtenerDSiguiente(String object) throws IOException{
         int inicio = ObtenerInicio();
         String siguiente = "";
@@ -290,6 +368,11 @@ public class SecuencialIndexado {
         
         return siguiente;
     }
+    /**
+     * Refactoriza el Indice cuando se debe cambiar el inicio
+     * @param i
+     * @param n 
+     */
     private void RefactornI(int i, String n){
         try {
             int inicio = ObtenerInicio();
@@ -315,6 +398,12 @@ public class SecuencialIndexado {
         }
        
     }
+    /**
+     * Refactoriza el Indice cuando se debe cambiar el final
+     * @param vfin
+     * @param nfin
+     * @throws IOException 
+     */
     private void RefactorF(int vfin, String nfin) throws IOException{
         int inicio = ObtenerInicio();
         String comparacion = siguiente(inicio);
@@ -332,6 +421,12 @@ public class SecuencialIndexado {
             }
         }
     }
+    /**
+     * Revisa si la linea es la última del Indice
+     * @param i
+     * @param comp
+     * @return 
+     */
     private boolean foundfin(int i,String comp){
           String l1 = String.valueOf(i);
         String l2 = comp.split("\\|")[5].trim();
@@ -365,8 +460,7 @@ public class SecuencialIndexado {
       
         return posicion;
     }  
-    
-    public int compare(String o1, String o2) {
+    private int compare(String o1, String o2) {
         String l1 = o1.split("\\|")[2];
         String l2 = o2.split("\\|")[2];
         int result = l1.compareTo(l2);
@@ -383,7 +477,13 @@ public class SecuencialIndexado {
         return result;
         
     }
-    public boolean csig(String o1, String o2){
+    /**
+     * verifica si se cambia el siguiente
+     * @param o1
+     * @param o2
+     * @return 
+     */
+    private boolean csig(String o1, String o2){
         String l1 = o1;
         String l2 = o2.split("\\|")[5].trim();
         boolean found = false;
@@ -393,7 +493,6 @@ public class SecuencialIndexado {
         }
         return found;
     }
-   
     /**
      * Metodo que retorna la cantidad de Registros en la lista
      * @return cantidadRegistrosLista

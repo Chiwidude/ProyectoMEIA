@@ -176,6 +176,7 @@ public class Bitacora_lista extends ApiloFile {
   public void updateAutor(String autor){
       //nothing
   }
+    @Override
   public void Reorganizar() throws FileNotFoundException, IOException{
         Archivo = new RandomAccessFile(masterfile,"r");
      Queue<String> refactor = new LinkedList<>();
@@ -200,6 +201,26 @@ public class Bitacora_lista extends ApiloFile {
       Archivo.close();
       masterfile = tempfile;
   }
+    @Override
+  public int getNoRegistros(){
+        int registros = 0;
+        try {
+            Archivo = new RandomAccessFile(masterfile,"r");
+            String linea;
+            while((linea = Archivo.readLine())!= null){
+                if(!linea.split("\\|")[linea.split("\\|").length-1].contains("0")){
+                        registros++;
+                }
+            }
+            Archivo.close();
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ApiloFile.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ApiloFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return registros;
+    }
   
  
   

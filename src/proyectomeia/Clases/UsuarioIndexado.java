@@ -5,6 +5,9 @@
  */
 package proyectomeia.Clases;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  *
  * @author kevin
@@ -16,6 +19,7 @@ public class UsuarioIndexado {
         UsuarioAsociado = Uasociado;
         Descripcion = Desc;
         Status = "1";
+        fecha = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
        
     }
     /**
@@ -100,6 +104,8 @@ public class UsuarioIndexado {
         str.append("|");
         str.append(rightpad(Descripcion,40));
         str.append("|");
+        str.append(fecha);
+        str.append("|");
         str.append(Status);
         return str.toString();
     }
@@ -109,9 +115,24 @@ public class UsuarioIndexado {
         Usuario = parts[1];
         UsuarioAsociado = parts[2];
         Descripcion = parts[3];
-        Status = parts[4];
+        fecha = parts[4];
+        Status = parts[5];
         
     }
     
-    private String NombreLista,Usuario,UsuarioAsociado,Descripcion,Status;    
+    private String NombreLista,Usuario,UsuarioAsociado,Descripcion,Status,fecha;    
+
+    /**
+     * @return the fecha
+     */
+    public String getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 }

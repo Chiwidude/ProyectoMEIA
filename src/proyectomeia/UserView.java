@@ -38,7 +38,6 @@ public class UserView extends javax.swing.JFrame {
         t1 = labelRol.getText();
         if(fase.current.isRol()==true){
             t1 = t1+" " + "Administrador";
-            btnListas.setVisible(false);
         } else {
             t1 = t1 + " " + "Usuario Normal";
         }

@@ -452,6 +452,9 @@ public class ListaAdmin extends javax.swing.JFrame {
                 nuevo.setUsuario(User);
             try {
                 fase.Listas.Insertar(nuevo.toString());
+                if(fase.Listas.flag){
+                    fase.Listas.updateAutorMod(fase.current.getUsername());
+                }
                 JOptionPane.showMessageDialog(null, User +" " +"ahora cuenta con la lista:" + txtNlistad.getText());
                 txtNlistad.setText("");
                 txtNdesc.setText("");
