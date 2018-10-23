@@ -621,7 +621,8 @@ public class ListasUser extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            ObjectLista nuevo = working;
+            ObjectLista nuevo = new ObjectLista();
+            nuevo.CreateFromString(working.toString());
             nuevo.setEstatus(false);
             fase.Listas.Modificar(nuevo.toString(), working.toString());
             btnEditarL.setEnabled(false);

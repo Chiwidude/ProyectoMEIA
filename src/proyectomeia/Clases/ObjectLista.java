@@ -126,7 +126,7 @@ public class ObjectLista {
         this.Nombre_lista = Atributes[0];
         this.Usuario = Atributes[1];
         this.Descripcion = Atributes[2];
-        this.Numero_usuarios = Integer.valueOf(Atributes[3]);
+        this.Numero_usuarios = Integer.valueOf(Atributes[3].trim());
         this.Fecha_Creacion = Atributes[4];
         this.Estatus = Atributes[5].equals("1");
         

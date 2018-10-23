@@ -180,17 +180,16 @@ public class Bitacora_lista extends ApiloFile {
   public void Reorganizar() throws FileNotFoundException, IOException{
         Archivo = new RandomAccessFile(masterfile,"r");
      Queue<String> refactor = new LinkedList<>();
-     String keepath = masterfile.getPath();
+     //String keepath = masterfile.getPath();
           String linea;
           while((linea = Archivo.readLine())!= null){
-              if(!linea.split("\\|")[linea.split("\\|").length-1].contains(("0"))){
+              if(!linea.split("\\|")[linea.split("\\|").length-1].equals("0")){
                   refactor.add(linea);
               }
           }
           Archivo.close();
-          masterfile.delete();
-       File tempfile = new File(keepath); 
-      Archivo = new RandomAccessFile(tempfile,"rw");
+       FileChannel.open(Paths.get(masterfile.getPath()), StandardOpenOption.WRITE).truncate(0).close(); 
+      Archivo = new RandomAccessFile(masterfile,"rw");
       String decoy;
       decoy = refactor.poll();
         while(decoy != null){
@@ -199,7 +198,6 @@ public class Bitacora_lista extends ApiloFile {
           decoy = refactor.poll();
       }
       Archivo.close();
-      masterfile = tempfile;
   }
     @Override
   public int getNoRegistros(){
