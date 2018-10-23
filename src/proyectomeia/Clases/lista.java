@@ -44,6 +44,7 @@ public void Insertar(String valor) throws IOException{
                 if(bitacora.getNoRegistros() == bitacora.ReturnMaxreg()){
                     refactorBitacora();
                     flag = true;
+                    UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
                 }
                 bitacora.Insertar(valor);
             }
@@ -51,13 +52,14 @@ public void Insertar(String valor) throws IOException{
             if(bitacora.getNoRegistros() == bitacora.ReturnMaxreg()){
                     refactorBitacora();
                     flag = true;
+                    UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
                 }
                 bitacora.Insertar(valor);
         }
        }else {
             bitacora.Insertar(valor);
         }
-  UpdateDescriptor(String.valueOf(RegistrosActivos()),String.valueOf(RegistrosInactivos()),new SimpleDateFormat("yyyyMMdd.HH:mm").format(Calendar.getInstance().getTime()));
+  
 }
 /**
  * Método para realizar busquedas al insertar

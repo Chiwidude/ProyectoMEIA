@@ -162,13 +162,13 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        SecuencialIndexado archivo = new SecuencialIndexado(pathDescIndice, pathIndice,pathDescLista, pathLista);
-       try {
+        //SecuencialIndexado archivo = new SecuencialIndexado(pathDescIndice, pathIndice,pathDescLista, pathLista);
+       /*try {
             archivo.EliminacionLogicaAlCerrar();
             fase.ListaUsuarios.UpdateDescriptorLista(fase.current.getUsername());
         } catch (IOException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
        File temp1 = new File(pathArchivoApilo);
        File temp2 = new File(pathArchivoUsuarios);
         if(!temp1.exists() && !temp2.exists()){
