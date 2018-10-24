@@ -157,6 +157,27 @@ public class SecuencialIndexado {
                 return line;
     }
     
+    
+    public void EliminarUsuarioLista(String NombreLista,String nombreUsuario,String usuarioEliminar) throws FileNotFoundException, IOException{
+        RandomAccessFile archivo = new RandomAccessFile(Indice,"rw");        
+        String lineaModificar;
+        String[] data;
+        long tam = 0; 
+        while((lineaModificar = archivo.readLine())!=null){
+            data = lineaModificar.split("\\|");
+            if(data[2].contains(NombreLista) && data[3].contains(nombreUsuario) && data[4].contains(usuarioEliminar)){
+                archivo.seek(archivo.getFilePointer()-3);                
+                archivo.writeBytes("0");
+                archivo.seek(archivo.getFilePointer()+2);
+                archivo.seek(archivo.getFilePointer()-10);
+                archivo.writeBytes("-2");
+                archivo.seek(archivo.getFilePointer()+9);
+                UpdateDescriptorIndice();
+            }
+        }   
+        archivo.close();
+    }
+    
     /**
      * Metodo que recibe como parametro las claves e inactiva una lista
      * @param NombreLista clave 1

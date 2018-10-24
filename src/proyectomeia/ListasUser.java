@@ -42,6 +42,7 @@ public class ListasUser extends javax.swing.JFrame {
         btncancel.setEnabled(false);
         btnBuser.setEnabled(false);
         btnauser.setEnabled(false);
+        btnEliminarUsuario.setEnabled(false);
         addWindowListener(new WindowAdapter()
         {
             @Override
@@ -105,6 +106,8 @@ public class ListasUser extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         btncancel = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
+        txtUsuarioEliminar = new javax.swing.JTextField();
+        btnEliminarUsuario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -284,7 +287,7 @@ public class ListasUser extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setText("Eliminar Lista");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -321,6 +324,13 @@ public class ListasUser extends javax.swing.JFrame {
 
         jLabel11.setText("EDITAR UNA LISTA");
 
+        btnEliminarUsuario.setText("Eliminar usuario lista");
+        btnEliminarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarUsuarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -340,29 +350,32 @@ public class ListasUser extends javax.swing.JFrame {
                                 .addComponent(jLabel11)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                                    .addComponent(txtUsuarioEliminar))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btncancel))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(btnBusqueda)
                                         .addGap(42, 42, 42)
                                         .addComponent(btnEditarL)
                                         .addGap(18, 18, 18)
-                                        .addComponent(btnEliminar))))))
+                                        .addComponent(btnEliminar))
+                                    .addComponent(btnEliminarUsuario))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btncancel))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))))
-                .addGap(54, 54, 54))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,14 +393,20 @@ public class ListasUser extends javax.swing.JFrame {
                     .addComponent(btnBusqueda)
                     .addComponent(btnEditarL)
                     .addComponent(btnEliminar))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(btncancel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtUsuarioEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminarUsuario))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btncancel)
+                        .addGap(5, 5, 5)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -532,7 +551,7 @@ public class ListasUser extends javax.swing.JFrame {
         btnEliminar.setEnabled(false);
         btnCdesc.setEnabled(true);
         jTextArea1.setEnabled(true);
-        btncancel.setEnabled(true);
+        btncancel.setEnabled(true);        
     }//GEN-LAST:event_btnEditarLActionPerformed
 
     private void btnBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusquedaActionPerformed
@@ -561,6 +580,7 @@ public class ListasUser extends javax.swing.JFrame {
                                      btnEditarL.setEnabled(true);
                                     btnEliminar.setEnabled(true);
                                     btnBusqueda.setEnabled(false);
+                                    btnEliminarUsuario.setEnabled(true);
                                     txtBusqueda.setText("");
                                }else {
                                    JOptionPane.showMessageDialog(null, fase.current.getUsername().trim() +" " +"no posee una lista con ese nombre"); 
@@ -759,6 +779,18 @@ public class ListasUser extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnauserActionPerformed
 
+    private void btnEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarUsuarioActionPerformed
+        try {
+            // TODO add your handling code here:
+
+            fase.ListaUsuarios.EliminarUsuarioLista(txtBusqueda.getText(),fase.current.getUsername().trim() , txtUsuarioEliminar.getText());
+            JOptionPane.showMessageDialog(null, "El usuario:" + txtUsuarioEliminar.getText() +" "+"ya no esta asociado a:" + fase.current.getUsername() + " "
+                        + "en su lista:" + addList);
+        } catch (IOException ex) {
+            Logger.getLogger(ListasUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEliminarUsuarioActionPerformed
+
     /**     
      * @param args the command line arguments
      */
@@ -803,6 +835,7 @@ public class ListasUser extends javax.swing.JFrame {
     private javax.swing.JButton btnCrearlista;
     private javax.swing.JButton btnEditarL;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminarUsuario;
     private javax.swing.JButton btnauser;
     private javax.swing.JButton btncancel;
     private javax.swing.JButton jButton1;
@@ -833,5 +866,6 @@ public class ListasUser extends javax.swing.JFrame {
     private javax.swing.JTextField txtBusqueda;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNlista;
+    private javax.swing.JTextField txtUsuarioEliminar;
     // End of variables declaration//GEN-END:variables
 }
