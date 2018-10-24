@@ -166,17 +166,16 @@ public class SecuencialIndexado {
         while((lineaModificar = archivo.readLine())!=null){
             data = lineaModificar.split("\\|");
             if(data[2].contains(NombreLista) && data[3].contains(nombreUsuario) && data[4].contains(usuarioEliminar)){
+                ReorganizarEliminacion(lineaModificar);
                 archivo.seek(archivo.getFilePointer()-3);                
                 archivo.writeBytes("0");
                 archivo.seek(archivo.getFilePointer()+2);
                 archivo.seek(archivo.getFilePointer()-10);
                 archivo.writeBytes("-2");
                 archivo.seek(archivo.getFilePointer()+9);
+                String inlista = Blista_Usuario(data[1]);
+                EliminarnLista(inlista);
                 UpdateDescriptorIndice();
-            }else{
-                archivo.seek(archivo.getFilePointer()-10);
-                archivo.writeBytes("0");
-                archivo.seek(archivo.getFilePointer()+9);
             }
         }   
         archivo.close();
@@ -197,21 +196,58 @@ public class SecuencialIndexado {
         while((lineaModificar = archivo.readLine())!=null){
             data = lineaModificar.split("\\|");
             if(data[2].contains(NombreLista) && data[3].contains(nombreUsuario)){
+                ReorganizarEliminacion(lineaModificar);
                 archivo.seek(archivo.getFilePointer()-3);                
                 archivo.writeBytes("0");
                 archivo.seek(archivo.getFilePointer()+2);
                 archivo.seek(archivo.getFilePointer()-10);
                 archivo.writeBytes("-2");
                 archivo.seek(archivo.getFilePointer()+9);
+                String inlista = Blista_Usuario(data[1]);
+                EliminarnLista(inlista);
                 UpdateDescriptorIndice();
-            }else{
-                archivo.seek(archivo.getFilePointer()-10);
-                archivo.writeBytes("0");
-                archivo.seek(archivo.getFilePointer()+9); 
             }
         } 
         archivo.close();
     }
+    private void ReorganizarEliminacion(String object){
+        try {
+            ObjectIndice eliminar = new ObjectIndice();
+            eliminar.CreateFromString(object);
+            String nsiguiente = eliminar.getSiguiente();
+            String posreplace = eliminar.getNregistro();
+            refactorEliminar(posreplace,nsiguiente);
+        } catch (IOException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void refactorEliminar(String posremplazar,String nuevos) throws IOException{
+        boolean found = false;
+        int b = ObtenerInicio();
+        String in = siguiente(b);
+        while(found == false){
+            ObjectIndice elfound = new ObjectIndice();
+                elfound.CreateFromString(in);
+                boolean is = esInicio(Integer.parseInt(elfound.getNregistro().trim()));
+                if(is){
+                    NuevoInicio(elfound.getSiguiente());
+                    found = true;
+                }else{
+                    found = csig(posremplazar.trim(),in);
+                    if(found){
+                    ObjectIndice cambiar = new ObjectIndice();
+                    cambiar.CreateFromString(in);
+                    cambiar.setSiguiente(nuevos);
+                    Modificar(in,cambiar.toString());
+                    }else{
+                        int next = Next(in);
+                        in = siguiente(next);
+                    }
+                }
+            
+        }
+    }
+    
     
     /**
      * Elimina todas las listas desactivadas, inserta nuevamente las listas activas, y la reorganiza
@@ -254,6 +290,7 @@ public class SecuencialIndexado {
         //Se crean los archivos        
         temp1.createNewFile();
         temp2.createNewFile();
+        FileChannel.open(Paths.get(DescriptorIndice.getPath()), StandardOpenOption.WRITE).truncate(0).close();
         Indice = temp1;
         masterFile = temp2;
         nPosicion = 1;
@@ -290,6 +327,29 @@ public class SecuencialIndexado {
         archivo.close();
         
     }
+       public void ModLista(String viejo, String Nuevo) throws FileNotFoundException, IOException{
+        int posicion = PosicionRegistro(viejo);
+        RandomAccessFile archivo = new RandomAccessFile(masterFile,"rw");
+        for(int i = -1; i<posicion; i++){
+            archivo.readLine();
+        }
+        long rewrite = archivo.getFilePointer();
+        archivo.seek(rewrite);
+        archivo.writeBytes(Nuevo);
+        archivo.close();
+        
+    }
+       private void EliminarnLista(String viejo){
+        try {
+            UsuarioIndexado nuevo = new UsuarioIndexado();
+            nuevo.CreateFromString(viejo);
+            nuevo.setStatus("0");
+            ModLista(viejo,nuevo.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+       }
     
     public String Busqueda(String object) throws IOException{
         String  exists ="";
@@ -323,7 +383,36 @@ public class SecuencialIndexado {
         
         return exists;
        
-    }  
+    }
+    public String Blista_Usuario(String position){
+        InputStream f = null;
+        String result = "";
+        try {
+            String temp = "1.";
+            String nuevo = position.substring(temp.length(),position.length());
+            int pos = Integer.parseInt(nuevo.trim());
+            f = new FileInputStream(masterFile);
+            BufferedReader br = new BufferedReader(new InputStreamReader(f));
+            for(int i = 0; i<pos; i++){
+                String line = br.readLine();
+                if(i == pos-1){
+                    result = line;
+                }
+            }
+           
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                f.close();
+            } catch (IOException ex) {
+                Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+         return result;
+    }
     
     public boolean existeUsuario(String object) throws IOException{
         boolean exists = false;
@@ -419,6 +508,15 @@ public class SecuencialIndexado {
     private void UpdateDescriptorIndice(){
         try {
             int inicio = ObtenerInicio();
+            if(inicio == -2){
+                nPosicion = 1;
+                FileChannel.open(Paths.get(DescriptorIndice.getPath()), StandardOpenOption.WRITE).truncate(0).close();
+                FileChannel.open(Paths.get(Indice.getPath()), StandardOpenOption.WRITE).truncate(0).close();
+                FileChannel.open(Paths.get(DescriptorMasterFile.getPath()), StandardOpenOption.WRITE).truncate(0).close();
+                FileChannel.open(Paths.get(masterFile.getPath()), StandardOpenOption.WRITE).truncate(0).close(); 
+            }else{
+            
+            
             FileChannel.open(Paths.get(DescriptorIndice.getPath()), StandardOpenOption.WRITE).truncate(0).close();
             RandomAccessFile archivo = new RandomAccessFile(DescriptorIndice, "rw");
             StringBuilder descriptorLista = new StringBuilder();
@@ -430,7 +528,7 @@ public class SecuencialIndexado {
             descriptorLista.append(System.lineSeparator());
             descriptorLista.append("Registros Inactivos:"+rightpad(String.valueOf(CantidadRegistrosInactivosIndice()),4));
             archivo.writeBytes(descriptorLista.toString());
-            
+            }
         } catch (IOException ex) {
             Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -469,7 +567,7 @@ public class SecuencialIndexado {
             if(line.contains("Numero de Registros")){
                 long mod = r.getFilePointer();
                 r.seek(mod);
-                String newval = "Registro Inicio:" + nInicio;
+                String newval = "Registro Inicio:" + rightpad(nInicio,4);
                 r.writeBytes(newval);
                 
             }

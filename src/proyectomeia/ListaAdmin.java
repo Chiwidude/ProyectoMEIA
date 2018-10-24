@@ -227,7 +227,7 @@ public class ListaAdmin extends javax.swing.JFrame {
                                 .addComponent(txtBuser, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnBuser)))))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnregresar))
@@ -267,7 +267,7 @@ public class ListaAdmin extends javax.swing.JFrame {
         jInternalFrame3.setVisible(true);
 
         jLabel3.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
-        jLabel3.setText("Búsqueda usuario");
+        jLabel3.setText("Búsqueda usuario Propietario");
 
         btnUE.setText("Buscar");
         btnUE.addActionListener(new java.awt.event.ActionListener() {
@@ -305,12 +305,17 @@ public class ListaAdmin extends javax.swing.JFrame {
         jInternalFrame3Layout.setHorizontalGroup(
             jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame3Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
                 .addGroup(jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUE, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jInternalFrame3Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtUE, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)))
                 .addGroup(jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtLE, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -404,8 +409,8 @@ public class ListaAdmin extends javax.swing.JFrame {
                             .addGroup(jInternalFrame4Layout.createSequentialGroup()
                                 .addGap(205, 205, 205)
                                 .addComponent(btnCambiardesc)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 3, Short.MAX_VALUE)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         jInternalFrame4Layout.setVerticalGroup(
             jInternalFrame4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -623,10 +628,10 @@ public class ListaAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCEActionPerformed
 
     private void btnElLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElLActionPerformed
-        // TODO add your handling code here:
+        
         
          try {
-            // TODO add your handling code here:
+             
 
             fase.ListaUsuarios.EliminarUsuarioLista(txtLE.getText(),fase.current.getUsername().trim() , txtUE.getText());
             JOptionPane.showMessageDialog(null, "El usuario:" + txtUE.getText() +" "+"ya no esta asociado a:" + fase.current.getUsername() + " "

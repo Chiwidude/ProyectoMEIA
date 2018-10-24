@@ -135,4 +135,6 @@ public class UsuarioIndexado {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+    public UsuarioIndexado(){
+    }
 }
