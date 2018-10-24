@@ -173,6 +173,10 @@ public class SecuencialIndexado {
                 archivo.writeBytes("-2");
                 archivo.seek(archivo.getFilePointer()+9);
                 UpdateDescriptorIndice();
+            }else{
+                archivo.seek(archivo.getFilePointer()-10);
+                archivo.writeBytes("0");
+                archivo.seek(archivo.getFilePointer()+9);
             }
         }   
         archivo.close();
@@ -188,7 +192,7 @@ public class SecuencialIndexado {
     public void EliminarEnEjecucion(String NombreLista,String nombreUsuario) throws FileNotFoundException, IOException{        
         RandomAccessFile archivo = new RandomAccessFile(Indice,"rw");        
         String lineaModificar;
-        String[] data;
+        String[] data = null;
         long tam = 0; 
         while((lineaModificar = archivo.readLine())!=null){
             data = lineaModificar.split("\\|");
@@ -200,8 +204,12 @@ public class SecuencialIndexado {
                 archivo.writeBytes("-2");
                 archivo.seek(archivo.getFilePointer()+9);
                 UpdateDescriptorIndice();
+            }else{
+                archivo.seek(archivo.getFilePointer()-10);
+                archivo.writeBytes("0");
+                archivo.seek(archivo.getFilePointer()+9); 
             }
-        }   
+        } 
         archivo.close();
     }
     

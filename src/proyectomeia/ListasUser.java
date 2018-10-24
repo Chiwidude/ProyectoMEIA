@@ -618,6 +618,7 @@ public class ListasUser extends javax.swing.JFrame {
                        btnEditarL.setEnabled(true);
                         btnEliminar.setEnabled(true);
                         btnBusqueda.setEnabled(false);
+                        btnEliminarUsuario.setEnabled(true);
                         txtBusqueda.setText("");
                                                      
                    }

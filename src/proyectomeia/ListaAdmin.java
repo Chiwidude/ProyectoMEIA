@@ -244,7 +244,7 @@ public class ListaAdmin extends javax.swing.JFrame {
                 .addGroup(jInternalFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuser))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -284,6 +284,11 @@ public class ListaAdmin extends javax.swing.JFrame {
         });
 
         btnElL.setText("Eliminar");
+        btnElL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElLActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("sansserif", 2, 14)); // NOI18N
         jLabel8.setText("Busqueda Lista");
@@ -336,7 +341,7 @@ public class ListaAdmin extends javax.swing.JFrame {
                     .addComponent(btnBLE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame3Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(29, Short.MAX_VALUE)
                 .addComponent(btnEL)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnElL)
@@ -616,6 +621,20 @@ public class ListaAdmin extends javax.swing.JFrame {
         jInternalFrame3.setVisible(true);
         jInternalFrame4.setVisible(false);
     }//GEN-LAST:event_btnCEActionPerformed
+
+    private void btnElLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElLActionPerformed
+        // TODO add your handling code here:
+        
+         try {
+            // TODO add your handling code here:
+
+            fase.ListaUsuarios.EliminarUsuarioLista(txtLE.getText(),fase.current.getUsername().trim() , txtUE.getText());
+            JOptionPane.showMessageDialog(null, "El usuario:" + txtUE.getText() +" "+"ya no esta asociado a:" + fase.current.getUsername() + " "
+                        + "en su lista:" + txtLE.getText());
+        } catch (IOException ex) {
+            Logger.getLogger(ListasUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnElLActionPerformed
 
     /**
      * @param args the command line arguments
