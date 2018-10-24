@@ -172,9 +172,13 @@ public class SecuencialIndexado {
         while((lineaModificar = archivo.readLine())!=null){
             data = lineaModificar.split("\\|");
             if(data[2].contains(NombreLista) && data[3].contains(nombreUsuario)){
-                archivo.seek(archivo.getFilePointer()-3);
+                archivo.seek(archivo.getFilePointer()-3);                
                 archivo.writeBytes("0");
                 archivo.seek(archivo.getFilePointer()+2);
+                archivo.seek(archivo.getFilePointer()-10);
+                archivo.writeBytes("-2");
+                archivo.seek(archivo.getFilePointer()+9);
+                UpdateDescriptorIndice();
             }
         }   
         archivo.close();
