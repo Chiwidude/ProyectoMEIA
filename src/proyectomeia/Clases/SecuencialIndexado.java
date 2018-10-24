@@ -168,13 +168,16 @@ public class SecuencialIndexado {
         RandomAccessFile archivo = new RandomAccessFile(Indice,"rw");        
         String lineaModificar;
         String[] data;
+        long tam = 0; 
         while((lineaModificar = archivo.readLine())!=null){
             data = lineaModificar.split("\\|");
-            if(data[3].contains(NombreLista) && data[4].contains(nombreUsuario)){
-                archivo.seek(archivo.getFilePointer()-1);
+            if(data[2].contains(NombreLista) && data[3].contains(nombreUsuario)){
+                archivo.seek(archivo.getFilePointer()-3);
                 archivo.writeBytes("0");
+                archivo.seek(archivo.getFilePointer()+2);
             }
-        }        
+        }   
+        archivo.close();
     }
     
     /**
@@ -220,6 +223,7 @@ public class SecuencialIndexado {
         temp2.createNewFile();
         Indice = temp1;
         masterFile = temp2;
+        nPosicion = 1;
         for(int i = 0;i<lineasMasterSeleccionadas.size();i++){
             ObjectIndice nuevo = new ObjectIndice(lineasIndice.get(i).split("\\|")[1],
                     lineasIndice.get(i).split("\\|")[2],
@@ -254,9 +258,72 @@ public class SecuencialIndexado {
         
     }
     
-    public void Busqueda(String NombreLista,String usuario,String usuarioAsociado){
-        //sin implementar
-    }       
+    public String Busqueda(String object) throws IOException{
+        String  exists ="";
+        if(Indice.exists()){
+        int iterator = 0;
+        try {
+            iterator = ObtenerInicio();
+        } catch (IOException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String siguiente ="";
+        try {
+             siguiente = siguiente(iterator);
+        } catch (IOException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while(exists.equals("")){
+           int comparate = compare(object,siguiente);
+           if(comparate == 0){
+               exists = siguiente;
+           }else {
+               int mfound = Next(siguiente);
+               if(mfound == -1){
+                   break;
+               }else{
+                   siguiente = siguiente(mfound);
+               }
+           }
+        }
+        }
+        
+        return exists;
+       
+    }  
+    
+    public boolean existeUsuario(String object) throws IOException{
+        boolean exists = false;
+        if(Indice.exists()){
+        int iterator = 0;
+        try {
+            iterator = ObtenerInicio();
+        } catch (IOException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String siguiente ="";
+        try {
+             siguiente = siguiente(iterator);
+        } catch (IOException ex) {
+            Logger.getLogger(SecuencialIndexado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while(exists== false){
+           int comparate = compare(object,siguiente);
+           if(comparate == 0){
+               exists = true;
+           }else {
+               int mfound = Next(siguiente);
+               if(mfound == -1){
+                   break;
+               }else{
+                   siguiente = siguiente(mfound);
+               }
+           }
+        }
+        }
+        
+        return exists;
+    }
     /**
      * Sobreescrbe el descriptor LISTA, lo actualiza, sin problemas
      * @param usuario coloca el utltimo usuario
@@ -560,14 +627,25 @@ public class SecuencialIndexado {
      * @return 
      */
     private boolean csig(String o1, String o2){
+        boolean found = false;
+        try{        
         String l1 = o1;
         String l2 = o2.split("\\|")[5].trim();
-        boolean found = false;
+       
         int result = l1.compareTo(l2);
         if(result == 0){
             found = true;
         }
-        return found;
+        }catch(Exception e){
+        String l1 = o1;
+        String l2 = o2.split("\\|")[5].trim();
+       
+        int result = l1.compareTo(l2);
+        if(result == 0){
+            found = true;
+        }
+        }
+        return found; 
     }
     /**
      * Metodo que retorna la cantidad de Registros en la lista

@@ -47,7 +47,9 @@ public class Inicio extends javax.swing.JFrame {
      * Creates new form InterfazInicial
      */
     public Inicio() {
-        initComponents();        
+        initComponents(); 
+        txtUser.setText("bkevin1052");
+        txtPassword.setText("pepito1234");
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
     }
     public Inicio(Singleton datos){

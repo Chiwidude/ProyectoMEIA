@@ -6,6 +6,8 @@
 package proyectomeia;
 
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +37,18 @@ public class ListaAdmin extends javax.swing.JFrame {
         txtLE.setEnabled(false);
         btnEL.setEnabled(false);
         btnElL.setEnabled(false);
+        addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                try {
+                    fase.ListaUsuarios.EliminacionLogicaAlCerrar();
+                } catch (IOException ex) {
+                    Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
     private Singleton fase;
     private String  User;

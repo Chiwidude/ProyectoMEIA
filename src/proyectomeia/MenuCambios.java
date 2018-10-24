@@ -87,6 +87,7 @@ public class MenuCambios extends javax.swing.JFrame {
             {
                 try {
                     fase.Usuarios.refactorBitacora();
+                    fase.ListaUsuarios.EliminacionLogicaAlCerrar();
                 } catch (IOException ex) {
                     Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
                 }

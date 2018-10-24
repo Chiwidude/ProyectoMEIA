@@ -6,6 +6,8 @@
 package proyectomeia;
 
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,6 +29,7 @@ public class ListasUser extends javax.swing.JFrame {
      */
     public ListasUser() {
         initComponents();
+        txtBusqueda.setText("Cuates");
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));    
     }
     public ListasUser(Singleton object){
@@ -39,6 +42,18 @@ public class ListasUser extends javax.swing.JFrame {
         btncancel.setEnabled(false);
         btnBuser.setEnabled(false);
         btnauser.setEnabled(false);
+        addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                try {
+                    fase.ListaUsuarios.EliminacionLogicaAlCerrar();
+                } catch (IOException ex) {
+                    Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
     private Singleton fase;
     private ObjectLista working;
@@ -248,7 +263,7 @@ public class ListasUser extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnauser)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Agregar", jPanel3);
@@ -392,7 +407,9 @@ public class ListasUser extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, Short.MAX_VALUE))
         );
 
         pack();
@@ -625,6 +642,7 @@ public class ListasUser extends javax.swing.JFrame {
             nuevo.CreateFromString(working.toString());
             nuevo.setEstatus(false);
             fase.Listas.Modificar(nuevo.toString(), working.toString());
+            fase.ListaUsuarios.EliminarEnEjecucion(nuevo.getNombre_lista(), nuevo.getUsuario());
             btnEditarL.setEnabled(false);
             btnEliminar.setEnabled(false);
             btnBusqueda.setEnabled(true);
@@ -695,16 +713,29 @@ public class ListasUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuserActionPerformed
 
     private void btnauserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnauserActionPerformed
+                             
         String desc = jTextArea3.getText();
         if(desc.isEmpty()){
             JOptionPane.showMessageDialog(null, "Por favor agregue una descripción para el usuario");
         }else {
             if(desc.length()<=40){
                 try {
+                    
                     ObjectIndice nuevo = new ObjectIndice(addList,fase.current.getUsername().trim(),addUser);
+                    boolean exists = fase.ListaUsuarios.existeUsuario(nuevo.toString());
+                    if(!exists){
                     fase.ListaUsuarios.InsertarIndice(nuevo.toString());
                     UsuarioIndexado newi = new UsuarioIndexado(addList,fase.current.getUsername().trim(),addUser,desc);
                     fase.ListaUsuarios.InsertarLista(newi.toString());
+                    String anterior = fase.ExistsList(addList+"|" +fase.current.getUsername().trim());
+                    ObjectLista last = new ObjectLista();
+                    last.CreateFromString(anterior);
+                    int cantidad = last.getNumero_usuarios();
+                    cantidad++;
+                    ObjectLista nueva =new ObjectLista();
+                    nueva.CreateFromString(anterior);
+                    nueva.setNumero_usuarios(cantidad);
+                    fase.Listas.Modificar(nueva.toString(), last.toString());
                     if(fase.ListaUsuarios.flag){
                         fase.ListaUsuarios.CrearDescriptorLista(fase.current.getUsername());
                     }else{
@@ -713,6 +744,12 @@ public class ListasUser extends javax.swing.JFrame {
                     btnauser.setEnabled(false);
                     btnBlistaa.setEnabled(true);
                     jTextArea3.setText("");
+                     JOptionPane.showMessageDialog(null, "El usuario:" + fase.current.getUsername().trim() +" "+"agregó a:" + addUser + " "
+                        + "a su lista:" + addList);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El usuario:" + fase.current.getUsername().trim() +" "+"ya tiene asociado a:" + addUser + " "
+                        + "en su lista:" + addList);
+                    }
                 } catch (IOException ex) {
                     Logger.getLogger(ListasUser.class.getName()).log(Level.SEVERE, null, ex);
                 }
