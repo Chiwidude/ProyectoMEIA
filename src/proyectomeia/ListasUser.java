@@ -194,7 +194,7 @@ public class ListasUser extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Buscar Usuarioa Asociar");
+        jLabel10.setText("Buscar Usuario a Asociar");
 
         btnBuser.setText("Buscar");
         btnBuser.addActionListener(new java.awt.event.ActionListener() {
@@ -266,7 +266,7 @@ public class ListasUser extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnauser)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Agregar", jPanel3);
@@ -782,7 +782,6 @@ public class ListasUser extends javax.swing.JFrame {
 
     private void btnEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarUsuarioActionPerformed
         try {
-            // TODO add your handling code here:
 
             fase.ListaUsuarios.EliminarUsuarioLista(txtBusqueda.getText(),fase.current.getUsername().trim() , txtUsuarioEliminar.getText());
             JOptionPane.showMessageDialog(null, "El usuario:" + txtUsuarioEliminar.getText() +" "+"ya no esta asociado a:" + fase.current.getUsername() + " "

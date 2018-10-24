@@ -660,23 +660,13 @@ public class SecuencialIndexado {
      * @return 
      */
     private boolean csig(String o1, String o2){
-        boolean found = false;
-        try{        
+        boolean found = false;   
         String l1 = o1;
         String l2 = o2.split("\\|")[5].trim();
        
         int result = l1.compareTo(l2);
         if(result == 0){
             found = true;
-        }
-        }catch(Exception e){
-        String l1 = o1;
-        String l2 = o2.split("\\|")[5].trim();
-       
-        int result = l1.compareTo(l2);
-        if(result == 0){
-            found = true;
-        }
         }
         return found; 
     }

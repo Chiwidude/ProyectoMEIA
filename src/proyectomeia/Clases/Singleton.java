@@ -83,17 +83,19 @@ public boolean ExistsUser(String object){
         } else if(!temp2.exists()){
             exists = false;
         } else {
-            String busqueda = Usuarios.Buscar(object);
-            if(!busqueda.isEmpty() || !busqueda.equals("")){
-                if(!busqueda.split("\\|")[busqueda.split("\\|").length-1].contains("0")){
-                         exists = true;
-                }else{
-                       exists = true;
+           
+                String busqueda = Usuarios.Buscar(object);
+                if(!busqueda.isEmpty() || !busqueda.equals("")){
+                    if(!busqueda.split("\\|")[busqueda.split("\\|").length-1].contains("0")){
+                        exists = true;
+                    }else{
+                        exists = true;
+                    }
+                    
+                } else{
+                    exists = false;
                 }
-             
-            } else{
-                exists = false;
-            }
+            
         }
     }
     return exists;
@@ -172,14 +174,18 @@ public String ExistsList(String object){
           }else if(!temp2.exists()){
                        exists = "";
                    } else {
-                            String busqueda = Usuarios.Buscar(object);
-                             if(busqueda.isEmpty() || busqueda.equals("")){
-                                 exists = "";
-                             }else if(busqueda.split("\\|")[busqueda.split("\\|").length-1].equals("1")) {
-                                 exists = busqueda;
-                             }else{
-                                exists = "";
-                             }
+            try {
+                String busqueda = Listas.Buscar(object);
+                if(busqueda.isEmpty() || busqueda.equals("")){
+                    exists = "";
+                }else if(busqueda.split("\\|")[busqueda.split("\\|").length-1].equals("1")) {
+                    exists = busqueda;
+                }else{
+                    exists = "";
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Singleton.class.getName()).log(Level.SEVERE, null, ex);
+            }
            
                           }
         } 

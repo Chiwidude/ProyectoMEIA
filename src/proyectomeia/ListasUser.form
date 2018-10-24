@@ -230,7 +230,7 @@
                       <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnauser" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="20" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -261,7 +261,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Buscar Usuarioa Asociar"/>
+                <Property name="text" type="java.lang.String" value="Buscar Usuario a Asociar"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtBuser">
