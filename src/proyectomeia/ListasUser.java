@@ -42,13 +42,16 @@ public class ListasUser extends javax.swing.JFrame {
         btnBuser.setEnabled(false);
         btnauser.setEnabled(false);
         btnEliminarUsuario.setEnabled(false);
+        btnBual.setEnabled(false);
+        btnCdua.setEnabled(false);
+        jTextArea4.setEnabled(false);
         addWindowListener(new WindowAdapter()
         {
             @Override
             public void windowClosing(WindowEvent e)
             {
                 try {
-                    fase.ListaUsuarios.EliminacionLogicaAlCerrar();
+                    fase.ListaUsuarios.EliminacionLogicaAlCerrar(fase.current.getUsername().trim());
                 } catch (IOException ex) {
                     Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -61,6 +64,9 @@ public class ListasUser extends javax.swing.JFrame {
     private String addList;
     private String User;
     private String list;
+    private String lista;
+    private String Uasociado;
+    private String Euasociado;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,6 +117,21 @@ public class ListasUser extends javax.swing.JFrame {
         btnEliminarUsuario = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         btnBusered = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        txtBlmod = new javax.swing.JTextField();
+        btnBleu = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        txtUAb = new javax.swing.JTextField();
+        btnBual = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextArea4 = new javax.swing.JTextArea();
+        jLabel16 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTextArea5 = new javax.swing.JTextArea();
+        jLabel17 = new javax.swing.JLabel();
+        btnCdua = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -431,10 +452,11 @@ public class ListasUser extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtUsuarioEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel6))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel8)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -445,6 +467,121 @@ public class ListasUser extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Acciones", jPanel2);
+
+        jLabel13.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel13.setText("EDITAR DESCRIPCIÓN USUARIO");
+
+        jLabel14.setText("Buscar Lista");
+
+        btnBleu.setText("Buscar");
+        btnBleu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBleuActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setText("Buscar Usuario Asociado");
+
+        btnBual.setText("Buscar");
+        btnBual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBualActionPerformed(evt);
+            }
+        });
+
+        jTextArea4.setColumns(20);
+        jTextArea4.setRows(5);
+        jScrollPane5.setViewportView(jTextArea4);
+
+        jLabel16.setText("Antigua");
+
+        jTextArea5.setColumns(20);
+        jTextArea5.setRows(5);
+        jScrollPane6.setViewportView(jTextArea5);
+
+        jLabel17.setText("Nueva");
+
+        btnCdua.setText("Cambiar");
+        btnCdua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCduaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addGap(172, 172, 172)
+                                .addComponent(jLabel13))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtUAb, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                                    .addComponent(txtBlmod, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnBleu)
+                                    .addComponent(btnBual)))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
+                        .addGap(51, 51, 51)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel17)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCdua)))))
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel13))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel14)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBlmod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBleu))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUAb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBual))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCdua, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+
+        jTabbedPane1.addTab("Editar U.", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -867,6 +1004,73 @@ public class ListasUser extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuseredActionPerformed
 
+    private void btnBleuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBleuActionPerformed
+       lista = txtBlmod.getText();
+       if(lista.isEmpty()){
+           JOptionPane.showMessageDialog(null, "Por favor ingrese el nombre de la lista donde se encuentra el usuario");
+       }else{
+           boolean verify = fase.ExistsLista(lista+"|"+fase.current.getUsername().trim());
+           if(verify){
+                    btnBual.setEnabled(true);
+                    txtBlmod.setText("");
+                    txtUAb.setText("");
+                    btnBleu.setEnabled(false);
+                    JOptionPane.showMessageDialog(null, "Lista Encontrada");
+           }else{
+                JOptionPane.showMessageDialog(null, "Lista No encontrada");
+           }
+       }
+    }//GEN-LAST:event_btnBleuActionPerformed
+
+    private void btnBualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBualActionPerformed
+        Uasociado =txtUAb.getText();
+        if(Uasociado.isEmpty()){
+            
+        } else{
+            try {
+                ObjectIndice ind = new ObjectIndice(lista,fase.current.getUsername().trim(),Uasociado);
+                boolean verify = fase.ListaUsuarios.existeUsuario(ind.toString());
+                if(verify){
+                 JOptionPane.showMessageDialog(null, "El Usuario se encuentra en la lista indicada");
+                 btnCdua.setEnabled(true);
+                 btnBual.setEnabled(false);
+                 jTextArea5.setText("");
+                 String f = fase.ListaUsuarios.Busqueda(ind.toString());
+                 ind.CreateFromString(f);
+                 String position = ind.getPosicion();
+                 Euasociado = fase.ListaUsuarios.Blista_Usuario(position);
+                 UsuarioIndexado i = new UsuarioIndexado();
+                 i.CreateFromString(Euasociado);
+                 jTextArea4.setText(i.getDescripcion().trim());
+                 
+                     
+                }else{
+                    JOptionPane.showMessageDialog(null, "No existe ese usuario en la lista:" + list);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ListasUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnBualActionPerformed
+
+    private void btnCduaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCduaActionPerformed
+       String ndesc = jTextArea5.getText();
+       if(ndesc.isEmpty()){
+           JOptionPane.showMessageDialog(null, "Escriba una descripción");
+       }else{
+           try {
+               UsuarioIndexado nuevo = new UsuarioIndexado();
+               nuevo.CreateFromString(Euasociado);
+               nuevo.setDescripcion(ndesc);
+               fase.ListaUsuarios.ModLista(Euasociado, nuevo.toString());
+               JOptionPane.showMessageDialog(null, "Se cambió la descripción del usuario:" + nuevo.getUsuarioAsociado().trim()+" " +System.lineSeparator()
+               + "de la lista:" + nuevo.getNombreLista().trim());
+           } catch (IOException ex) {
+               Logger.getLogger(ListasUser.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+    }//GEN-LAST:event_btnCduaActionPerformed
+
     /**     
      * @param args the command line arguments
      */
@@ -904,11 +1108,14 @@ public class ListasUser extends javax.swing.JFrame {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBleu;
     private javax.swing.JButton btnBlistaa;
+    private javax.swing.JButton btnBual;
     private javax.swing.JButton btnBuser;
     private javax.swing.JButton btnBusered;
     private javax.swing.JButton btnBusqueda;
     private javax.swing.JButton btnCdesc;
+    private javax.swing.JButton btnCdua;
     private javax.swing.JButton btnCrearlista;
     private javax.swing.JButton btnEditarL;
     private javax.swing.JButton btnEliminar;
@@ -920,6 +1127,11 @@ public class ListasUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -931,19 +1143,26 @@ public class ListasUser extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTextArea jTextArea4;
+    private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextField txtBlistaa;
+    private javax.swing.JTextField txtBlmod;
     private javax.swing.JTextField txtBuser;
     private javax.swing.JTextField txtBusqueda;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNlista;
+    private javax.swing.JTextField txtUAb;
     private javax.swing.JTextField txtUsuarioEliminar;
     // End of variables declaration//GEN-END:variables
 }

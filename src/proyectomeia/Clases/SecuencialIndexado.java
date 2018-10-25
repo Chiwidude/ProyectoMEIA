@@ -167,12 +167,11 @@ public class SecuencialIndexado {
             data = lineaModificar.split("\\|");
             if(data[2].contains(NombreLista) && data[3].contains(nombreUsuario) && data[4].contains(usuarioEliminar)){
                 ReorganizarEliminacion(lineaModificar);
-                archivo.seek(archivo.getFilePointer()-3);                
-                archivo.writeBytes("0");
-                archivo.seek(archivo.getFilePointer()+2);
-                archivo.seek(archivo.getFilePointer()-10);
-                archivo.writeBytes("-2");
-                archivo.seek(archivo.getFilePointer()+9);
+                 ObjectIndice nuevo = new ObjectIndice();
+                nuevo.CreateFromString(lineaModificar);
+                nuevo.setEstatus("0");
+                nuevo.setSiguiente("-2");
+                Modificar(lineaModificar,nuevo.toString());
                 String inlista = Blista_Usuario(data[1]);
                 EliminarnLista(inlista);
                 UpdateDescriptorIndice();
@@ -197,12 +196,17 @@ public class SecuencialIndexado {
             data = lineaModificar.split("\\|");
             if(data[2].contains(NombreLista) && data[3].contains(nombreUsuario)){
                 ReorganizarEliminacion(lineaModificar);
-                archivo.seek(archivo.getFilePointer()-3);                
+                ObjectIndice nuevo = new ObjectIndice();
+                nuevo.CreateFromString(lineaModificar);
+                nuevo.setEstatus("0");
+                nuevo.setSiguiente("-2");
+                /*archivo.seek(archivo.getFilePointer()-3);                
                 archivo.writeBytes("0");
                 archivo.seek(archivo.getFilePointer()+2);
                 archivo.seek(archivo.getFilePointer()-10);
                 archivo.writeBytes("-2");
-                archivo.seek(archivo.getFilePointer()+9);
+                archivo.seek(archivo.getFilePointer()+9); */
+                Modificar(lineaModificar,nuevo.toString());
                 String inlista = Blista_Usuario(data[1]);
                 EliminarnLista(inlista);
                 UpdateDescriptorIndice();
@@ -226,25 +230,28 @@ public class SecuencialIndexado {
         int b = ObtenerInicio();
         String in = siguiente(b);
         while(found == false){
-            ObjectIndice elfound = new ObjectIndice();
-                elfound.CreateFromString(in);
-                boolean is = esInicio(Integer.parseInt(elfound.getNregistro().trim()));
-                if(is){
-                    NuevoInicio(elfound.getSiguiente());
-                    found = true;
-                }else{
-                    found = csig(posremplazar.trim(),in);
-                    if(found){
+            found = csig(posremplazar.trim(),in);
+            if(found){
+            
+               
+                
                     ObjectIndice cambiar = new ObjectIndice();
                     cambiar.CreateFromString(in);
                     cambiar.setSiguiente(nuevos);
-                    Modificar(in,cambiar.toString());
-                    }else{
-                        int next = Next(in);
-                        in = siguiente(next);
-                    }
-                }
+                     Modificar(in,cambiar.toString());
             
+        }
+            else{
+                    ObjectIndice elfound = new ObjectIndice();
+                        elfound.CreateFromString(in);
+                        int next = Next(in);
+                        if(next ==-1){
+                            NuevoInicio(elfound.getSiguiente());
+                            found = true;
+                        }else{
+                        in = siguiente(next);
+                        }
+                    }
         }
     }
     
@@ -253,7 +260,7 @@ public class SecuencialIndexado {
      * Elimina todas las listas desactivadas, inserta nuevamente las listas activas, y la reorganiza
      * @throws IOException 
      */
-    public void EliminacionLogicaAlCerrar() throws IOException{
+    public void EliminacionLogicaAlCerrar(String user) throws IOException{
         ArrayList<String> lineasIndice = new ArrayList<>();
         ArrayList<String> lineasMaster = new ArrayList<>();
         ArrayList<String> lineasMasterSeleccionadas = new ArrayList<>();
@@ -304,6 +311,8 @@ public class SecuencialIndexado {
                     lineasMasterSeleccionadas.get(i).split("\\|")[3]);
             InsertarIndice(nuevo.toString());
             InsertarLista(newi.toString());
+            FileChannel.open(Paths.get(DescriptorMasterFile.getPath()), StandardOpenOption.WRITE).truncate(0).close();
+            CrearDescriptorLista(user);
         }
         
     }
@@ -328,7 +337,7 @@ public class SecuencialIndexado {
         
     }
        public void ModLista(String viejo, String Nuevo) throws FileNotFoundException, IOException{
-        int posicion = PosicionRegistro(viejo);
+        int posicion = PosicionRegister(viejo);
         RandomAccessFile archivo = new RandomAccessFile(masterFile,"rw");
         for(int i = -1; i<posicion; i++){
             archivo.readLine();
@@ -733,7 +742,30 @@ public class SecuencialIndexado {
         }
       
         return posicion;
-    }  
+    }
+    private int PosicionRegister(String registro){
+        int posicion = -1;
+        try {
+           RandomAccessFile contador = new RandomAccessFile(masterFile,"r");
+            String line;
+            while((line = contador.readLine())!= null){
+                if(line.equals(registro)){
+                    contador.close();
+                    return posicion;
+                }
+                posicion++;
+            }
+            contador.close();
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ApiloFile.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ApiloFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+        return posicion;
+    }
+    
     private int compare(String o1, String o2) {
         String l1 = o1.split("\\|")[2];
         String l2 = o2.split("\\|")[2];

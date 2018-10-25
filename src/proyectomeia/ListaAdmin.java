@@ -43,7 +43,7 @@ public class ListaAdmin extends javax.swing.JFrame {
             public void windowClosing(WindowEvent e)
             {
                 try {
-                    fase.ListaUsuarios.EliminacionLogicaAlCerrar();
+                    fase.ListaUsuarios.EliminacionLogicaAlCerrar(fase.current.getUsername().trim());
                 } catch (IOException ex) {
                     Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
                 }
