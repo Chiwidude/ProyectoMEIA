@@ -165,8 +165,15 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-       NodoBinario nodo = new NodoBinario("Kevin","Francisco","Hola","Que haces?","Ruta Archivo","1");
-       Binario arbol = new Binario(pathCorreos, nodo);
+       
+       Binario arbol = new Binario(pathCorreos);
+        try {
+            NodoBinario nodo = new NodoBinario("Kevin","Francisco","Hola","Que haces?","Ruta Archivo","1");
+            arbol.Insertar(nodo);
+            arbol.Insertar(nodo);
+        } catch (IOException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
        File temp1 = new File(pathArchivoApilo);
        File temp2 = new File(pathArchivoUsuarios);
