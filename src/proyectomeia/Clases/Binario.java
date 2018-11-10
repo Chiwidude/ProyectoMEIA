@@ -5,10 +5,19 @@
  */
 package proyectomeia.Clases;
 
+import java.io.File;
+import java.io.RandomAccessFile;
+
 /**
  *
  * @author kevin
  */
 public class Binario {
+    
+    File archivoBinario;
+    RandomAccessFile archivoMaster;
+    
+    public Binario(){    
+    }
     
 }
