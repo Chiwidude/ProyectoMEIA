@@ -21,7 +21,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyectomeia.Clases.SequentialFile;
 import proyectomeia.Clases.ApiloFile;
+import proyectomeia.Clases.Binario;
 import proyectomeia.Clases.Bitacora_lista;
+import proyectomeia.Clases.NodoBinario;
 import proyectomeia.Clases.SecuencialIndexado;
 import proyectomeia.Clases.Singleton;
 import proyectomeia.Clases.Usuario;
@@ -40,6 +42,7 @@ public class Inicio extends javax.swing.JFrame {
     public static final String pathDescIndice = Paths.get("C:/MEIA/desc_Indice.txt").toString();  
     public static final String pathLista = Paths.get("C:/MEIA/Lista_usuario.txt").toString();  
     public static final String pathDescLista = Paths.get("C:/MEIA/desc_Lista_usuario.txt").toString();
+    public static final String pathCorreos = Paths.get("C:/MEIA/correos.txt").toString();
 //  Archivos
     
 
@@ -162,13 +165,9 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        //SecuencialIndexado archivo = new SecuencialIndexado(pathDescIndice, pathIndice,pathDescLista, pathLista);
-       /*try {
-            archivo.EliminacionLogicaAlCerrar();
-            fase.ListaUsuarios.UpdateDescriptorLista(fase.current.getUsername());
-        } catch (IOException ex) {
-            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+       NodoBinario nodo = new NodoBinario("Kevin","Francisco","Hola","Que haces?","Ruta Archivo","1");
+       Binario arbol = new Binario(pathCorreos, nodo);
+       
        File temp1 = new File(pathArchivoApilo);
        File temp2 = new File(pathArchivoUsuarios);
         if(!temp1.exists() && !temp2.exists()){
