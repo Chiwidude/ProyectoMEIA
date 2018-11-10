@@ -76,6 +76,8 @@ public class UserView extends javax.swing.JFrame {
         opcionesButton = new javax.swing.JButton();
         btnListas = new javax.swing.JButton();
         logout = new javax.swing.JButton();
+        bbentrada = new javax.swing.JButton();
+        bsalida = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,7 +90,7 @@ public class UserView extends javax.swing.JFrame {
         labelRol.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         labelRol.setText("Rol:");
 
-        imgIcon.setText("jLabel2");
+        imgIcon.setText("-----");
 
         opcionesButton.setText("Opciones");
         opcionesButton.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +113,20 @@ public class UserView extends javax.swing.JFrame {
             }
         });
 
+        bbentrada.setText("Bandeja de Entrada ");
+        bbentrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bbentradaActionPerformed(evt);
+            }
+        });
+
+        bsalida.setText("Bandeja de Salida");
+        bsalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bsalidaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,41 +134,52 @@ public class UserView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(opcionesButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnListas))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(labelUsuario))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(157, 157, 157)
-                        .addComponent(labelTitulo))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(imgIcon)
+                            .addComponent(labelTitulo)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addComponent(labelRol))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(194, 194, 194)
-                        .addComponent(imgIcon)))
-                .addContainerGap(172, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(opcionesButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnListas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(logout))
-                    .addComponent(labelUsuario)))
+                        .addGap(57, 57, 57)
+                        .addComponent(bbentrada)
+                        .addGap(40, 40, 40)
+                        .addComponent(bsalida)))
+                .addContainerGap(92, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(logout))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opcionesButton)
-                    .addComponent(btnListas)
-                    .addComponent(logout))
-                .addGap(9, 9, 9)
+                .addContainerGap()
+                .addComponent(logout)
+                .addGap(3, 3, 3)
                 .addComponent(labelTitulo)
                 .addGap(18, 18, 18)
                 .addComponent(labelUsuario)
                 .addGap(18, 18, 18)
                 .addComponent(labelRol)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(imgIcon)
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bbentrada, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bsalida, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(opcionesButton)
+                    .addComponent(btnListas))
+                .addContainerGap())
         );
 
         pack();
@@ -176,6 +203,18 @@ public class UserView extends javax.swing.JFrame {
         this.dispose();
         start.setVisible(true);
     }//GEN-LAST:event_logoutActionPerformed
+
+    private void bsalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsalidaActionPerformed
+      BandejaSalida bandeja = new BandejaSalida(fase);
+      this.dispose();
+      bandeja.setVisible(true);
+    }//GEN-LAST:event_bsalidaActionPerformed
+
+    private void bbentradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbentradaActionPerformed
+       BandejaEntrada bandeja = new BandejaEntrada(fase);
+       this.dispose();
+       bandeja.show();
+    }//GEN-LAST:event_bbentradaActionPerformed
     
      
      
@@ -215,6 +254,8 @@ public class UserView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bbentrada;
+    private javax.swing.JButton bsalida;
     private javax.swing.JButton btnListas;
     private javax.swing.JLabel imgIcon;
     private javax.swing.JLabel labelRol;
