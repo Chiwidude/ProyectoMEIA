@@ -170,8 +170,14 @@ public class Inicio extends javax.swing.JFrame {
         try {
             NodoBinario nodo = new NodoBinario("Kevin","Francisco","Hola","Que haces?","Ruta Archivo","1");
             NodoBinario nodo2 = new NodoBinario("Carlos","Juan","Hola","Que haces?","Ruta Archivo","1");
+            NodoBinario nodo3 = new NodoBinario("Manuel","Maz","Hola","Que haces?","Ruta Archivo","1");
+            NodoBinario nodo4 = new NodoBinario("Pepito","Pablo","Hola","Que haces?","Ruta Archivo","1");
+            NodoBinario nodo5 = new NodoBinario("Luis","Lesly","Hola","Que haces?","Ruta Archivo","1");
             arbol.Insertar(nodo);
             arbol.Insertar(nodo2);
+            arbol.Insertar(nodo3);
+            arbol.Insertar(nodo4);
+            //arbol.Insertar(nodo5);
         } catch (IOException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
