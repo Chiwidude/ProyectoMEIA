@@ -44,11 +44,11 @@ public class NodoBinario {
         setIzquierdo(parts[0]);
         setDerecho(parts[1]);
         setUsuarioEmisor(parts[2]);
-        setUsuarioReceptor(parts[3]);
-        setFechaTransaccion(parts[4]);
-        setAsunto(parts[5]);
-        setMensaje(parts[6]);
-        setAdjunto(parts[7]);
+        setUsuarioReceptor(parts[3]);        
+        setAsunto(parts[4]);
+        setMensaje(parts[5]);
+        setAdjunto(parts[6]);
+        setFechaTransaccion(parts[7]);
         setEstatus(parts[8]);               
     }
         

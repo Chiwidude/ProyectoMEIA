@@ -169,8 +169,9 @@ public class Inicio extends javax.swing.JFrame {
        Binario arbol = new Binario(pathCorreos);
         try {
             NodoBinario nodo = new NodoBinario("Kevin","Francisco","Hola","Que haces?","Ruta Archivo","1");
+            NodoBinario nodo2 = new NodoBinario("Carlos","Juan","Hola","Que haces?","Ruta Archivo","1");
             arbol.Insertar(nodo);
-            arbol.Insertar(nodo);
+            arbol.Insertar(nodo2);
         } catch (IOException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
