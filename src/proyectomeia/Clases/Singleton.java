@@ -5,9 +5,16 @@
  */
 package proyectomeia.Clases;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -192,4 +199,130 @@ public String ExistsList(String object){
     
        return exists;
 }
+
+public List<String> getUsers() throws FileNotFoundException, IOException, ParseException{
+    List<String> users = new ArrayList<>();
+    List<String> temp = new ArrayList<>();
+    File bit = new File(pathArchivoApilo);
+    File master = new File(pathArchivoUsuarios);
+    if(bit.length() == 0){
+        InputStream stream = new FileInputStream(master);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        String input;
+        String[] fields;
+        while((input = reader.readLine()) != null){
+            fields = input.split("\\|");
+            if(fields[fields.length-1].trim().equals("1")){
+                temp.add(input);
+            }
+        }
+        reader.close();
+        for(int i = 0; i<temp.size(); i++){
+            Usuario fnd = new Usuario();
+            fnd.CreatefromString(temp.get(i));
+            users.add(fnd.getUsername().trim());
+        }
+    }else{
+         InputStream stream = new FileInputStream(bit);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        String input;
+        String[] fields;
+        while((input = reader.readLine()) != null){
+            fields = input.split("\\|");
+            if(fields[fields.length-1].trim().equals("1")){
+                temp.add(input);
+            }
+        }
+        reader.close();
+        if(master.length()>0){
+            InputStream stream1 = new FileInputStream(master);
+            BufferedReader reader1 = new BufferedReader(new InputStreamReader(stream1));
+        String input1;
+        String[] fields1;
+        while((input1 = reader.readLine()) != null){
+            fields1 = input.split("\\|");
+            if(fields1[fields1.length-1].trim().equals("1")){
+                temp.add(input1);
+            }
+        }
+        reader1.close();
+        }
+        for(int i =0; i<temp.size(); i++){
+            Usuario fnd = new Usuario();
+            fnd.CreatefromString(temp.get(i));
+            users.add(fnd.getUsername().trim());
+        }
+    }
+    
+    
+    return users;
 }
+public List<String> Lists(String user) throws FileNotFoundException, IOException{
+    List<String> lists = new ArrayList<>();
+    List<String> temp = new ArrayList<>();
+    File bit = new File(pathBlistas);
+    File master = new File(pathArchivoListas);
+    
+    if(bit.length() == 0){
+        InputStream stream = new FileInputStream(master);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        String input;
+        String[] fields;
+        while((input = reader.readLine())!= null){
+            fields = input.split("\\|");
+            if(fields[fields.length-1].trim().equals("1")){
+                temp.add(input);
+            }
+        }
+        reader.close();
+        
+        for(int i = 0; i<temp.size(); i++){
+            ObjectLista lista = new ObjectLista();
+            lista.CreateFromString(temp.get(i));
+            if(lista.getUsuario().trim().equals(user)&&lista.getNumero_usuarios()>0){
+                lists.add(lista.getNombre_lista().trim());
+            }
+        }
+        
+    } else {
+             InputStream stream = new FileInputStream(bit);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        String input;
+        String[] fields;
+        while((input = reader.readLine())!= null){
+            fields = input.split("\\|");
+            if(fields[fields.length-1].trim().equals("1")){
+                temp.add(input);
+            }
+        }
+        reader.close();
+        
+        if(master.length() >0){
+                 InputStream stream1 = new FileInputStream(master);
+        BufferedReader reader1 = new BufferedReader(new InputStreamReader(stream1));
+        String input1;
+        String[] fields1;
+        while((input1 = reader1.readLine())!= null){
+            fields1 = input1.split("\\|");
+            if(fields1[fields1.length-1].trim().equals("1")){
+                temp.add(input1);
+            }
+        }
+        reader1.close();
+     
+        }
+         
+        for(int i = 0; i<temp.size(); i++){
+            ObjectLista lista = new ObjectLista();
+            lista.CreateFromString(temp.get(i));
+            if(lista.getUsuario().trim().equals(user) && lista.getNumero_usuarios()>0){
+                lists.add(lista.getNombre_lista().trim());
+            }
+        }
+        
+        
+    }
+    return lists;
+}
+}
+

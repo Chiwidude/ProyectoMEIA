@@ -24,6 +24,8 @@ public class BandejaEntrada extends javax.swing.JFrame {
       public BandejaEntrada(Singleton object_){
           this();
           fase = object_;
+          txtAentrada.setEditable(false);
+          txtMensajeentrada.setEditable(false);
       }
     
 
@@ -49,7 +51,7 @@ public class BandejaEntrada extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { " " };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });

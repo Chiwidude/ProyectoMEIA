@@ -19,6 +19,7 @@ import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -359,7 +360,12 @@ public class SecuencialIndexado {
         }
            
        }
-    
+    /**
+     * Esta función retorna un elemento del
+     * @param object
+     * @return
+     * @throws IOException 
+     */
     public String Busqueda(String object) throws IOException{
         String  exists ="";
         if(Indice.exists()){
@@ -392,6 +398,30 @@ public class SecuencialIndexado {
         
         return exists;
        
+    }
+    public List<String> BusuariosLista(String object) throws IOException{
+        List<String> users = new ArrayList<>();
+        if(Indice.exists()){
+            int iterator = 0;
+            iterator = ObtenerInicio();
+            String siguiente = "";
+            siguiente = siguiente(iterator);
+            boolean flag = true;
+            while(flag == true){
+                int comparate = compare1(object,siguiente);
+                if(comparate == 0){
+                    users.add(siguiente);
+                }
+                int mfound = Next(siguiente);
+                if(mfound ==-1){
+                    flag = false;
+                } else {
+                    siguiente = siguiente(mfound);
+                }
+            }
+        }
+        
+        return users;
     }
     public String Blista_Usuario(String position){
         InputStream f = null;
@@ -782,6 +812,17 @@ public class SecuencialIndexado {
         }
         return result;
         
+    }
+    private int compare1(String o1, String o2){
+        String l1 = o1.split("\\|")[2];
+        String l2 =  o2.split("\\|")[2];
+        int result = l1.compareTo(l2);
+        if(result == 0){
+            l1 = o1.split("\\|")[3];
+            l2 = o2.split("\\|")[3];
+            result = l1.compareTo(l2);
+        }
+        return result;
     }
     /**
      * verifica si se cambia el siguiente
