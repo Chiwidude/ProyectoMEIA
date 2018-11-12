@@ -24,6 +24,8 @@ public class Binario {
     RandomAccessFile archivoMaster;
     NodoBinario nodoBinario;
     long tamanio = 0;
+    NodoBinario anterior = new NodoBinario("", "", "", "", "", "");
+    
     ArrayList<NodoBinario> nodos = new ArrayList<>();
     
     public Binario(String RutaBinario){         
@@ -102,7 +104,9 @@ public class Binario {
     }
     
     public void Reorganizar() throws IOException{
-        String linea;        
+        String linea;     
+        RandomAccessFile archivo = new RandomAccessFile(archivoBinario,"rw");
+        archivo.seek(0);
         archivoMaster.seek(0);
         while((linea = archivoMaster.readLine()) != null){
             NodoBinario nodo = new NodoBinario("", "", "", "", "", "");
@@ -111,37 +115,99 @@ public class Binario {
             archivoMaster.seek(archivoMaster.getFilePointer());
         }
         NodoBinario raiz = new NodoBinario("", "", "", "", "", "");
-        raiz = nodos.get(0);
+        NodoBinario padre = new NodoBinario("", "", "", "", "", "");
+        
+        raiz = nodos.remove(0);
         archivoMaster.seek(0);
-        for (int i = 1; i < nodos.size(); i++) {
-            NodoBinario hijo = nodos.get(i);
+        int size = nodos.size();
+        for (int i = 0; i < size; i++) {
+            if(!nodos.isEmpty()){
+            NodoBinario hijo = new NodoBinario("", "", "", "", "", "");
+            hijo = nodos.remove(0);
             //Inserciones en raiz
-            if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) > 1
+            if(raiz.getDerecho().contains("-1")){                
+                    if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) > 1
                     || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) > 1
-                    || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) > 1){//Raiz Derecho                
-                if(raiz.getDerecho().contains("-1")){
+                    || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) > 1){//Raiz Derecho    
                     NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
+                    anterior = hijo;
                     viejo.CreateFromString(raiz.toString());
                     raiz.setDerecho(String.valueOf(PosicionRegistro(hijo.toString())+1));
-                    Modificar(viejo.toString(), raiz.toString());
-                }else {
-                    //Nodo padre
-                }
-            }else if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) < 1
+                    Modificar(viejo.toString(), raiz.toString());                
+                    }                
+            }else if(raiz.getIzquierdo().contains("-1")){                 
+                    if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) < 1
                     || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) < 1
-                    || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) < 1){//Raiz Izquierdo                
-                if(raiz.getIzquierdo().contains("-1")){
+                    || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) < 1){//Raiz Izquierdo  
                     NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
                     viejo.CreateFromString(raiz.toString());
-                    raiz.setIzquierdo(String.valueOf(PosicionRegistro(hijo.toString())+1));
-                    Modificar(viejo.toString(), raiz.toString());
-                }else{
-                    //Nodo padre
+                    raiz.setIzquierdo(String.valueOf(PosicionRegistro(hijo.toString())+2));
+                    Modificar(viejo.toString(), raiz.toString());                
+                    }
+            }else{//Nodo hijos      
+                if(!nodos.isEmpty()){
+                    int hijoIzquierdo = Integer.valueOf(raiz.getIzquierdo().trim());
+                    int hijoDerecho = Integer.valueOf(raiz.getDerecho().trim());
+                //busca los hijos de la raiz y compara
+                if(hijoIzquierdo != -1){
+                    String hijoIz = null;
+                    for(int j = -1; j<hijoIzquierdo; j++){
+                            hijoIz = archivo.readLine();
+                        }  
+                    padre.CreateFromString(hijoIz); 
+                    raiz = padre;
+                    hijo = nodos.remove(nodos.size()-1);                    
+                    if(raiz.getDerecho().contains("-1")){                
+                        if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) > 1
+                        || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) > 1
+                        || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) > 1){//Raiz Derecha    
+                        NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
+                        viejo.CreateFromString(raiz.toString());
+                        raiz.setDerecho(String.valueOf(PosicionRegistro(hijo.toString())+1));
+                        Modificar(viejo.toString(), raiz.toString());                
+                        }else if(raiz.getIzquierdo().contains("-1")){                 
+                            if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) < 1
+                            || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) < 1
+                            || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) < 1){//Raiz Izquierdo  
+                            NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
+                            viejo.CreateFromString(raiz.toString());
+                            raiz.setIzquierdo(String.valueOf(PosicionRegistro(hijo.toString())+2));
+                            Modificar(viejo.toString(), raiz.toString());                
+                            }
+                        }
+                    }               
+               }else if(hijoDerecho != -1){ 
+                    String hijoDer = null;
+                    for(int j = -1; j<hijoDerecho; j++){
+                            hijoDer = archivo.readLine();
+                        } 
+                    raiz = padre;
+                    hijo = nodos.remove(nodos.size()-1);                    
+                    if(raiz.getDerecho().contains("-1")){                
+                        if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) > 1
+                        || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) > 1
+                        || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) > 1){//Raiz Derecho    
+                        NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
+                        viejo.CreateFromString(raiz.toString());
+                        raiz.setDerecho(String.valueOf(PosicionRegistro(hijo.toString())+1));
+                        Modificar(viejo.toString(), raiz.toString());                
+                    }else if(raiz.getIzquierdo().contains("-1")){                 
+                            if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) < 1
+                            || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) < 1
+                            || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) < 1){//Raiz Izquierdo  
+                            NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
+                            viejo.CreateFromString(raiz.toString());
+                            raiz.setIzquierdo(String.valueOf(PosicionRegistro(hijo.toString())+2));
+                            Modificar(viejo.toString(), raiz.toString());                
+                            }
+                        }
+                    }                                  
+                   }
                 }
-            }
-        }
+            }            
+         }
+      }
     }
-
     
     public void Busqueda(NodoBinario nodoBuscado){
         

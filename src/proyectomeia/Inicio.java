@@ -177,7 +177,7 @@ public class Inicio extends javax.swing.JFrame {
             arbol.Insertar(nodo2);
             arbol.Insertar(nodo3);
             arbol.Insertar(nodo4);
-            //arbol.Insertar(nodo5);
+            arbol.Insertar(nodo5);
         } catch (IOException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
