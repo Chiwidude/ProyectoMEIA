@@ -8,6 +8,7 @@ package proyectomeia;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +89,6 @@ public class NuevoMensaje extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtBured = new javax.swing.JTextField();
-        btnBured = new javax.swing.JButton();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jLabel5 = new javax.swing.JLabel();
         txtAred = new javax.swing.JTextField();
@@ -114,16 +114,11 @@ public class NuevoMensaje extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14" }));
+
         jLabel3.setText("Grupo");
 
         jLabel4.setText("Usuario:");
-
-        btnBured.setText("Buscar");
-        btnBured.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuredActionPerformed(evt);
-            }
-        });
 
         jInternalFrame1.setVisible(true);
 
@@ -144,6 +139,11 @@ public class NuevoMensaje extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextArea2);
 
         btnEred.setText("Enviar");
+        btnEred.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEredActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
@@ -176,7 +176,7 @@ public class NuevoMensaje extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEred, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -201,10 +201,8 @@ public class NuevoMensaje extends javax.swing.JFrame {
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBured, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnBured)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -223,8 +221,7 @@ public class NuevoMensaje extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(txtBured, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBured))
+                    .addComponent(txtBured, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jInternalFrame1)
                 .addContainerGap())
@@ -371,10 +368,6 @@ public class NuevoMensaje extends javax.swing.JFrame {
         bandeja.setVisible(true);
     }//GEN-LAST:event_btncancelarredActionPerformed
 
-    private void btnBuredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuredActionPerformed
-       
-    }//GEN-LAST:event_btnBuredActionPerformed
-
     private void btnElocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElocalActionPerformed
        String asunto = txtAlocal.getText();
      if(asunto.isEmpty()){
@@ -440,6 +433,23 @@ public class NuevoMensaje extends javax.swing.JFrame {
      }
     }//GEN-LAST:event_btnElocalActionPerformed
 
+    private void btnEredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEredActionPerformed
+        int greceptor = Integer.valueOf(jComboBox2.getSelectedItem().toString());
+        String uemisor = fase.current.getUsername().trim();
+        String ureceptor = txtBured.getText().trim();
+        String asunto = txtAred.getText();
+        String mensaje = jTextArea2.getText();
+        
+        try {
+            fase.base.Insert(4, greceptor, uemisor, ureceptor,asunto,mensaje);
+            txtBured.setText("");
+            txtAred.setText("");
+            jTextArea2.setText("");
+        } catch (SQLException ex) {
+            Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEredActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -478,7 +488,6 @@ public class NuevoMensaje extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdlocal;
-    private javax.swing.JButton btnBured;
     private javax.swing.JButton btnElocal;
     private javax.swing.JButton btnEred;
     private javax.swing.JButton btncancelar;

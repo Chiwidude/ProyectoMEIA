@@ -5,13 +5,11 @@
  */
 package proyectomeia;
 
-import java.awt.Dialog;
+
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -19,15 +17,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import proyectomeia.Clases.SequentialFile;
-import proyectomeia.Clases.ApiloFile;
 import proyectomeia.Clases.Binario;
-import proyectomeia.Clases.Bitacora_lista;
 import proyectomeia.Clases.NodoBinario;
-import proyectomeia.Clases.SecuencialIndexado;
 import proyectomeia.Clases.Singleton;
 import proyectomeia.Clases.Usuario;
-import proyectomeia.Clases.UsuarioIndexado;
 
 /**
  *
@@ -166,7 +159,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
        
-       Binario arbol = new Binario(pathCorreos);
+       /*Binario arbol = new Binario(pathCorreos);
         try {
             NodoBinario nodo = new NodoBinario("Kevin","Francisco","Hola","Que haces?","Ruta Archivo","1");
             NodoBinario nodo2 = new NodoBinario("Carlos","Juan","Hola","Que haces?","Ruta Archivo","1");
@@ -180,7 +173,7 @@ public class Inicio extends javax.swing.JFrame {
             arbol.Insertar(nodo5);
         } catch (IOException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
        
        File temp1 = new File(pathArchivoApilo);
        File temp2 = new File(pathArchivoUsuarios);

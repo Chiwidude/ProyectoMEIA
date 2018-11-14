@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +44,18 @@ public class Singleton {
     private Bitacora_lista Blista;
     public lista Listas;
     public SecuencialIndexado ListaUsuarios;
+    public BDD base;
 
 public Singleton(){
+        try {
+            BDD.getInstancia().conexion();
+            base = BDD.getInstancia();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Singleton.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Singleton.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
     current = new Usuario();
     bitacora = new ApiloFile(pathArchivoApilo,"Bitácora de Usuarios","Archivo de datos","",5,new String[]{"Usuario"},"Usuario|Nombre|Apellido|password|Rol"
             + "|Fecha_Nacimiento|Correo_alterno|Telefono|path_fotografia|Status");
