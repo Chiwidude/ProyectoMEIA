@@ -158,6 +158,7 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+
        
        /*Binario arbol = new Binario(pathCorreos);
         try {
@@ -174,6 +175,32 @@ public class Inicio extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }*/
+//       //PRUEBA DEL ARBOL
+//        Binario arbol = new Binario(pathCorreos);
+//         try {
+//             NodoBinario nodo = new NodoBinario("Kevin","Francisco","Hola","Que haces?","Ruta Archivo","1");
+//             NodoBinario nodo2 = new NodoBinario("Carlos","Juan","Hola","Que haces?","Ruta Archivo","1");
+//             NodoBinario nodo3 = new NodoBinario("Manuel","Maz","Hola","Que haces?","Ruta Archivo","1");
+//             NodoBinario nodo4 = new NodoBinario("Pepito","Pablo","Hola","Que haces?","Ruta Archivo","1");
+//             NodoBinario nodo5 = new NodoBinario("Luis","Lesly","Hola","Que haces?","Ruta Archivo","1");
+//             NodoBinario nodo6 = new NodoBinario("Zara","Kevin","Hola","Que haces?","Ruta Archivo","1");
+//             NodoBinario nodo7 = new NodoBinario("Sonia","Juan","Hola","Que haces?","Ruta Archivo","1");
+//             NodoBinario nodo8 = new NodoBinario("Xara","Max","Hola","Que haces?","Ruta Archivo","1");
+//             NodoBinario nodo9 = new NodoBinario("Ana","Pablo","Hola","Que haces?","Ruta Archivo","1");
+//             NodoBinario nodo10 = new NodoBinario("Beto","Lesly","Hola","Que haces?","Ruta Archivo","1");
+//             arbol.Insertar(nodo);
+//             arbol.Insertar(nodo2);
+//             arbol.Insertar(nodo3);
+//             arbol.Insertar(nodo4);
+//             arbol.Insertar(nodo5);
+//             arbol.Insertar(nodo6);
+//             arbol.Insertar(nodo7);
+//             arbol.Insertar(nodo8);
+//             arbol.Insertar(nodo9);
+//             arbol.Insertar(nodo10);
+//         } catch (IOException ex) {
+//             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+//         }
        
        File temp1 = new File(pathArchivoApilo);
        File temp2 = new File(pathArchivoUsuarios);
