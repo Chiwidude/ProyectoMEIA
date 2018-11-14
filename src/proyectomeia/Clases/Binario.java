@@ -22,11 +22,10 @@ public class Binario {
     
     File archivoBinario;
     RandomAccessFile archivoMaster;
-    NodoBinario nodoBinario;
+    NodoBinario nodoIzquierdo,nodoDerecho,nodoRaiz;
     long tamanio = 0;
-    NodoBinario anterior = new NodoBinario("", "", "", "", "", "");
-    
-    ArrayList<NodoBinario> nodos = new ArrayList<>();
+    int cantRegistros = 0;  
+    NodoBinario padre = new NodoBinario("", "", "", "", "", "");   
     
     public Binario(String RutaBinario){         
         archivoBinario = new File(RutaBinario);
@@ -36,29 +35,95 @@ public class Binario {
         archivoMaster = new RandomAccessFile(archivoBinario, "rw");  
         tamanio = archivoMaster.length();
         archivoMaster.seek(tamanio);
+        NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
+        //Nodo Raiz
         if(tamanio == 0){
         nuevoNodo.setDerecho("-1");
         nuevoNodo.setIzquierdo("-1");
-        archivoMaster.writeBytes(nuevoNodo.toString());
+        nodoRaiz = new NodoBinario("", "", "", "", "", "");
+        nodoRaiz.CreateFromString(nuevoNodo.toString());
+        archivoMaster.writeBytes(nodoRaiz.toString());
         archivoMaster.writeBytes(System.lineSeparator());
-        archivoMaster.close();      
-        }else{  
+        archivoMaster.close(); 
+        cantRegistros++;
+            }else{  
+            nuevoNodo.setDerecho("-1");
+            nuevoNodo.setIzquierdo("-1");
+            if((nodoRaiz.getUsuarioEmisor().compareTo(nuevoNodo.getUsuarioEmisor())>0)){            
+                if(nodoRaiz.getDerecho().trim().contains("-1")){
+                    cantRegistros++;
+                    viejo.CreateFromString(nodoRaiz.toString());
+                    nodoRaiz.setDerecho(String.valueOf(cantRegistros));
+                    Modificar(viejo.toString(), nodoRaiz.toString());
+                    archivoMaster.writeBytes(nuevoNodo.toString());
+                    archivoMaster.writeBytes(System.lineSeparator());
+                    archivoMaster.close();
+                } else{
+                    nodoDerecho = obtenerPadre(Integer.parseInt(nodoRaiz.getDerecho().trim()));                    
+                    InsertarInterno(nuevoNodo,nodoDerecho);
+                }
+                    
+            }else{            
+                if((nodoRaiz.getUsuarioEmisor().compareTo(nuevoNodo.getUsuarioEmisor())<0)){  
+                     if(nodoRaiz.getIzquierdo().trim().contains("-1")){
+                        cantRegistros++;
+                        viejo.CreateFromString(nodoRaiz.toString());
+                        nodoRaiz.setIzquierdo(String.valueOf(cantRegistros));
+                        Modificar(viejo.toString(), nodoRaiz.toString());
+                        archivoMaster.writeBytes(nuevoNodo.toString());
+                        archivoMaster.writeBytes(System.lineSeparator());
+                        archivoMaster.close(); 
+                      }else{                          
+                        nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoRaiz.getIzquierdo().trim()));
+                        InsertarInterno(nuevoNodo,nodoIzquierdo);
+                    }
+                }
+            }
+        }
+    }//FIN DEL METODO
+    
+    public void InsertarInterno(NodoBinario nuevoNodo,NodoBinario nodoRaiz) throws IOException{  
+        NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
         nuevoNodo.setDerecho("-1");
         nuevoNodo.setIzquierdo("-1");
-        archivoMaster.writeBytes(nuevoNodo.toString());
-        archivoMaster.writeBytes(System.lineSeparator());
-        nodoBinario = new NodoBinario("", "", "", "", "", "");
-        nodoBinario = nuevoNodo;
-        Reorganizar();
-        nodos.clear();
-        archivoMaster.close();        
-        }
-        
+            if((nodoRaiz.getUsuarioEmisor().compareTo(nuevoNodo.getUsuarioEmisor())>0)){            
+                if(nodoRaiz.getDerecho().trim().contains("-1")){
+                    cantRegistros++;
+                    viejo.CreateFromString(nodoRaiz.toString());
+                    nodoRaiz.setDerecho(String.valueOf(cantRegistros));
+                    Modificar(viejo.toString(), nodoRaiz.toString());
+                    archivoMaster.writeBytes(nuevoNodo.toString());
+                    archivoMaster.writeBytes(System.lineSeparator());
+                    archivoMaster.close();
+                } else{
+                    nodoDerecho = obtenerPadre(Integer.parseInt(nodoRaiz.getDerecho().trim()));                    
+                    InsertarInterno(nuevoNodo,nodoDerecho);
+                }
+                    
+            }else{   
+                int h = nodoRaiz.getUsuarioEmisor().compareTo(nuevoNodo.getUsuarioEmisor());
+                if((nodoRaiz.getUsuarioEmisor().compareTo(nuevoNodo.getUsuarioEmisor())<0)){  
+                     if(nodoRaiz.getIzquierdo().trim().contains("-1")){
+                        cantRegistros++;
+                        viejo.CreateFromString(nodoRaiz.toString());
+                        nodoRaiz.setIzquierdo(String.valueOf(cantRegistros));
+                        Modificar(viejo.toString(), nodoRaiz.toString());
+                        archivoMaster.writeBytes(nuevoNodo.toString());
+                        archivoMaster.writeBytes(System.lineSeparator());
+                        archivoMaster.close(); 
+                      }else{                          
+                        nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoRaiz.getIzquierdo().trim()));
+                        InsertarInterno(nuevoNodo,nodoIzquierdo);
+                    }
+                }
+            }
     }
+        
+       
     
     public void Eliminar(NodoBinario nodoEliminar){
         
-    }
+    }//FIN DEL METODO
     
      /**
      *Modifica un dato del Indice
@@ -78,6 +143,14 @@ public class Binario {
         archivo.writeBytes(Nuevo);
         archivo.close();
         
+    }
+    
+    public NodoBinario obtenerPadre(int posicion) throws FileNotFoundException, IOException{
+       RandomAccessFile archivo = new RandomAccessFile(archivoBinario,"rw");
+        for(int i = 0; i<posicion; i++){
+            padre.CreateFromString(archivo.readLine());
+        }
+        return padre;
     }
     
     private int PosicionRegistro(String registro){
@@ -104,109 +177,7 @@ public class Binario {
     }
     
     public void Reorganizar() throws IOException{
-        String linea;     
-        RandomAccessFile archivo = new RandomAccessFile(archivoBinario,"rw");
-        archivo.seek(0);
-        archivoMaster.seek(0);
-        while((linea = archivoMaster.readLine()) != null){
-            NodoBinario nodo = new NodoBinario("", "", "", "", "", "");
-            nodo.CreateFromString(linea);
-            nodos.add(nodo);
-            archivoMaster.seek(archivoMaster.getFilePointer());
-        }
-        NodoBinario raiz = new NodoBinario("", "", "", "", "", "");
-        NodoBinario padre = new NodoBinario("", "", "", "", "", "");
-        
-        raiz = nodos.remove(0);
-        archivoMaster.seek(0);
-        int size = nodos.size();
-        for (int i = 0; i < size; i++) {
-            if(!nodos.isEmpty()){
-            NodoBinario hijo = new NodoBinario("", "", "", "", "", "");
-            hijo = nodos.remove(0);
-            //Inserciones en raiz
-            if(raiz.getDerecho().contains("-1")){                
-                    if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) > 1
-                    || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) > 1
-                    || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) > 1){//Raiz Derecho    
-                    NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
-                    anterior = hijo;
-                    viejo.CreateFromString(raiz.toString());
-                    raiz.setDerecho(String.valueOf(PosicionRegistro(hijo.toString())+1));
-                    Modificar(viejo.toString(), raiz.toString());                
-                    }                
-            }else if(raiz.getIzquierdo().contains("-1")){                 
-                    if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) < 1
-                    || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) < 1
-                    || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) < 1){//Raiz Izquierdo  
-                    NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
-                    viejo.CreateFromString(raiz.toString());
-                    raiz.setIzquierdo(String.valueOf(PosicionRegistro(hijo.toString())+2));
-                    Modificar(viejo.toString(), raiz.toString());                
-                    }
-            }else{//Nodo hijos      
-                if(!nodos.isEmpty()){
-                    int hijoIzquierdo = Integer.valueOf(raiz.getIzquierdo().trim());
-                    int hijoDerecho = Integer.valueOf(raiz.getDerecho().trim());
-                //busca los hijos de la raiz y compara
-                if(hijoIzquierdo != -1){
-                    String hijoIz = null;
-                    for(int j = -1; j<hijoIzquierdo; j++){
-                            hijoIz = archivo.readLine();
-                        }  
-                    padre.CreateFromString(hijoIz); 
-                    raiz = padre;
-                    hijo = nodos.remove(nodos.size()-1);                    
-                    if(raiz.getDerecho().contains("-1")){                
-                        if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) > 1
-                        || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) > 1
-                        || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) > 1){//Raiz Derecha    
-                        NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
-                        viejo.CreateFromString(raiz.toString());
-                        raiz.setDerecho(String.valueOf(PosicionRegistro(hijo.toString())+1));
-                        Modificar(viejo.toString(), raiz.toString());                
-                        }else if(raiz.getIzquierdo().contains("-1")){                 
-                            if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) < 1
-                            || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) < 1
-                            || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) < 1){//Raiz Izquierdo  
-                            NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
-                            viejo.CreateFromString(raiz.toString());
-                            raiz.setIzquierdo(String.valueOf(PosicionRegistro(hijo.toString())+2));
-                            Modificar(viejo.toString(), raiz.toString());                
-                            }
-                        }
-                    }               
-               }else if(hijoDerecho != -1){ 
-                    String hijoDer = null;
-                    for(int j = -1; j<hijoDerecho; j++){
-                            hijoDer = archivo.readLine();
-                        } 
-                    raiz = padre;
-                    hijo = nodos.remove(nodos.size()-1);                    
-                    if(raiz.getDerecho().contains("-1")){                
-                        if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) > 1
-                        || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) > 1
-                        || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) > 1){//Raiz Derecho    
-                        NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
-                        viejo.CreateFromString(raiz.toString());
-                        raiz.setDerecho(String.valueOf(PosicionRegistro(hijo.toString())+1));
-                        Modificar(viejo.toString(), raiz.toString());                
-                    }else if(raiz.getIzquierdo().contains("-1")){                 
-                            if(raiz.getUsuarioEmisor().compareTo(hijo.getUsuarioEmisor()) < 1
-                            || raiz.getUsuarioReceptor().compareTo(hijo.getUsuarioReceptor()) < 1
-                            || raiz.getFechaTransaccion().compareTo(hijo.getFechaTransaccion()) < 1){//Raiz Izquierdo  
-                            NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
-                            viejo.CreateFromString(raiz.toString());
-                            raiz.setIzquierdo(String.valueOf(PosicionRegistro(hijo.toString())+2));
-                            Modificar(viejo.toString(), raiz.toString());                
-                            }
-                        }
-                    }                                  
-                   }
-                }
-            }            
-         }
-      }
+       
     }
     
     public void Busqueda(NodoBinario nodoBuscado){
