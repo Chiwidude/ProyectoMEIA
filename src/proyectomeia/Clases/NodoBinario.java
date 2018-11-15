@@ -32,7 +32,7 @@ public class NodoBinario {
         public NodoBinario(String UsuarioEmisor,String UsuarioReceptor,String Asunto,String Mensaje,String Adjunto,String Estatus){
             this.UsuarioEmisor = UsuarioEmisor;
             this.UsuarioReceptor = UsuarioReceptor;
-            this.FechaTransaccion = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+            this.FechaTransaccion = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(Calendar.getInstance().getTime());
             this.Asunto = Asunto;            
             this.Mensaje = Mensaje;
             this.Adjunto = Adjunto;
