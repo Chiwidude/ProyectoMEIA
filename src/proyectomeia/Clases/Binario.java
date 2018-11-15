@@ -470,12 +470,30 @@ public class Binario {
         return posicion;
     }//FIN DEL METODO   
     
-    public void Reorganizar() throws IOException{
-       
+    private int RetornarRaizRegistro() throws FileNotFoundException, IOException{
+        String linea;
+        RandomAccessFile archive = new RandomAccessFile(descriptor,"rw");
+        String[] raiz;
+          while((linea = archive.readLine())!= null){
+              raiz = linea.split(":");
+             if(raiz[0].contains("Raiz")){
+                 return Integer.parseInt(raiz[1].trim());
+            }
+        }
+          return 0;
     }
+    public void Reorganizar() throws IOException{    
+        int inicio = RetornarRaizRegistro();
+        raizArbol = obtenerPadre(inicio);
+        RecorrerArbol(raizArbol);
+    } 
     
-    
-    
+    private void RecorrerArbol(NodoBinario raiz) throws IOException{
+        RecorrerArbol(obtenerPadre(Integer.valueOf(raiz.getIzquierdo().trim())));
+        RecorrerArbol(raiz);
+        RecorrerArbol(obtenerPadre(Integer.valueOf(raiz.getDerecho().trim())));        
+    }
+      
     public NodoBinario Busqueda(NodoBinario nodoBuscado) throws FileNotFoundException, IOException{
         String [] atributos = null;
         NodoBinario buscado = new NodoBinario("", "", "", "", "", "");
