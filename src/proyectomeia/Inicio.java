@@ -35,6 +35,8 @@ public class Inicio extends javax.swing.JFrame {
     public static final String pathDescIndice = Paths.get("C:/MEIA/desc_Indice.txt").toString();  
     public static final String pathLista = Paths.get("C:/MEIA/Lista_usuario.txt").toString();  
     public static final String pathDescLista = Paths.get("C:/MEIA/desc_Lista_usuario.txt").toString();
+    public static final String pathCorreos = Paths.get("C:/MEIA/correos.txt").toString();
+    public static final String pathDescCorreos = Paths.get("C:/MEIA/desc_correos.txt").toString();
 
 //  Archivos
     
@@ -159,6 +161,39 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
+        try {
+              Binario arbol = new Binario(pathCorreos,pathDescCorreos);
+              NodoBinario nodo = new NodoBinario("Kevin","Francisco","Hola","Que haces?","Ruta Archivo");
+              NodoBinario nodo2 = new NodoBinario("Carlos","Juan","Hola","Que haces?","Ruta Archivo");
+              NodoBinario nodo3 = new NodoBinario("Manuel","Maza","Hola","Que haces?","Ruta Archivo");
+              NodoBinario nodo4 = new NodoBinario("Pepito","Pablo","Hola","Que haces?","Ruta Archivo");
+              NodoBinario nodo5 = new NodoBinario("Luis","Lesly","Hola","Que haces?","Ruta Archivo");
+              NodoBinario nodo6 = new NodoBinario("Zara","Kevin","Hola","Que haces?","Ruta Archivo");
+              NodoBinario nodo7 = new NodoBinario("Sonia","Juan","Hola","Que haces?","Ruta Archivo");
+              NodoBinario nodo8 = new NodoBinario("Xara","Max","Hola","Que haces?","Ruta Archivo");
+              NodoBinario nodo9 = new NodoBinario("Ana","Pablo","Hola","Que haces?","Ruta Archivo");
+              NodoBinario nodo10 = new NodoBinario("Beto","Lesly","Hola","Que haces?","Ruta Archivo");
+              NodoBinario nodo11 = new NodoBinario("Eber","Juan", "Hola", "Que haces?", "Ruta Archivo");
+//              arbol.Insertar(nodo);
+//              arbol.Insertar(nodo2);
+//              arbol.Insertar(nodo3);
+//              arbol.Insertar(nodo4);
+//              arbol.Insertar(nodo5);
+//              arbol.Insertar(nodo6);
+//              arbol.Insertar(nodo7);
+//              arbol.Insertar(nodo8);
+//              arbol.Insertar(nodo9);
+//              arbol.Insertar(nodo10);
+//              arbol.Insertar(nodo11);
+//              arbol.Eliminar(nodo7);
+//              arbol.Eliminar(nodo8);
+//              arbol.Inseratr(nodo7);
+                arbol.Eliminar(nodo7);
+              arbol.CrearDescriptor();
+          } catch (IOException ex) {
+              Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        
        File temp1 = new File(pathArchivoApilo);
        File temp2 = new File(pathArchivoUsuarios);
         if(!temp1.exists() && !temp2.exists()){

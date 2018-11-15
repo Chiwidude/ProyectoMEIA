@@ -45,6 +45,11 @@ public class Binario {
         tamanio = archivoMaster.length();
         archivoMaster.seek(tamanio);
         NodoBinario viejo = new NodoBinario("", "", "", "", "");
+        try{
+        nodoRaiz.CreateFromString(obtenerPadre(RetornarRaizRegistro()).toString());        
+        }catch(Exception e){
+         
+        }
         //Nodo Raiz
         if(tamanio == 0){
         nuevoNodo.setDerecho("-1");
@@ -54,7 +59,8 @@ public class Binario {
         archivoMaster.writeBytes(nodoRaiz.toString());
         archivoMaster.writeBytes(System.lineSeparator());
         archivoMaster.close(); 
-        cantRegistros++;        
+        cantRegistros++;
+        CrearDescriptor();        
             }else{ 
             nuevoNodo.setDerecho("-1");
             nuevoNodo.setIzquierdo("-1");
@@ -96,7 +102,7 @@ public class Binario {
         }
     }//FIN DEL METODO
     
-    public void InsertarInterno(NodoBinario nuevoNodo,NodoBinario nodoRaiz) throws IOException{ 
+    private void InsertarInterno(NodoBinario nuevoNodo,NodoBinario nodoRaiz) throws IOException{ 
         NodoBinario viejo = new NodoBinario("", "", "", "", "");
         nuevoNodo.setDerecho("-1");
         nuevoNodo.setIzquierdo("-1");
@@ -153,7 +159,7 @@ public class Binario {
             viejo.CreateFromString(padre.toString());            
             if(padre.getDerecho().trim().contains(String.valueOf(posicion))){
                 padre.setDerecho("-1");
-            }else if(padre.getDerecho().trim().contains(String.valueOf(posicion))){
+            }else if(padre.getIzquierdo().trim().contains(String.valueOf(posicion))){
                 padre.setIzquierdo("-1");
             }            
             Modificar(viejo.toString(), padre.toString()); 
@@ -172,7 +178,7 @@ public class Binario {
             padre.setDerecho(String.valueOf(posicion));
             Modificar(viejo.toString(), padre.toString());
             //Eliminacion Nodo izquierdo
-        }else if(nodoEliminar.getDerecho().trim().contains("-1")){
+          }else if(nodoEliminar.getDerecho().trim().contains("-1")){
             //Si no tiene hijo derecho
             nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoEliminar.getIzquierdo().trim()));                  
             viejo.CreateFromString(nodoEliminar.toString());
@@ -186,10 +192,12 @@ public class Binario {
         }else{
             
             nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoEliminar.getIzquierdo().trim()));
+            raizArbol.CreateFromString(obtenerPadre(RetornarRaizRegistro()).toString());
             //Nodo Raiz
             if((nodoEliminar.getUsuarioEmisor().contains(raizArbol.getUsuarioEmisor()))&&
                (nodoEliminar.getUsuarioReceptor().contains(raizArbol.getUsuarioReceptor()))&&
                (nodoEliminar.getFechaTransaccion().contains(raizArbol.getFechaTransaccion()))){
+                nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoEliminar.getIzquierdo().trim()));
                 raizArbol = BusquedaMasDerecho(nodoIzquierdo); //Obtengo nuevo nodoRaiz  
                 posicion = PosicionRegistroEliminar(anterior.toString());
                 padre = BusquedaPadre(raizArbol,posicion);
@@ -244,17 +252,17 @@ public class Binario {
         }       
     }//FIN DEL METODO
     
-    public NodoBinario obtenerRaiz(){
+    private NodoBinario obtenerRaiz(){
         return raizArbol;
     }
     
-    public NodoBinario asignarRaiz(String raiz){
+    private NodoBinario asignarRaiz(String raiz){
         NodoBinario raizArbol = new NodoBinario("", "", "", "", "");
         raizArbol.CreateFromString(raiz);
         return raizArbol;
     }
     
-    public NodoBinario BusquedaMasDerecho(NodoBinario nodoBuscado) throws IOException{        
+    private NodoBinario BusquedaMasDerecho(NodoBinario nodoBuscado) throws IOException{        
         if(nodoBuscado.getDerecho().trim().contains("-1")){
             return nodoBuscado;            
         }else{
@@ -266,7 +274,7 @@ public class Binario {
         return nodoDerecho;
     }
     
-    public NodoBinario BusquedaPadre(NodoBinario nodoBuscado,int posicion) throws FileNotFoundException, IOException{
+    private NodoBinario BusquedaPadre(NodoBinario nodoBuscado,int posicion) throws FileNotFoundException, IOException{
         String [] atributos = null;
         NodoBinario buscado = new NodoBinario("", "", "", "", "");
         RandomAccessFile archivo = new RandomAccessFile(archivoBinario, "rw");
@@ -387,7 +395,7 @@ public class Binario {
         
     }//FIN DEL METODO
     
-    public NodoBinario obtenerPadre(int posicion) throws FileNotFoundException, IOException{
+    private NodoBinario obtenerPadre(int posicion) throws FileNotFoundException, IOException{
        RandomAccessFile archivo = new RandomAccessFile(archivoBinario,"rw");
         for(int i = 0; i<posicion; i++){
             padre.CreateFromString(archivo.readLine());
@@ -482,6 +490,7 @@ public class Binario {
         }
           return 0;
     }
+    
     public void Reorganizar() throws IOException{    
         int inicio = RetornarRaizRegistro();
         raizArbol = obtenerPadre(inicio);
@@ -506,7 +515,8 @@ public class Binario {
                     if(atributos[2].contains(nodoBuscado.getUsuarioEmisor())&&
                        atributos[3].contains(nodoBuscado.getUsuarioReceptor())&&
                        atributos[4].contains(nodoBuscado.getAsunto())&&
-                       atributos[5].contains(nodoBuscado.getMensaje())){
+                       atributos[5].contains(nodoBuscado.getMensaje())&&
+                       atributos[8].trim().contains("1")){
                         buscado.CreateFromString(inputLine);
                         return buscado;                    
                     }
