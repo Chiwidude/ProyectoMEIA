@@ -30,13 +30,13 @@ public class Binario {
     NodoBinario nodoIzquierdo,nodoDerecho,nodoRaiz;
     long tamanio = 0;
     int cantRegistros = 0;
-    NodoBinario padre = new NodoBinario("", "", "", "", "", "");   
-    NodoBinario anterior = new NodoBinario("", "", "", "", "", "");
-    NodoBinario raizArbol = new NodoBinario("", "", "", "", "", "");
+    NodoBinario padre = new NodoBinario("", "", "", "", "");   
+    NodoBinario anterior = new NodoBinario("", "", "", "", "");
+    NodoBinario raizArbol = new NodoBinario("", "", "", "", "");
     public Binario(String RutaBinario,String RutaDescriptor) throws IOException{         
         archivoBinario = new File(RutaBinario);
         descriptor = new File(RutaDescriptor);
-        nodoRaiz = new NodoBinario("", "", "", "", "", "");
+        nodoRaiz = new NodoBinario("", "", "", "", "");
     }
     
     public void Insertar(NodoBinario nuevoNodo) throws FileNotFoundException, IOException{ 
@@ -44,7 +44,7 @@ public class Binario {
         archivoMaster = new RandomAccessFile(archivoBinario, "rw");
         tamanio = archivoMaster.length();
         archivoMaster.seek(tamanio);
-        NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
+        NodoBinario viejo = new NodoBinario("", "", "", "", "");
         //Nodo Raiz
         if(tamanio == 0){
         nuevoNodo.setDerecho("-1");
@@ -97,7 +97,7 @@ public class Binario {
     }//FIN DEL METODO
     
     public void InsertarInterno(NodoBinario nuevoNodo,NodoBinario nodoRaiz) throws IOException{ 
-        NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
+        NodoBinario viejo = new NodoBinario("", "", "", "", "");
         nuevoNodo.setDerecho("-1");
         nuevoNodo.setIzquierdo("-1");
             if((nodoRaiz.getUsuarioEmisor().compareTo(nuevoNodo.getUsuarioEmisor())>0)||
@@ -137,8 +137,8 @@ public class Binario {
     } //FIN DEL METODO 
           
     public void Eliminar(NodoBinario nodoEliminar) throws FileNotFoundException, IOException{
-        NodoBinario viejo = new NodoBinario("", "", "", "", "", "");
-        NodoBinario nuevaRaiz = new NodoBinario("", "", "", "", "", "");
+        NodoBinario viejo = new NodoBinario("", "", "", "", "");
+        NodoBinario nuevaRaiz = new NodoBinario("", "", "", "", "");
         nodoEliminar = Busqueda(nodoEliminar);
         int posicion = 0;
         //Eliminacion Nodo Hoja
@@ -249,7 +249,7 @@ public class Binario {
     }
     
     public NodoBinario asignarRaiz(String raiz){
-        NodoBinario raizArbol = new NodoBinario("", "", "", "", "", "");
+        NodoBinario raizArbol = new NodoBinario("", "", "", "", "");
         raizArbol.CreateFromString(raiz);
         return raizArbol;
     }
@@ -268,7 +268,7 @@ public class Binario {
     
     public NodoBinario BusquedaPadre(NodoBinario nodoBuscado,int posicion) throws FileNotFoundException, IOException{
         String [] atributos = null;
-        NodoBinario buscado = new NodoBinario("", "", "", "", "", "");
+        NodoBinario buscado = new NodoBinario("", "", "", "", "");
         RandomAccessFile archivo = new RandomAccessFile(archivoBinario, "rw");
                 String inputLine;
                 while ((inputLine = archivo.readLine()) != null) {
@@ -496,7 +496,7 @@ public class Binario {
       
     public NodoBinario Busqueda(NodoBinario nodoBuscado) throws FileNotFoundException, IOException{
         String [] atributos = null;
-        NodoBinario buscado = new NodoBinario("", "", "", "", "", "");
+        NodoBinario buscado = new NodoBinario("", "", "", "", "");
         RandomAccessFile archivo = new RandomAccessFile(archivoBinario, "rw");
                 String inputLine;
                 while ((inputLine = archivo.readLine()) != null) {

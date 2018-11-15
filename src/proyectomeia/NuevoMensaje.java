@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import proyectomeia.Clases.NodoBinario;
 import proyectomeia.Clases.ObjectIndice;
 import proyectomeia.Clases.Singleton;
 import proyectomeia.Clases.UsuarioIndexado;
@@ -389,9 +390,14 @@ public class NuevoMensaje extends javax.swing.JFrame {
           if(dialogbutton == JOptionPane.YES_OPTION){
               String mensaje = jTextArea1.getText();
               if(!mensaje.isEmpty()){
-                  if(jRadioButton1.isSelected()){ // un usuario
+                  if(jRadioButton1.isSelected()){ try {
+                      // un usuario
                       String usuarioR = String.valueOf(jComboBox1.getSelectedItem());
-                      
+                      NodoBinario nuevo = new NodoBinario(fase.current.getUsername().trim(),usuarioR,asunto,mensaje,pathAdjuntado);
+                      fase.arbol.Insertar(nuevo);
+                      } catch (IOException ex) {
+                          Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);
+                      }
                   }else if(jRadioButton2.isSelected()){ try {
                       // lista de distribución
                       String lista = String.valueOf(jComboBox1.getSelectedItem());
@@ -404,6 +410,9 @@ public class NuevoMensaje extends javax.swing.JFrame {
                           UsuarioIndexado user = new UsuarioIndexado();
                           user.CreateFromString(fase.ListaUsuarios.Blista_Usuario(nuevo.getPosicion().trim()));
                           users.add(user.getUsuarioAsociado().trim());
+                      }
+                      for(String user:users){
+                          fase.arbol.Insertar(new NodoBinario(fase.current.getUsername().trim(),user,asunto,mensaje,pathAdjuntado));
                       }
                       
                       } catch (IOException ex) {
@@ -421,6 +430,14 @@ public class NuevoMensaje extends javax.swing.JFrame {
          String mensaje = jTextArea1.getText();
               if(!mensaje.isEmpty()){
                   if(jRadioButton1.isSelected()){ // un usuario
+                      try {
+                      // un usuario
+                      String usuarioR = String.valueOf(jComboBox1.getSelectedItem());
+                      NodoBinario nuevo = new NodoBinario(fase.current.getUsername().trim(),usuarioR,asunto,mensaje,pathAdjuntado);
+                      fase.arbol.Insertar(nuevo);
+                      } catch (IOException ex) {
+                          Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);
+                      }
                   }else if(jRadioButton2.isSelected()){ try {
                       // lista de distribución
                       String lista = String.valueOf(jComboBox1.getSelectedItem());
@@ -433,6 +450,9 @@ public class NuevoMensaje extends javax.swing.JFrame {
                           UsuarioIndexado user = new UsuarioIndexado();
                           user.CreateFromString(fase.ListaUsuarios.Blista_Usuario(nuevo.getPosicion().trim()));
                           users.add(user.getUsuarioAsociado().trim());
+                      }
+                      for(String user:users){
+                          fase.arbol.Insertar(new NodoBinario(fase.current.getUsername().trim(),user,asunto,mensaje,pathAdjuntado));
                       }
                       
                       } catch (IOException ex) {
@@ -467,7 +487,7 @@ public class NuevoMensaje extends javax.swing.JFrame {
 
     private void btnAdlocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdlocalActionPerformed
             JFileChooser chooser = new JFileChooser();
-            int returnval = chooser.showOpenDialog(null);
+                int returnval = chooser.showOpenDialog(null);
             if(returnval == JFileChooser.APPROVE_OPTION){
                 try {
                     File directory = new File(pathadjunto);
@@ -476,6 +496,7 @@ public class NuevoMensaje extends javax.swing.JFrame {
                     }
                     File selectedFile = chooser.getSelectedFile();
                     pathAdjuntado = directory.getPath()+"\\"+ selectedFile.getName();
+                    if(!new File(pathAdjuntado).exists())
                     Files.copy(selectedFile.toPath(),Paths.get(pathAdjuntado));
                 } catch (IOException ex) {
                     Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);

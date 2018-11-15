@@ -28,15 +28,22 @@ public class NodoBinario {
         private String Adjunto;
         private String Estatus;
                 
-        
-        public NodoBinario(String UsuarioEmisor,String UsuarioReceptor,String Asunto,String Mensaje,String Adjunto,String Estatus){
+        /**
+         * 
+         * @param UsuarioEmisor
+         * @param UsuarioReceptor
+         * @param Asunto
+         * @param Mensaje
+         * @param Adjunto 
+         */
+        public NodoBinario(String UsuarioEmisor,String UsuarioReceptor,String Asunto,String Mensaje,String Adjunto){
             this.UsuarioEmisor = UsuarioEmisor;
             this.UsuarioReceptor = UsuarioReceptor;
             this.FechaTransaccion = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(Calendar.getInstance().getTime());
             this.Asunto = Asunto;            
             this.Mensaje = Mensaje;
             this.Adjunto = Adjunto;
-            this.Estatus = Estatus;
+            this.Estatus = "1";
         }
         
         public void CreateFromString(String object){

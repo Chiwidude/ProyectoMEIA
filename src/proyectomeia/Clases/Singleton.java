@@ -33,6 +33,8 @@ public class Singleton {
     public static final String pathdesInd = Paths.get("C:/MEIA/desc_Indice.txt").toString();
     public static final String pathdesLU = Paths.get("C:/MEIA/desc_Lista_usuario.txt").toString();
     public static final String pathListasUsuario = Paths.get("C:/MEIA/Lista_usuario.txt").toString();
+    public static final String pathCorreos = Paths.get("C:/MEIA/correos.txt").toString();
+    public static final String pathDescCorreos = Paths.get("C:/MEIA/desc_correos.txt").toString();
 
     @Override
     public String toString() {
@@ -45,7 +47,7 @@ public class Singleton {
     public lista Listas;
     public SecuencialIndexado ListaUsuarios;
     public BDD base;
-
+    public Binario arbol;
 public Singleton(){
         try {
             BDD.getInstancia().conexion();
@@ -55,7 +57,11 @@ public Singleton(){
         } catch (SQLException ex) {
             Logger.getLogger(Singleton.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+        try {
+            arbol =   new Binario(pathCorreos,pathDescCorreos);
+        } catch (IOException ex) {
+            Logger.getLogger(Singleton.class.getName()).log(Level.SEVERE, null, ex);
+        }
     current = new Usuario();
     bitacora = new ApiloFile(pathArchivoApilo,"Bitácora de Usuarios","Archivo de datos","",5,new String[]{"Usuario"},"Usuario|Nombre|Apellido|password|Rol"
             + "|Fecha_Nacimiento|Correo_alterno|Telefono|path_fotografia|Status");
