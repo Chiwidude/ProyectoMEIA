@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import proyectomeia.Notificacion;
 public class Listener extends Thread {
     private Connection Conexion;
@@ -65,13 +66,14 @@ public class Listener extends Thread {
                             boolean existe = false;
                             
                             if(GrupoReceptor.equals("4")){
-                                BDD.getInstancia().setMensaje("El Usuario:" + Emisor + " " +"del grupo:"+ GrupoEmisor +" "+ " te ha enviado un Correo." );
-                                Not = new Notificacion();
-                                Not.setVisible(true);
-                             Singleton validacion = new Singleton();
-                                existe = validacion.ExistsUser(Receptor.replace("\"",""));
+                                existe = new Singleton().ExistsUser(Receptor.replace("\"",""));
                                 if(existe){
+                                    BDD.getInstancia().setMensaje("El Usuario:" + Emisor + " " +"del grupo:"+ GrupoEmisor +" "+ " te ha enviado un Correo." );
+                                    Not = new Notificacion();
+                                    Not.setVisible(true);
                                     BDD.getInstancia().Update(id, existe);
+                                    JOptionPane.showMessageDialog(null, Mensaje);
+                                    
                                 }else{
                                     BDD.getInstancia().Update(id, existe);
                                 }                                        
@@ -96,7 +98,7 @@ public class Listener extends Thread {
                                     Not = new Notificacion();
                                     Not.setVisible(true);
                                  }else{
-                                    BDD.getInstancia().setMensaje("El usuario: " + Receptor +" "+ " del grupo:" +" "+ GrupoReceptor +" "+ " ha recibido el mensaje." );
+                                    BDD.getInstancia().setMensaje("El usuario: " + Receptor +" "+ " del grupo:" +" "+GrupoReceptor +" "+ " ha recibido el mensaje." );
                                     Not = new Notificacion();
                                     Not.setVisible(true);
                                  }

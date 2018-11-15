@@ -5,15 +5,20 @@
  */
 package proyectomeia;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import proyectomeia.Clases.ObjectIndice;
 import proyectomeia.Clases.Singleton;
@@ -33,6 +38,7 @@ public class NuevoMensaje extends javax.swing.JFrame {
     }
     public NuevoMensaje(Singleton objeto){
         this();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
         fase = objeto;
        jRadioButton1.addActionListener(new ActionListener(){
             @Override
@@ -72,6 +78,8 @@ public class NuevoMensaje extends javax.swing.JFrame {
     private Singleton fase;
     private List<String> users;
     private List<String> lists;
+    private String pathAdjuntado;
+    private static final String pathadjunto =  Paths.get("C:/MEIA/Adjuntos").toString();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -246,6 +254,11 @@ public class NuevoMensaje extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         btnAdlocal.setText("Adjuntar");
+        btnAdlocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdlocalActionPerformed(evt);
+            }
+        });
 
         btnElocal.setText("Enviar");
         btnElocal.addActionListener(new java.awt.event.ActionListener() {
@@ -377,6 +390,8 @@ public class NuevoMensaje extends javax.swing.JFrame {
               String mensaje = jTextArea1.getText();
               if(!mensaje.isEmpty()){
                   if(jRadioButton1.isSelected()){ // un usuario
+                      String usuarioR = String.valueOf(jComboBox1.getSelectedItem());
+                      
                   }else if(jRadioButton2.isSelected()){ try {
                       // lista de distribución
                       String lista = String.valueOf(jComboBox1.getSelectedItem());
@@ -449,6 +464,26 @@ public class NuevoMensaje extends javax.swing.JFrame {
             Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEredActionPerformed
+
+    private void btnAdlocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdlocalActionPerformed
+            JFileChooser chooser = new JFileChooser();
+            int returnval = chooser.showOpenDialog(null);
+            if(returnval == JFileChooser.APPROVE_OPTION){
+                try {
+                    File directory = new File(pathadjunto);
+                    if(!directory.exists()){
+                        directory.mkdir();
+                    }
+                    File selectedFile = chooser.getSelectedFile();
+                    pathAdjuntado = directory.getPath()+"\\"+ selectedFile.getName();
+                    Files.copy(selectedFile.toPath(),Paths.get(pathAdjuntado));
+                } catch (IOException ex) {
+                    Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                   
+            }
+            
+    }//GEN-LAST:event_btnAdlocalActionPerformed
 
     /**
      * @param args the command line arguments

@@ -9,6 +9,7 @@ package proyectomeia;
  *
  * @author Pancho
  */
+import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,7 @@ public class Notificacion extends javax.swing.JFrame {
      */
     public Notificacion() {
         initComponents();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
         try {
             txtTitulo.setText(BDD.getInstancia().getMensaje());
         } catch (ClassNotFoundException ex) {

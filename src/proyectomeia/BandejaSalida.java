@@ -5,6 +5,7 @@
  */
 package proyectomeia;
 
+import java.awt.Toolkit;
 import proyectomeia.Clases.Singleton;
 
 /**
@@ -21,6 +22,7 @@ public class BandejaSalida extends javax.swing.JFrame {
     }
     public BandejaSalida(Singleton object_){
         this();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
         fase = object_;
         jTextField1.setEditable(false);
         jTextArea1.setEditable(false);

@@ -5,6 +5,7 @@
  */
 package proyectomeia;
 
+import java.awt.Toolkit;
 import proyectomeia.Clases.Singleton;
 
 /**
@@ -23,6 +24,7 @@ public class BandejaEntrada extends javax.swing.JFrame {
       
       public BandejaEntrada(Singleton object_){
           this();
+          setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
           fase = object_;
           txtAentrada.setEditable(false);
           txtMensajeentrada.setEditable(false);
