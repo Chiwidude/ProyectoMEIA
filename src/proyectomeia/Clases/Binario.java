@@ -146,7 +146,60 @@ public class Binario {
         NodoBinario viejo = new NodoBinario("", "", "", "", "");
         NodoBinario nuevaRaiz = new NodoBinario("", "", "", "", "");
         nodoEliminar = Busqueda(nodoEliminar);
-        int posicion = 0;
+        int posicion = 0;            
+        raizArbol.CreateFromString(obtenerPadre(RetornarRaizRegistro()).toString());
+        //Elimina Nodo Raiz sin hijo derecho        
+        if((nodoEliminar.getUsuarioEmisor().contains(raizArbol.getUsuarioEmisor()))&&
+           (nodoEliminar.getUsuarioReceptor().contains(raizArbol.getUsuarioReceptor()))&&
+           (nodoEliminar.getFechaTransaccion().contains(raizArbol.getFechaTransaccion()))&&
+           (nodoEliminar.getDerecho().trim().contains("-1"))){
+            nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoEliminar.getIzquierdo().trim()));
+            viejo.CreateFromString(nodoEliminar.toString());
+            raizArbol.CreateFromString(nodoIzquierdo.toString());
+            nodoEliminar.setIzquierdo("-1");
+            nodoEliminar.setEstatus("0");
+            Modificar(viejo.toString(),nodoEliminar.toString());
+            CrearDescriptor();  
+        }else{  
+            //Eliminar Nodo Raiz sin hijo Izquierdo
+            if((nodoEliminar.getUsuarioEmisor().contains(raizArbol.getUsuarioEmisor()))&&
+           (nodoEliminar.getUsuarioReceptor().contains(raizArbol.getUsuarioReceptor()))&&
+           (nodoEliminar.getFechaTransaccion().contains(raizArbol.getFechaTransaccion()))&&
+           (nodoEliminar.getIzquierdo().trim().contains("-1"))){
+            nodoDerecho = obtenerPadre(Integer.parseInt(nodoEliminar.getDerecho().trim()));
+            viejo.CreateFromString(nodoEliminar.toString());
+            raizArbol.CreateFromString(nodoDerecho.toString());
+            nodoEliminar.setDerecho("-1");
+            nodoEliminar.setEstatus("0");
+            Modificar(viejo.toString(),nodoEliminar.toString());
+            CrearDescriptor();
+        }else{
+              
+        nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoEliminar.getIzquierdo().trim()));
+        raizArbol.CreateFromString(obtenerPadre(RetornarRaizRegistro()).toString());
+        //Eliminar Raiz con Hijos
+        if((nodoEliminar.getUsuarioEmisor().contains(raizArbol.getUsuarioEmisor()))&&
+           (nodoEliminar.getUsuarioReceptor().contains(raizArbol.getUsuarioReceptor()))&&
+           (nodoEliminar.getFechaTransaccion().contains(raizArbol.getFechaTransaccion()))){
+                nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoEliminar.getIzquierdo().trim()));
+                raizArbol = BusquedaMasDerecho(nodoIzquierdo); //Obtengo nuevo nodoRaiz  
+                posicion = PosicionRegistroEliminar(anterior.toString());
+                padre = BusquedaPadre(raizArbol,posicion);
+                viejo.CreateFromString(raizArbol.toString());
+                raizArbol = asignarRaiz(viejo.toString());
+                raizArbol.setDerecho(nodoEliminar.getDerecho());
+                raizArbol.setIzquierdo(nodoEliminar.getIzquierdo());
+                nuevaRaiz.CreateFromString(nodoEliminar.toString());
+                nodoEliminar.setDerecho("-1");
+                nodoEliminar.setIzquierdo("-1");
+                nodoEliminar.setEstatus("0");
+                Modificar(nuevaRaiz.toString(),nodoEliminar.toString());
+                Modificar(viejo.toString(),raizArbol.toString());
+                viejo.CreateFromString(anterior.toString());
+                anterior.setDerecho("-1");
+                Modificar(viejo.toString(),anterior.toString());
+                CrearDescriptor();
+            }else{
         //Eliminacion Nodo Hoja
        if(nodoEliminar.getIzquierdo().trim().contains("-1") && nodoEliminar.getDerecho().trim().contains("-1")){          
             //Si es nodo hoja
@@ -191,31 +244,7 @@ public class Binario {
             Modificar(viejo.toString(), padre.toString());          
         }else{
             
-            nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoEliminar.getIzquierdo().trim()));
-            raizArbol.CreateFromString(obtenerPadre(RetornarRaizRegistro()).toString());
-            //Nodo Raiz
-            if((nodoEliminar.getUsuarioEmisor().contains(raizArbol.getUsuarioEmisor()))&&
-               (nodoEliminar.getUsuarioReceptor().contains(raizArbol.getUsuarioReceptor()))&&
-               (nodoEliminar.getFechaTransaccion().contains(raizArbol.getFechaTransaccion()))){
-                nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoEliminar.getIzquierdo().trim()));
-                raizArbol = BusquedaMasDerecho(nodoIzquierdo); //Obtengo nuevo nodoRaiz  
-                posicion = PosicionRegistroEliminar(anterior.toString());
-                padre = BusquedaPadre(raizArbol,posicion);
-                viejo.CreateFromString(raizArbol.toString());
-                raizArbol = asignarRaiz(viejo.toString());
-                raizArbol.setDerecho(nodoEliminar.getDerecho());
-                raizArbol.setIzquierdo(nodoEliminar.getIzquierdo());
-                nuevaRaiz.CreateFromString(nodoEliminar.toString());
-                nodoEliminar.setDerecho("-1");
-                nodoEliminar.setIzquierdo("-1");
-                nodoEliminar.setEstatus("0");
-                Modificar(nuevaRaiz.toString(),nodoEliminar.toString());
-                Modificar(viejo.toString(),raizArbol.toString());
-                viejo.CreateFromString(anterior.toString());
-                anterior.setDerecho("-1");
-                Modificar(viejo.toString(),anterior.toString());
-                CrearDescriptor();
-            }else{
+            nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoEliminar.getIzquierdo().trim()));                      
             //Dos hijos
             if(nodoIzquierdo.getDerecho().trim().contains("-1")){
                 viejo.CreateFromString(nodoEliminar.toString());
@@ -247,10 +276,12 @@ public class Binario {
                 viejo.CreateFromString(anterior.toString());
                 anterior.setDerecho("-1");
                 Modificar(viejo.toString(),anterior.toString());
-                } 
-            }
-        }       
-    }//FIN DEL METODO
+             }           
+          }
+        }
+      }       
+    }
+}//FIN DEL METODO
     
     private NodoBinario obtenerRaiz(){
         return raizArbol;
