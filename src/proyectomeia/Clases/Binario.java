@@ -503,7 +503,7 @@ public class Binario {
         RecorrerArbol(obtenerPadre(Integer.valueOf(raiz.getDerecho().trim())));        
     }
       
-    public NodoBinario Busqueda(NodoBinario nodoBuscado) throws FileNotFoundException, IOException{
+    private NodoBinario Busqueda(NodoBinario nodoBuscado) throws FileNotFoundException, IOException{
         String [] atributos = null;
         NodoBinario buscado = new NodoBinario("", "", "", "", "");
         RandomAccessFile archivo = new RandomAccessFile(archivoBinario, "rw");
@@ -523,6 +523,40 @@ public class Binario {
                 }
                 archivo.close(); 
                 return buscado;
+    }
+    
+     public ArrayList<String> BusquedaBandejaSalida(String usuarioEmisor) throws FileNotFoundException, IOException{
+        
+        ArrayList<String> listaBandejaSalida = new ArrayList<>();
+        String [] atributos = null;
+        NodoBinario buscado = new NodoBinario("", "", "", "", "");
+        RandomAccessFile archivo = new RandomAccessFile(archivoBinario, "rw");
+                String inputLine;
+                while ((inputLine = archivo.readLine()) != null) {
+                    atributos = inputLine.split("\\|");
+                    if(atributos[2].trim().contains(usuarioEmisor)){
+                        listaBandejaSalida.add(inputLine);                                           
+                    }
+                }
+                archivo.close(); 
+                return listaBandejaSalida;
+    }
+    
+    public ArrayList<String> BusquedaBandejaEntrada(String usuarioReceptor) throws FileNotFoundException, IOException{
+        
+        ArrayList<String> listaBandejaEntrada = new ArrayList<>();
+        String [] atributos = null;
+        NodoBinario buscado = new NodoBinario("", "", "", "", "");
+        RandomAccessFile archivo = new RandomAccessFile(archivoBinario, "rw");
+                String inputLine;
+                while ((inputLine = archivo.readLine()) != null) {
+                    atributos = inputLine.split("\\|");
+                    if(atributos[3].trim().contains(usuarioReceptor)){
+                        listaBandejaEntrada.add(inputLine);                                           
+                    }
+                }
+                archivo.close(); 
+                return listaBandejaEntrada;
     }
     
 }
