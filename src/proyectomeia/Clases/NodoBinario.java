@@ -7,8 +7,6 @@ package proyectomeia.Clases;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *
@@ -63,7 +61,7 @@ public class NodoBinario {
         StringBuilder str = new StringBuilder();
         str.append(rightpad(Izquierdo,30));
         str.append("|");
-        str.append(rightpad(Derecho,20));
+        str.append(rightpad(Derecho,30));
         str.append("|");
         str.append(rightpad(UsuarioEmisor,20));
         str.append("|");
@@ -73,7 +71,7 @@ public class NodoBinario {
         str.append("|");
         str.append(rightpad(Mensaje,50));
         str.append("|");
-        str.append(rightpad(Adjunto,40));
+        str.append(rightpad(Adjunto,60));
         str.append("|");
         str.append(FechaTransaccion);
         str.append("|");

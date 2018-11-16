@@ -65,8 +65,8 @@ public class Binario {
             nuevoNodo.setDerecho("-1");
             nuevoNodo.setIzquierdo("-1");
             if((nodoRaiz.getUsuarioEmisor().compareTo(nuevoNodo.getUsuarioEmisor())>0)||
-               (nodoRaiz.getFechaTransaccion().compareTo(nuevoNodo.getFechaTransaccion())>0)||
-               (nodoRaiz.getUsuarioReceptor().compareTo(nuevoNodo.getUsuarioReceptor())>0)){            
+               (nodoRaiz.getUsuarioReceptor().compareTo(nuevoNodo.getUsuarioReceptor())>0)||
+               (nodoRaiz.getFechaTransaccion().compareTo(nuevoNodo.getFechaTransaccion())>0)){            
                 if(nodoRaiz.getDerecho().trim().contains("-1")){
                     cantRegistros++;
                     viejo.CreateFromString(nodoRaiz.toString());
@@ -83,8 +83,8 @@ public class Binario {
                     
             }else{            
                 if((nodoRaiz.getUsuarioEmisor().compareTo(nuevoNodo.getUsuarioEmisor())<0)||
-               (nodoRaiz.getFechaTransaccion().compareTo(nuevoNodo.getFechaTransaccion())<0)||
-               (nodoRaiz.getUsuarioReceptor().compareTo(nuevoNodo.getUsuarioReceptor())<0)){  
+               (nodoRaiz.getUsuarioReceptor().compareTo(nuevoNodo.getUsuarioReceptor())<0)||
+               (nodoRaiz.getFechaTransaccion().compareTo(nuevoNodo.getFechaTransaccion())<0)){  
                      if(nodoRaiz.getIzquierdo().trim().contains("-1")){
                         cantRegistros++;
                         viejo.CreateFromString(nodoRaiz.toString());

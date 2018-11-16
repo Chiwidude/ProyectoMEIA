@@ -79,7 +79,7 @@ public class NuevoMensaje extends javax.swing.JFrame {
     private Singleton fase;
     private List<String> users;
     private List<String> lists;
-    private String pathAdjuntado;
+    private String pathAdjuntado = "";
     private static final String pathadjunto =  Paths.get("C:/MEIA/Adjuntos").toString();
 
     /**
@@ -389,12 +389,13 @@ public class NuevoMensaje extends javax.swing.JFrame {
           dialogbutton = JOptionPane.showConfirmDialog(null, "Está seguro de enviar el mensaje sin asunto","Aclaración",dialogbutton);
           if(dialogbutton == JOptionPane.YES_OPTION){
               String mensaje = jTextArea1.getText();
-              if(!mensaje.isEmpty()){
+              if(!mensaje.isEmpty()||!pathAdjuntado.isEmpty()){
                   if(jRadioButton1.isSelected()){ try {
                       // un usuario
                       String usuarioR = String.valueOf(jComboBox1.getSelectedItem());
                       NodoBinario nuevo = new NodoBinario(fase.current.getUsername().trim(),usuarioR,asunto,mensaje,pathAdjuntado);
                       fase.arbol.Insertar(nuevo);
+                      JOptionPane.showMessageDialog(null, "Mensaje enviado a:" + usuarioR);
                       } catch (IOException ex) {
                           Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);
                       }
@@ -443,15 +444,15 @@ public class NuevoMensaje extends javax.swing.JFrame {
                       String lista = String.valueOf(jComboBox1.getSelectedItem());
                       ObjectIndice ind = new ObjectIndice(lista,fase.current.getUsername().trim(),"");
                       List<String> temp = fase.ListaUsuarios.BusuariosLista(ind.toString());
-                      List<String> users = new ArrayList<>();
+                      List<String> users_ = new ArrayList<>();
                       for(int i = 0; i<temp.size(); i++){
                           ObjectIndice nuevo = new ObjectIndice();
                           nuevo.CreateFromString(temp.get(i));
                           UsuarioIndexado user = new UsuarioIndexado();
                           user.CreateFromString(fase.ListaUsuarios.Blista_Usuario(nuevo.getPosicion().trim()));
-                          users.add(user.getUsuarioAsociado().trim());
+                          users_.add(user.getUsuarioAsociado().trim());
                       }
-                      for(String user:users){
+                      for(String user:users_){
                           fase.arbol.Insertar(new NodoBinario(fase.current.getUsername().trim(),user,asunto,mensaje,pathAdjuntado));
                       }
                       
