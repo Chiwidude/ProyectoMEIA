@@ -196,23 +196,43 @@ public class Binario {
            (nodoEliminar.getUsuarioReceptor().contains(raizArbol.getUsuarioReceptor()))&&
            (nodoEliminar.getFechaTransaccion().contains(raizArbol.getFechaTransaccion()))){
                 nodoIzquierdo = obtenerPadre(Integer.parseInt(nodoEliminar.getIzquierdo().trim()));
-                raizArbol = BusquedaMasDerecho(nodoIzquierdo); //Obtengo nuevo nodoRaiz  
-                posicion = PosicionRegistroEliminar(anterior.toString());
-                padre = BusquedaPadre(raizArbol,posicion);
-                viejo.CreateFromString(raizArbol.toString());
-                raizArbol = asignarRaiz(viejo.toString());
-                raizArbol.setDerecho(nodoEliminar.getDerecho());
-                raizArbol.setIzquierdo(nodoEliminar.getIzquierdo());
-                nuevaRaiz.CreateFromString(nodoEliminar.toString());
-                nodoEliminar.setDerecho("-1");
-                nodoEliminar.setIzquierdo("-1");
-                nodoEliminar.setEstatus("0");
-                Modificar(nuevaRaiz.toString(),nodoEliminar.toString());
-                Modificar(viejo.toString(),raizArbol.toString());
-                viejo.CreateFromString(anterior.toString());
-                anterior.setDerecho("-1");
-                Modificar(viejo.toString(),anterior.toString());
-                CrearDescriptor();
+                raizArbol = BusquedaMasDerecho(nodoIzquierdo); //Obtengo nuevo nodoRaiz
+                if(anterior.getDerecho() == null || anterior.getIzquierdo()==null){
+                    anterior.CreateFromString(raizArbol.toString());
+                    posicion = PosicionRegistroEliminar(anterior.toString());
+                    padre = BusquedaPadre(raizArbol,posicion);
+                    viejo.CreateFromString(raizArbol.toString());
+                    raizArbol = asignarRaiz(viejo.toString());
+                    raizArbol.setDerecho(nodoEliminar.getDerecho());
+                    raizArbol.setIzquierdo("-1");
+                    nuevaRaiz.CreateFromString(nodoEliminar.toString());
+                    nodoEliminar.setDerecho("-1");
+                    nodoEliminar.setIzquierdo("-1");
+                    nodoEliminar.setEstatus("0");
+                    Modificar(nuevaRaiz.toString(),nodoEliminar.toString());
+                    Modificar(viejo.toString(),raizArbol.toString());
+                    viejo.CreateFromString(anterior.toString());
+                    anterior.setDerecho("-1");
+                    Modificar(viejo.toString(),anterior.toString());
+                    CrearDescriptor();
+                }else{
+                    posicion = PosicionRegistroEliminar(anterior.toString());
+                    padre = BusquedaPadre(raizArbol,posicion);
+                    viejo.CreateFromString(raizArbol.toString());
+                    raizArbol = asignarRaiz(viejo.toString());
+                    raizArbol.setDerecho(nodoEliminar.getDerecho());
+                    raizArbol.setIzquierdo(nodoEliminar.getIzquierdo());
+                    nuevaRaiz.CreateFromString(nodoEliminar.toString());
+                    nodoEliminar.setDerecho("-1");
+                    nodoEliminar.setIzquierdo("-1");
+                    nodoEliminar.setEstatus("0");
+                    Modificar(nuevaRaiz.toString(),nodoEliminar.toString());
+                    Modificar(viejo.toString(),raizArbol.toString());
+                    viejo.CreateFromString(anterior.toString());
+                    anterior.setDerecho("-1");
+                    Modificar(viejo.toString(),anterior.toString());
+                    CrearDescriptor();
+                }                
             }else{
         //Eliminacion Nodo Hoja
        if(nodoEliminar.getIzquierdo().trim().contains("-1") && nodoEliminar.getDerecho().trim().contains("-1")){          

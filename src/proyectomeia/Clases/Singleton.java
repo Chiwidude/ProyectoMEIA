@@ -256,8 +256,8 @@ public List<String> getUsers() throws FileNotFoundException, IOException, ParseE
             BufferedReader reader1 = new BufferedReader(new InputStreamReader(stream1));
         String input1;
         String[] fields1;
-        while((input1 = reader.readLine()) != null){
-            fields1 = input.split("\\|");
+        while((input1 = reader1.readLine()) != null){
+            fields1 = input1.split("\\|");
             if(fields1[fields1.length-1].trim().equals("1")){
                 temp.add(input1);
             }
