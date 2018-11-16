@@ -46,11 +46,24 @@ public class Binario {
         archivoMaster.seek(tamanio);
         NodoBinario viejo = new NodoBinario("", "", "", "", "");
         try{
-        nodoRaiz.CreateFromString(obtenerPadre(RetornarRaizRegistro()).toString());        
+        nodoRaiz.CreateFromString(obtenerPadre(RetornarRaizRegistro()).toString()); 
+        
+            
         }catch(Exception e){
          
         }
         //Nodo Raiz
+        if(verificarEliminarTodos() && CantidadRegistrosArbol()!=0){
+        nuevoNodo.setDerecho("-1");
+        nuevoNodo.setIzquierdo("-1");
+        nodoRaiz.CreateFromString(nuevoNodo.toString());
+        raizArbol.CreateFromString(nuevoNodo.toString());
+        archivoMaster.writeBytes(nodoRaiz.toString());
+        archivoMaster.writeBytes(System.lineSeparator());
+        archivoMaster.close(); 
+        cantRegistros++;
+        CrearDescriptor();
+        }else{
         if(tamanio == 0){
         nuevoNodo.setDerecho("-1");
         nuevoNodo.setIzquierdo("-1");
@@ -100,6 +113,7 @@ public class Binario {
                 }
             }
         }
+      }
     }//FIN DEL METODO
     
     private void InsertarInterno(NodoBinario nuevoNodo,NodoBinario nodoRaiz) throws IOException{ 
@@ -587,6 +601,24 @@ public class Binario {
                 }
                 archivo.close(); 
                 return listaBandejaEntrada;
+    }
+    
+    private boolean verificarEliminarTodos() throws FileNotFoundException, IOException{
+        int cantidadRegistrosInactivosArbol = 0;        
+        String [] atributos = null;
+        RandomAccessFile archivo = new RandomAccessFile(archivoBinario, "rw");
+                String inputLine;
+                while ((inputLine = archivo.readLine()) != null) {
+                    atributos = inputLine.split("\\|");
+                    if(atributos[8].contains("0")){
+                        cantidadRegistrosInactivosArbol++;
+                    }
+                }
+                archivo.close(); 
+                if(cantidadRegistrosInactivosArbol == CantidadRegistrosArbol()){
+                    return true;
+                }
+                return false;
     }
     
 }
