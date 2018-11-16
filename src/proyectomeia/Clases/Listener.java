@@ -72,9 +72,7 @@ public class Listener extends Thread {
                                     new Singleton().arbol.Insertar(new NodoBinario(Emisor.trim().replace("\"",""),Receptor.trim().replace("\"", ""),Asunto.trim().replace("\"", ""),Mensaje.trim().replace("\"",""),""));
                                     Not = new Notificacion();
                                     Not.setVisible(true);
-                                    BDD.getInstancia().Update(id, existe);
-                                    JOptionPane.showMessageDialog(null, Mensaje);
-                                    
+                                    BDD.getInstancia().Update(id, existe);                                                                        
                                 }else{
                                     BDD.getInstancia().Update(id, existe);
                                 }                                        
