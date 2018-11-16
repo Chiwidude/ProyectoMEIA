@@ -5,9 +5,11 @@
  */
 package proyectomeia;
 
+import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -112,6 +114,11 @@ public class BandejaEntrada extends javax.swing.JFrame {
         jLabel4.setText("Usuario Emisor | Fecha");
 
         btnAdjunto.setText("Ver Adjunto");
+        btnAdjunto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdjuntoActionPerformed(evt);
+            }
+        });
 
         jScrollPane3.setViewportView(jList2);
 
@@ -225,6 +232,21 @@ public class BandejaEntrada extends javax.swing.JFrame {
             Logger.getLogger(BandejaEntrada.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEliminarEntradaActionPerformed
+
+    private void btnAdjuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdjuntoActionPerformed
+        String opened = recibidos.get(position);
+        NodoBinario temp = new NodoBinario();
+        temp.CreateFromString(opened);
+        File file = new File(temp.getAdjunto().trim());
+        if(Desktop.isDesktopSupported()){
+            Desktop desktop = Desktop.getDesktop();
+            if(file.exists()) try {
+                desktop.open(file);
+            } catch (IOException ex) {
+                Logger.getLogger(BandejaEntrada.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnAdjuntoActionPerformed
 
     /**
      * @param args the command line arguments

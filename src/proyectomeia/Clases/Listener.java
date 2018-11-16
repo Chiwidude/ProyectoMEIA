@@ -9,6 +9,7 @@ package proyectomeia.Clases;
  *
  * @author Pancho
  */
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,8 +28,7 @@ public class Listener extends Thread {
     private String Emisor;
     private String Asunto;
     private String Mensaje;
-    private Notificacion Not;  
-
+    private Notificacion Not; 
     Listener(Connection conn) throws SQLException {
 		this.Conexion = conn;
 		this.pgconn = (org.postgresql.PGConnection)conn;
@@ -69,6 +69,7 @@ public class Listener extends Thread {
                                 existe = new Singleton().ExistsUser(Receptor.replace("\"",""));
                                 if(existe){
                                     BDD.getInstancia().setMensaje("El Usuario:" + Emisor + " " +"del grupo:"+ GrupoEmisor +" "+ " te ha enviado un Correo." );
+                                    new Singleton().arbol.Insertar(new NodoBinario(Emisor.trim().replace("\"",""),Receptor.trim().replace("\"", ""),Asunto.trim().replace("\"", ""),Mensaje.trim().replace("\"",""),""));
                                     Not = new Notificacion();
                                     Not.setVisible(true);
                                     BDD.getInstancia().Update(id, existe);
@@ -99,6 +100,7 @@ public class Listener extends Thread {
                                     Not.setVisible(true);
                                  }else{
                                     BDD.getInstancia().setMensaje("El usuario: " + Receptor +" "+ " del grupo:" +" "+GrupoReceptor +" "+ " ha recibido el mensaje." );
+                                    new Singleton().arbol.Insertar(new NodoBinario(Emisor.trim().replace("\"",""),Receptor.trim().replace("\"", ""),Asunto.trim().replace("\"", ""),Mensaje.trim().replace("\"",""),""));
                                     Not = new Notificacion();
                                     Not.setVisible(true);
                                  }
@@ -110,6 +112,8 @@ public class Listener extends Thread {
             } catch (SQLException | InterruptedException sqle) {
                     sqle.printStackTrace();
             } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

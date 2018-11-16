@@ -400,6 +400,9 @@ public class NuevoMensaje extends javax.swing.JFrame {
                       String usuarioR = String.valueOf(jComboBox1.getSelectedItem());
                       NodoBinario nuevo = new NodoBinario(fase.current.getUsername().trim(),usuarioR,asunto,mensaje,pathAdjuntado);
                       fase.arbol.Insertar(nuevo);
+                      txtAlocal.setText("");
+                      jTextArea1.setText("");
+                      pathAdjuntado = "";                      
                       fase.arbol.CrearDescriptor();
                       JOptionPane.showMessageDialog(null, "Mensaje enviado a:" + usuarioR);
                       } catch (IOException ex) {
@@ -423,6 +426,9 @@ public class NuevoMensaje extends javax.swing.JFrame {
                           fase.arbol.CrearDescriptor();
                       }
                       JOptionPane.showMessageDialog(null, "Mensaje enviado a la lista:" + lista);
+                      txtAlocal.setText("");
+                      jTextArea1.setText("");
+                      pathAdjuntado = "";
                       
                       } catch (IOException ex) {
                           Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);
@@ -444,6 +450,9 @@ public class NuevoMensaje extends javax.swing.JFrame {
                       String usuarioR = String.valueOf(jComboBox1.getSelectedItem());
                       NodoBinario nuevo = new NodoBinario(fase.current.getUsername().trim(),usuarioR,asunto,mensaje,pathAdjuntado);
                       fase.arbol.Insertar(nuevo);
+                      txtAlocal.setText("");
+                      jTextArea1.setText("");
+                      pathAdjuntado = "";
                       fase.arbol.CrearDescriptor();
                       JOptionPane.showMessageDialog(null, "Mensaje enviado a:" + usuarioR);
                       } catch (IOException ex) {
@@ -467,7 +476,9 @@ public class NuevoMensaje extends javax.swing.JFrame {
                           fase.arbol.CrearDescriptor();
                       }
                       JOptionPane.showMessageDialog(null, "Mensaje enviado a la lista:" + lista);
-                      
+                      txtAlocal.setText("");
+                      jTextArea1.setText("");
+                      pathAdjuntado = "";                      
                       } catch (IOException ex) {
                           Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);
                       }
