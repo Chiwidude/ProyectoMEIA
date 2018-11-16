@@ -415,6 +415,7 @@ public class NuevoMensaje extends javax.swing.JFrame {
                       for(String user:users){
                           fase.arbol.Insertar(new NodoBinario(fase.current.getUsername().trim(),user,asunto,mensaje,pathAdjuntado));
                       }
+                      JOptionPane.showMessageDialog(null, "Mensaje enviado a la lista:" + lista);
                       
                       } catch (IOException ex) {
                           Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);
@@ -436,6 +437,7 @@ public class NuevoMensaje extends javax.swing.JFrame {
                       String usuarioR = String.valueOf(jComboBox1.getSelectedItem());
                       NodoBinario nuevo = new NodoBinario(fase.current.getUsername().trim(),usuarioR,asunto,mensaje,pathAdjuntado);
                       fase.arbol.Insertar(nuevo);
+                      JOptionPane.showMessageDialog(null, "Mensaje enviado a:" + usuarioR);
                       } catch (IOException ex) {
                           Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);
                       }
@@ -455,6 +457,7 @@ public class NuevoMensaje extends javax.swing.JFrame {
                       for(String user:users_){
                           fase.arbol.Insertar(new NodoBinario(fase.current.getUsername().trim(),user,asunto,mensaje,pathAdjuntado));
                       }
+                      JOptionPane.showMessageDialog(null, "Mensaje enviado a la lista:" + lista);
                       
                       } catch (IOException ex) {
                           Logger.getLogger(NuevoMensaje.class.getName()).log(Level.SEVERE, null, ex);

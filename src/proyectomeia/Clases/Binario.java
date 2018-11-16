@@ -529,12 +529,11 @@ public class Binario {
         
         ArrayList<String> listaBandejaSalida = new ArrayList<>();
         String [] atributos = null;
-        NodoBinario buscado = new NodoBinario("", "", "", "", "");
         RandomAccessFile archivo = new RandomAccessFile(archivoBinario, "rw");
                 String inputLine;
                 while ((inputLine = archivo.readLine()) != null) {
                     atributos = inputLine.split("\\|");
-                    if(atributos[2].trim().contains(usuarioEmisor)){
+                    if(atributos[2].trim().equals(usuarioEmisor) && atributos[atributos.length-1].equals("1")){
                         listaBandejaSalida.add(inputLine);                                           
                     }
                 }
@@ -547,11 +546,11 @@ public class Binario {
         ArrayList<String> listaBandejaEntrada = new ArrayList<>();
         String [] atributos = null;
         NodoBinario buscado = new NodoBinario("", "", "", "", "");
-        RandomAccessFile archivo = new RandomAccessFile(archivoBinario, "rw");
+        RandomAccessFile archivo = new RandomAccessFile(archivoBinario, "r");
                 String inputLine;
                 while ((inputLine = archivo.readLine()) != null) {
                     atributos = inputLine.split("\\|");
-                    if(atributos[3].trim().contains(usuarioReceptor)){
+                    if(atributos[3].trim().equals(usuarioReceptor) && atributos[atributos.length-1].equals("1")){
                         listaBandejaEntrada.add(inputLine);                                           
                     }
                 }

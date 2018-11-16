@@ -43,6 +43,8 @@ public class NodoBinario {
             this.Adjunto = Adjunto;
             this.Estatus = "1";
         }
+        public NodoBinario(){
+        }
         
         public void CreateFromString(String object){
         String[]  parts = object.split("\\|");
