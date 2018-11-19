@@ -6,14 +6,24 @@
 package proyectomeia.Clases;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -644,6 +654,92 @@ public class Binario {
                 }
                 return false;
     }
+    
+   public void ReorganizarArbol() throws IOException{
+       int raiz = RetornarRaizRegistro();
+       Map<Integer,Integer> refactor = new HashMap();
+       InputStream f = new FileInputStream(archivoBinario);
+        BufferedReader br = new BufferedReader(new InputStreamReader(f));
+        String line;
+        int counter = 1;
+        List<String> activos = new ArrayList<>();
+        while((line = br.readLine())!= null){
+         if(line.split("\\|")[line.split("\\|").length-1].contains("1")){
+             activos.add(line);
+             refactor.put(counter,refactor.size()+1);
+         }
+         counter++;
+        }
+        br.close();
+        refactor.put(0,0);
+        if(activos.size() == 0){
+            FileChannel.open(Paths.get(archivoBinario.getPath()), StandardOpenOption.WRITE).truncate(0).close();
+            RewriteDesc();
+        }else{
+         FileChannel.open(Paths.get(archivoBinario.getPath()), StandardOpenOption.WRITE).truncate(0).close(); 
+         OutputStream out = new FileOutputStream(archivoBinario);
+            BufferedWriter bw =  new BufferedWriter(new OutputStreamWriter(out));
+            NodoBinario temp = new NodoBinario();
+            NodoBinario active = new NodoBinario();
+         for(String activo:activos){
+            
+            temp.CreateFromString(activo);
+            active.CreateFromString(activo);
+            if(!temp.getIzquierdo().trim().equals("-1")){
+                active.setIzquierdo(String.valueOf(refactor.get(Integer.valueOf(temp.getIzquierdo().trim()))));
+            }
+            if(!temp.getDerecho().trim().equals("-1")){
+                active.setDerecho(String.valueOf(refactor.get(Integer.valueOf(temp.getDerecho().trim()))));
+            }
+            bw.write(active.toString());
+            bw.write(System.lineSeparator());
+         }
+         bw.close();
+         raiz = refactor.get(raiz);
+         RefactorDescriptor(raiz,activos.size());
+         
+        }
+         
+   }
+   private void RefactorDescriptor(int nraiz, int activos){
+        try {
+            FileChannel.open(Paths.get(descriptor.getPath()), StandardOpenOption.WRITE).truncate(0).close();
+            RandomAccessFile archivo = new RandomAccessFile(descriptor, "rw");
+            StringBuilder descriptorArbol = new StringBuilder();
+            descriptorArbol.append("Numero de Registros:"+rightpad(String.valueOf(activos),4)); 
+            descriptorArbol.append(System.lineSeparator());
+            descriptorArbol.append("Raiz:"+rightpad(String.valueOf(nraiz),4)); //Raiz
+            descriptorArbol.append(System.lineSeparator());        
+            descriptorArbol.append("Registros Activos:"+rightpad(String.valueOf(activos),4)); 
+            descriptorArbol.append(System.lineSeparator());
+            descriptorArbol.append("Registros Inactivos:"+rightpad(String.valueOf(0),4));
+            archivo.writeBytes(descriptorArbol.toString());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Binario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Binario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+   }
+   private void RewriteDesc(){
+        try {
+            FileChannel.open(Paths.get(descriptor.getPath()), StandardOpenOption.WRITE).truncate(0).close();
+            RandomAccessFile archivo = new RandomAccessFile(descriptor, "rw");
+            StringBuilder descriptorArbol = new StringBuilder();
+            descriptorArbol.append("Numero de Registros:"+rightpad(String.valueOf(CantidadRegistrosArbol()),4)); 
+            descriptorArbol.append(System.lineSeparator());
+            descriptorArbol.append("Raiz:"+rightpad(String.valueOf(0),4)); //Raiz
+            descriptorArbol.append(System.lineSeparator());
+            descriptorArbol.append("Registros Activos:"+rightpad(String.valueOf(CantidadRegistrosActivosArbol()),4));
+            descriptorArbol.append(System.lineSeparator());
+            descriptorArbol.append("Registros Inactivos:"+rightpad(String.valueOf(0),4));
+            archivo.writeBytes(descriptorArbol.toString());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Binario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Binario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
     
 }
 

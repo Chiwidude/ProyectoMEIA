@@ -197,10 +197,16 @@ public class UserView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListasActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        try {
+            fase.arbol.ReorganizarArbol();
+        } catch (IOException ex) {
+            Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
+        }
         fase.current = null;
         Inicio start = new Inicio(fase);
         this.dispose();
         start.setVisible(true);
+        
     }//GEN-LAST:event_logoutActionPerformed
 
     private void bsalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsalidaActionPerformed

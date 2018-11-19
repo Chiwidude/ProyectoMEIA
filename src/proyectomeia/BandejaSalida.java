@@ -36,7 +36,7 @@ public class BandejaSalida extends javax.swing.JFrame {
         jTextField1.setEditable(false);
         jTextArea1.setEditable(false);
         btnAdjunto.setEnabled(false);
-        DefaultListModel model = new DefaultListModel();
+        model = new DefaultListModel();
         try {
             enviados = fase.arbol.BusquedaBandejaSalida(fase.current.getUsername().trim());
             enviados.forEach((enviado)->{
@@ -52,7 +52,7 @@ public class BandejaSalida extends javax.swing.JFrame {
                 selected.CreateFromString(enviados.get(position));
                 jTextField1.setText(selected.getAsunto().trim());
                 jTextArea1.setText(selected.getMensaje().trim());
-                if(!selected.getAdjunto().trim().equals("null")){
+                if(!selected.getAdjunto().trim().equals("null")||!selected.getAdjunto().trim().equals("")){
                     btnAdjunto.setEnabled(true);
                 }else{
                     btnAdjunto.setEnabled(false);
@@ -65,6 +65,7 @@ public class BandejaSalida extends javax.swing.JFrame {
     private Singleton fase;
     private ArrayList<String> enviados;
     private int position;
+    DefaultListModel model;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -214,20 +215,20 @@ public class BandejaSalida extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
+            String temp = model.getElementAt(position).toString();
             String aEliminar = enviados.get(position);
+            if(!temp.contains("||E")){
             NodoBinario selection = new NodoBinario();
             selection.CreateFromString(aEliminar);
             fase.arbol.Eliminar(selection);
             fase.arbol.CrearDescriptor();
-            DefaultListModel model = new DefaultListModel();
-            enviados = fase.arbol.BusquedaBandejaSalida(fase.current.getUsername().trim());
-            for(String enviado:enviados){
-                NodoBinario temp = new NodoBinario();
-                temp.CreateFromString(enviado);
-                model.addElement(temp.getUsuarioReceptor().trim()+"|" + temp.getFechaTransaccion());
-            }
-            jList1.setModel(model);
+             int num = Integer.valueOf(position);
+            temp = temp +"||E";
+            model.setElementAt(temp, num);
             JOptionPane.showMessageDialog(null, "Correo eliminado");
+            }else{
+                JOptionPane.showMessageDialog(null, "Este correo ya está eliminado");
+            }
         } catch (IOException ex) {
             Logger.getLogger(BandejaSalida.class.getName()).log(Level.SEVERE, null, ex);
         }
