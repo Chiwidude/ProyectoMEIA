@@ -317,8 +317,12 @@ public class Binario {
     }
 }//FIN DEL METODO
     
-    private NodoBinario obtenerRaiz(){
-        return raizArbol;
+    private NodoBinario obtenerRaiz() throws IOException{
+        if(raizArbol.getDerecho()== null && raizArbol.getIzquierdo() == null){
+            return obtenerPadre(RetornarRaizRegistro());
+        }else{
+           return raizArbol; 
+        }        
     }
     
     private NodoBinario asignarRaiz(String raiz){
